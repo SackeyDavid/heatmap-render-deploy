@@ -11,6 +11,7 @@ export function evidenceInRequest(evidence: string, request: string): boolean {
   const e = withoutQuotes(evidence).toLowerCase();
   const r = withoutQuotes(request).toLowerCase();
   if (!e || e.length > 160) return false;
+  if (!e.split(/[^\p{L}\p{N}]+/u).some((w) => w && !FILLER_WORDS.has(w))) return false; // filler alone ("click on", "when someone") proves nothing
   return r.includes(e) || wordsInOrder(e, r);
 }
 
@@ -21,12 +22,23 @@ export function evidenceInRequest(evidence: string, request: string): boolean {
 function wordsInOrder(evidence: string, request: string): boolean {
   const tokens = (t: string) => t.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
   const wanted = tokens(evidence);
-  if (wanted.length < 2) return false;
+  if (wanted.length < 2 || !wanted.some((w) => !FILLER_WORDS.has(w))) return false; // filler alone ("click on") proves nothing
   const have = tokens(request);
-  let at = 0;
-  for (const word of have) if (word === wanted[at] && ++at === wanted.length) return true;
+  for (let from = 0; from < have.length; from++) {
+    if (have[from] !== wanted[0]) continue;
+    let at = 1;
+    let end = from;
+    for (let i = from + 1; i < have.length && at < wanted.length; i++) if (have[i] === wanted[at]) (at++, (end = i));
+    if (at < wanted.length) continue;
+    if (!have.slice(Math.max(0, from - 3), end + 1).some((w) => NEGATIONS.has(w))) return true; // a skipped "never" or "not" would flip the meaning
+  }
   return false;
 }
+
+/** Words that carry no target on their own. */
+const FILLER_WORDS = new Set(["a", "an", "the", "on", "in", "at", "of", "to", "me", "my", "when", "if", "someone", "somebody", "visitor", "visitors", "click", "clicks", "clicked", "tap", "taps", "tapped", "press", "presses", "tell", "track", "and", "or", "is", "are", "i", "we", "they", "it"]);
+/** A negation inside the matched stretch or just before it means the quoted words may be the opposite of what was asked. */
+const NEGATIONS = new Set(["never", "not", "no", "dont", "don", "doesn", "without", "except", "ignore", "instead", "nor", "neither"]);
 
 const GENERIC_NOUNS = new Set([
   "page",

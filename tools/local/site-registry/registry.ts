@@ -49,6 +49,11 @@ export class SiteRegistry {
   get(siteId: string): Site | undefined {
     return this.list().find((s) => s.siteId === siteId);
   }
+  /** Adds the site, or replaces the one with the same siteId (the sign-in page lets the person change the website name and email). */
+  save(site: Site): void {
+    const all = this.list();
+    this.write(all.some((s) => s.siteId === site.siteId) ? all.map((s) => (s.siteId === site.siteId ? site : s)) : [...all, site]);
+  }
   /** Returns "exists" when the siteId is already registered (never overwrites). */
   add(site: Site): "added" | "exists" {
     const all = this.list();
@@ -56,4 +61,10 @@ export class SiteRegistry {
     this.write([...all, site]);
     return "added";
   }
+}
+
+/** "https://www.Manduu.com/shop" becomes "manduu-com": the name used for the site's folders, letters, numbers and dashes only. */
+export function siteIdFromWebsite(typed: string): string {
+  const host = typed.trim().toLowerCase().replace(/^[a-z]+:\/\//, "").replace(/^www\./, "").split(/[/?#]/)[0] ?? "";
+  return host.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 63);
 }

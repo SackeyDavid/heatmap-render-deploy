@@ -109,3 +109,37 @@ test("nothing logged contains the secret or a JWT", async () => {
   assert.ok(logs.length > 0);
   for (const l of logs) { assert.ok(!l.includes(secret)); assert.ok(!/eyJ[A-Za-z0-9_-]{10,}\./.test(l)); }
 });
+
+const save = (fields: Record<string, string>, headers: Record<string, string> = {}) =>
+  fetch(base + "/signin/save", { method: "POST", redirect: "manual", headers: { "content-type": "application/x-www-form-urlencoded", ...headers }, body: new URLSearchParams(fields).toString() });
+
+test("the sign-in page says Sign in, has a pencil, a Connected badge, and a hidden Save button", async () => {
+  const html = await (await get("/signin?site=example-site")).text();
+  assert.match(html, /<h1>Sign in<\/h1>/);
+  assert.ok(!/local sign-in/i.test(html));
+  assert.match(html, /hm-local-auth__pencil/);
+  assert.match(html, /Connected/);
+  assert.match(html, /hm-local-auth__save"[^>]*hidden/);
+});
+
+test("saving a new website and email signs the token in for them", async () => {
+  const r = await save({ from: "example-site", website: "https://www.Manduu.com/shop", email: "owner@manduu.com" }, { origin: base });
+  assert.equal(r.status, 303);
+  assert.equal(r.headers.get("location"), "/signin?site=manduu-com&saved=1");
+  const html = await (await get("/signin?site=manduu-com&saved=1")).text();
+  assert.match(html, /Saved\./);
+  const go = await get("/go/" + codeFromSignInHtml(html));
+  const token = new URL(go.headers.get("location")!).searchParams.get("token")!;
+  const v = verifyToken(token, secret, Math.floor(clock / 1000));
+  assert.ok(v.ok, JSON.stringify(v));
+  const claims = v.claims;
+  assert.equal(claims.siteId, "manduu-com");
+  assert.equal(claims.email, "owner@manduu.com");
+});
+
+test("saving refuses another website's form post, a bad email and an empty website", async () => {
+  assert.equal((await save({ from: "example-site", website: "x.com", email: "a@b.co" }, { origin: "http://evil.example" })).status, 403);
+  assert.equal((await save({ from: "example-site", website: "x.com", email: "not an email" })).status, 400);
+  assert.equal((await save({ from: "example-site", website: "///", email: "a@b.co" })).status, 400);
+  assert.equal((await save({ from: "nope", website: "x.com", email: "a@b.co" })).status, 404);
+});

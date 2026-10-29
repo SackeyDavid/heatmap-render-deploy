@@ -7,6 +7,7 @@ import { SECRET_LIKE } from "../shared/secret-like.ts";
 import { StepFailure } from "../../domain/errors.ts";
 import { scriptIsLive, type Job } from "../../domain/types.ts";
 import { failureEmailDetail } from "../../domain/safe-question.ts";
+import { BRANDED_EMAIL_IMAGES, renderBrandedEmail } from "../../domain/branded-email.ts";
 import type {
   AgenticOperation,
   GenerateRenderArgs,
@@ -162,20 +163,49 @@ export class KlaviyoSegmentationOperation implements AgenticOperation<KlaviyoSeg
   }
 }
 
-function successEmail(input: KlaviyoSegmentationInput, job: Job, segmentsJson: string, notesText = "") {
+const ADAPTER_NAME = "Klaviyo";
+
+/** The host of the first page, for "your website" in the email (falls back to the site folder name). */
+function websiteOf(input: KlaviyoSegmentationInput): string {
+  try {
+    return new URL(input.pages[0] ?? "").hostname.replace(/^www\./, "") || input.siteSlug || "your website";
+  } catch {
+    return input.siteSlug ?? "your website";
+  }
+}
+
+/** Facts about this one job, so no two emails carry the same hard-coded values. */
+function jobDetailLines(input: KlaviyoSegmentationInput, job: Job): string[] {
+  const published = job.state.published;
+  const profile = job.state.verification?.details.profileUrl;
+  return [
+    `Website: ${websiteOf(input)}`,
+    `Adapter: ${ADAPTER_NAME}`,
+    ...(input.pages.length > 0 ? [`Pages: ${input.pages.join(", ")}`] : []),
+    ...(published ? [`Version: ${published.version}`, `Script address: ${published.url}`] : []),
+    `Ready at: ${new Date(job.updatedAt).toUTCString()}`,
+    ...(profile ? [`Test profile: ${profile}`] : []),
+  ];
+}
+
+export function successEmail(input: KlaviyoSegmentationInput, job: Job, segmentsJson: string, notesText = "") {
   const leftOut = leftOutFromNotes(notesText);
   let events = "";
   let segments = "";
+  let eventLines: string[] = [];
+  let segmentLines: string[] = [];
   try {
     const s = JSON.parse(segmentsJson) as { events?: { name: string; trigger: string }[]; segments?: { name: string; conditions: string }[] };
-    events = (s.events ?? []).map((e) => `  - ${e.name}: ${e.trigger}`).join("\n");
-    segments = (s.segments ?? []).map((g) => `  - ${g.name}: ${g.conditions}`).join("\n");
+    eventLines = (s.events ?? []).map((e) => `${e.name}: ${e.trigger}`);
+    segmentLines = (s.segments ?? []).map((g) => `${g.name}: ${g.conditions}`);
+    events = eventLines.map((l) => `  - ${l}`).join("\n");
+    segments = segmentLines.map((l) => `  - ${l}`).join("\n");
   } catch {
     // body still useful without the lists
   }
   return {
     to: input.notifyEmail,
-    subject: "Your Klaviyo segmentation script is live",
+    subject: `Your ${ADAPTER_NAME} tracking code for ${websiteOf(input)} is live`,
     body: [
       "Your site-specific tracking script is live.",
       "",
@@ -190,6 +220,19 @@ function successEmail(input: KlaviyoSegmentationInput, job: Job, segmentsJson: s
       ...(leftOut.length > 0 ? ["We left these out (they are not in the script):", ...leftOut.map((l) => `  - ${l}`), ""] : []),
       `Test profile with every event: ${job.state.verification?.details.profileUrl ?? "n/a"}`,
     ].join("\n"),
+    images: BRANDED_EMAIL_IMAGES,
+    html: renderBrandedEmail({
+      preheader: `Your ${ADAPTER_NAME} tracking code for ${websiteOf(input)} is live.`,
+      heading: "Your tracking code is ready",
+      intro: [`Good news. Your tracking code for ${websiteOf(input)} is live, so ${eventLines.length === 1 ? "this action is" : `these ${eventLines.length || ""} actions are`} now being recorded.`.replace("these  actions","these actions")],
+      sections: [
+        { title: "Setup details", items: jobDetailLines(input, job) },
+        { title: "Actions it records", items: eventLines },
+        { title: "Klaviyo segments to build", items: segmentLines },
+        { title: "Left out of the script", items: leftOut },
+      ],
+      footnote: "Reply to this email if anything looks wrong.",
+    }),
   };
 }
 
@@ -201,6 +244,13 @@ export function failureEmail(input: KlaviyoSegmentationInput, job: Job) {
       to: input.notifyEmail,
       subject: "Your tracking script is live, but we hit a problem afterwards",
       body: ["Your tracking script is already live on your site.", "", `What happened afterwards: ${failureEmailDetail(f)}`, "", "Nothing you need to do. Reply to this email if anything looks wrong."].join("\n"),
+      images: BRANDED_EMAIL_IMAGES,
+      html: renderBrandedEmail({
+        preheader: "Your tracking code is live. A later step had a problem.",
+        heading: "Your tracking code is live",
+        intro: [`Your tracking code is already live on ${websiteOf(input)}.`, `What happened afterwards: ${failureEmailDetail(f)}`, "There is nothing you need to do."],
+        footnote: "Reply to this email if anything looks wrong.",
+      }),
     };
   }
   return {
@@ -213,5 +263,12 @@ export function failureEmail(input: KlaviyoSegmentationInput, job: Job) {
       "",
       f?.question ?? "Could you reply with more detail about the behavior you want tracked?",
     ].join("\n"),
+    images: BRANDED_EMAIL_IMAGES,
+    html: renderBrandedEmail({
+      preheader: "We need one more detail before we can finish.",
+      heading: "We need one more detail",
+      intro: [`We could not publish a passing script, so nothing was changed on ${websiteOf(input)}.`, `What happened: ${failureEmailDetail(f)}`, f?.question ?? "Could you reply with more detail about the behavior you want tracked?"],
+      footnote: "Just reply to this email with the detail.",
+    }),
   };
 }

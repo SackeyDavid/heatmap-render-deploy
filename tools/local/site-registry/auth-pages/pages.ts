@@ -27,6 +27,9 @@ const ICON_ARROW =
 const ICON_LINK =
   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>';
 
+const ICON_PENCIL =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+
 let cachedStyles: string | undefined;
 
 function embeddedStyles(): string {
@@ -61,22 +64,47 @@ ${body}
 }
 
 /** Branded stand-in page with one-time Continue link (single use, 5 min). */
-export function signInLinkPage(siteId: string, goUrl: string): string {
+export function signInLinkPage(siteId: string, goUrl: string, email = "", saved = false): string {
   return shell(
-    "Local sign-in",
+    "Sign in",
     `<article class="hm-local-auth__card">
   <div class="hm-local-auth__card-head">
     <span class="hm-local-auth__hero-icon" aria-hidden="true">${ICON_SIGNIN}</span>
-    <p class="hm-local-auth__badge">Local testing</p>
-    <h1>Local sign-in</h1>
+    <h1>Sign in</h1>
   </div>
-  <div class="hm-local-auth__site-row">
-    <span class="hm-local-auth__row-icon" aria-hidden="true">${ICON_GLOBE}</span>
-    <div>
-      <p class="hm-local-auth__muted">Website</p>
-      <p class="hm-local-auth__site">${esc(siteId)}</p>
+  <form class="hm-local-auth__who" method="post" action="/signin/save" data-editing="false">
+    <input type="hidden" name="from" value="${esc(siteId)}">
+    <div class="hm-local-auth__site-row">
+      <span class="hm-local-auth__row-icon" aria-hidden="true">${ICON_GLOBE}</span>
+      <div class="hm-local-auth__who-fields">
+        <p class="hm-local-auth__muted">Website</p>
+        <p class="hm-local-auth__site"><span data-view>${esc(siteId)}</span>
+          <button type="button" class="hm-local-auth__pencil" data-edit aria-label="Edit website and email">${ICON_PENCIL}</button>
+          <input class="hm-local-auth__input" data-field type="text" name="website" value="${esc(siteId)}" aria-label="Website" autocomplete="off" hidden>
+        </p>
+        <div data-field hidden>
+          <p class="hm-local-auth__muted">Email</p>
+          <input class="hm-local-auth__input" type="email" name="email" value="${esc(email)}" aria-label="Email" autocomplete="email">
+        </div>
+      </div>
+      <span class="hm-local-auth__connected" data-view>${ICON_CHECK} Connected</span>
+      <button type="submit" class="hm-local-auth__save" data-field hidden>${ICON_CHECK} Save</button>
     </div>
-  </div>
+    ${saved ? '<p class="hm-local-auth__saved" role="status">Saved. Your new sign-in link is ready.</p>' : ""}
+  </form>
+  <script>
+    (function () {
+      var form = document.querySelector(".hm-local-auth__who");
+      var edit = form.querySelector("[data-edit]");
+      edit.addEventListener("click", function () {
+        form.setAttribute("data-editing", "true");
+        form.querySelectorAll("[data-view]").forEach(function (e) { e.hidden = true; });
+        edit.hidden = true;
+        form.querySelectorAll("[data-field]").forEach(function (e) { e.hidden = false; });
+        form.querySelector("input[name=website]").focus();
+      });
+    })();
+  </script>
   <p>Your one-time sign-in link is ready.</p>
   <ul class="hm-local-auth__facts">
     <li>${ICON_CHECK} Works once</li>
@@ -89,7 +117,7 @@ export function signInLinkPage(siteId: string, goUrl: string): string {
     <p class="hm-local-auth__muted">${ICON_LINK} Or open this address</p>
     <code class="hm-local-auth__code">${esc(goUrl)}</code>
   </div>
-  <p class="hm-local-auth__foot">Served on your computer for local testing only. Not Heatmap production login.</p>
+  <p class="hm-local-auth__foot">Served on your computer for testing only. Not Heatmap production login.</p>
 </article>`,
   );
 }

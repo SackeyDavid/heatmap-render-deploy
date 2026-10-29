@@ -134,6 +134,7 @@ async function serveStatic(req: IncomingMessage, res: ServerResponse, pathname: 
   }
   let rel = normalize(decoded).replace(/^([/\\])+/, "");
   if (rel.includes("..")) return send(res, 400, "Bad path");
+  if (rel.split(/[/\\]/).some((part) => part.startsWith("."))) return send(res, 404, "Not found"); // dotfiles (.env and the like) are never app screens
   let file = join(UI_DIST, rel || "index.html");
   try {
     if ((await stat(file)).isDirectory()) file = join(file, "index.html");
@@ -145,7 +146,7 @@ async function serveStatic(req: IncomingMessage, res: ServerResponse, pathname: 
   try {
     const body = await readFile(file);
     const cache = file.includes(`${join(UI_DIST, "assets")}`) ? "public, max-age=31536000, immutable" : "no-cache";
-    res.writeHead(200, { "content-type": MIME[extname(file)] ?? "application/octet-stream", "cache-control": cache, "x-content-type-options": "nosniff" });
+    res.writeHead(200, { "content-type": MIME[extname(file)] ?? "application/octet-stream", "cache-control": cache, "x-content-type-options": "nosniff", "referrer-policy": "no-referrer", "x-frame-options": "DENY" });
     res.end(req.method === "HEAD" ? undefined : body);
   } catch {
     send(res, 404, "Not found");

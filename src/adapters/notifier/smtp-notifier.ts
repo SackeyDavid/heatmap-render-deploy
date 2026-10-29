@@ -66,19 +66,27 @@ export class SmtpNotifier implements Notifier {
   /** The message with CRLF line ends. Header values cannot carry line breaks (no header injection); the body is base64 so any text and any leading dot is safe. */
   private render(m: Email): string {
     const header = (v: string) => (/^[\x20-\x7e]*$/.test(v) ? v.replace(/[\r\n]+/g, " ") : `=?UTF-8?B?${Buffer.from(v.replace(/[\r\n]+/g, " "), "utf8").toString("base64")}?=`);
-    const body = Buffer.from(m.body.replace(/\r?\n/g, "\r\n"), "utf8").toString("base64").replace(/.{1,76}/g, "$&\r\n").trimEnd();
-    return [
+    const b64 = (t: string) => Buffer.from(t.replace(/\r?\n/g, "\r\n"), "utf8").toString("base64").replace(/.{1,76}/g, "$&\r\n").trimEnd();
+    const head = [
       `From: ${this.cfg.from}`,
       `To: ${m.to}`,
       `Subject: ${header(m.subject)}`,
       `Date: ${new Date().toUTCString()}`,
       `Message-ID: <${randomUUID()}@heatmap-agentic.local>`,
       "MIME-Version: 1.0",
-      "Content-Type: text/plain; charset=utf-8",
-      "Content-Transfer-Encoding: base64",
-      "",
-      body,
-    ].join("\r\n");
+    ];
+    if (m.html === undefined) {
+      return [...head, "Content-Type: text/plain; charset=utf-8", "Content-Transfer-Encoding: base64", "", b64(m.body)].join("\r\n");
+    }
+    const boundary = `heatmap-${randomUUID()}`;
+    const part = (type: string, text: string) => [`--${boundary}`, `Content-Type: ${type}; charset=utf-8`, "Content-Transfer-Encoding: base64", "", b64(text)];
+    const alternative = [`Content-Type: multipart/alternative; boundary="${boundary}"`, "", ...part("text/plain", m.body), ...part("text/html", m.html), `--${boundary}--`];
+    if (!m.images || m.images.length === 0) return [...head, ...alternative].join("\r\n");
+    // Pictures the page shows with cid: addresses travel inside the message (multipart/related), so they show even when remote images are blocked.
+    const outer = `heatmap-rel-${randomUUID()}`;
+    const safe = (v: string) => v.replace(/[^A-Za-z0-9._@/+-]/g, "");
+    const images = m.images.flatMap((i) => [`--${outer}`, `Content-Type: ${safe(i.contentType) || "application/octet-stream"}`, "Content-Transfer-Encoding: base64", `Content-ID: <${safe(i.cid)}>`, "Content-Disposition: inline", "", i.base64.replace(/.{1,76}/g, "$&\r\n").trimEnd()]);
+    return [...head, `Content-Type: multipart/related; boundary="${outer}"`, "", `--${outer}`, ...alternative, ...images, `--${outer}--`].join("\r\n");
   }
 }
 

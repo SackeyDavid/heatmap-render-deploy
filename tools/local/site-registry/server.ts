@@ -2,7 +2,7 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { MIN_SECRET_LENGTH, SITE_ID_RE, signToken } from "./token.ts";
-import { SiteRegistry, validateSite } from "./registry.ts";
+import { SiteRegistry, siteIdFromWebsite, validateSite } from "./registry.ts";
 import { authMessagePage, signInLinkPage } from "./auth-pages/pages.ts";
 
 export const DEFAULT_PORT = 8786;
@@ -97,7 +97,24 @@ export function createAuthServer(cfg: Config): Server {
         pending.push({ hash: sha(code), siteId, expires: cfg.now() + CODE_TTL_MS });
         const goUrl = `http://${HOST}:${boundPort}/go/${code}`;
         cfg.log(`Sign-in link for site "${siteId}" (single use, 5 minutes): ${goUrl}`);
-        return send(res, 200, signInLinkPage(siteId, goUrl), "text/html; charset=utf-8");
+        const site = registry.get(siteId)!;
+        return send(res, 200, signInLinkPage(siteId, goUrl, site.userEmail, url.searchParams.get("saved") === "1"), "text/html; charset=utf-8");
+      }
+
+      if (req.method === "POST" && path === "/signin/save") {
+        // A form on this page's own origin only (the pencil edit); no other website may submit it.
+        if (req.headers.origin && req.headers.origin.toLowerCase() !== `http://${host}`) return page(res, 403, "Not allowed", "That request did not come from this page.");
+        if (!(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/x-www-form-urlencoded")) return page(res, 415, "Not allowed", "Please save from the sign-in page.");
+        const raw = await readBody(req);
+        if (raw === undefined) return page(res, 413, "Too large", "That request was too large.");
+        const form = new URLSearchParams(raw);
+        const from = registry.get(form.get("from") ?? "");
+        if (!from) return page(res, 404, "Site not found", "That site is not registered.");
+        const siteId = siteIdFromWebsite(form.get("website") ?? "");
+        const v = validateSite({ siteId, userId: from.userId, userEmail: (form.get("email") ?? "").trim(), label: (form.get("website") ?? "").trim().slice(0, 100) || siteId });
+        if (!v.ok) return page(res, 400, "Could not save", siteId ? "Please check the email address and try again." : "Please type your website, for example example.com.");
+        registry.save(v.site);
+        return send(res, 303, "", "text/plain; charset=utf-8", { location: `/signin?site=${encodeURIComponent(v.site.siteId)}&saved=1` });
       }
 
       if (req.method === "GET" && path.startsWith("/go/")) {

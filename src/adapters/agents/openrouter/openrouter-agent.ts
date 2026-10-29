@@ -65,7 +65,7 @@ export function controlsBlock(controlsJson: string | undefined): string {
 
 /** Worth another try (rate limit, server error, network, empty or unusable answer). */
 class Transient extends Error {}
-/** Trying again, on this model or any other, cannot help (bad or unauthorised key). */
+/** Trying again, on this model or any other, cannot help (the key is not accepted). */
 class Fatal extends Error {}
 /** One request took longer than its share: the same model is unlikely to answer faster, so move on to the next model. */
 class Slow extends Error {}
@@ -137,7 +137,7 @@ export class OpenRouterAgent implements AgentRunner {
       if (!res.ok) {
         const msg = `OpenRouter ${model} returned ${res.status}`;
         if (res.status === 429 || res.status >= 500) throw new Transient(msg);
-        if (res.status === 401 || res.status === 403) throw new Fatal(msg);
+        if (res.status === 401) throw new Fatal(msg); // only 401 means the key itself is bad; 402/403 can be one model or provider, so the next model still gets its turn
         throw new Error(msg);
       }
       const text = body.choices?.[0]?.message?.content;

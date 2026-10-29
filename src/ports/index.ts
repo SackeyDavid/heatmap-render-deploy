@@ -118,7 +118,12 @@ export interface RepairRenderArgs extends GenerateRenderArgs {
 export interface Email {
   to: string;
   subject: string;
+  /** Plain text version; always present. */
   body: string;
+  /** Optional designed version. Mail apps that cannot show it use `body`. */
+  html?: string;
+  /** Pictures the html shows with cid: addresses; sent inside the message. */
+  images?: { cid: string; contentType: string; base64: string }[];
 }
 
 /** What an operation's `confirm` hook returns to the pipeline. */

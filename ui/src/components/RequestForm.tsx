@@ -4,6 +4,7 @@ import { fill, screens } from '../copy';
 import { AlertIcon, MaterialSymbol, MinusIcon } from '../icons';
 import type { ModelProvider } from '../model/provider';
 import { OPERATION_GENERIC, OPERATION_KLAVIYO, PARTNER_OPTIONS } from '../partners/catalog';
+import { addMentionedPages, extractPageUrls } from '../request/extract-urls';
 import { FIELD_IDS, validate, type FieldError, type FormValues } from '../request/build';
 import { MerchantHelper, type HelperUiState } from './MerchantHelper';
 import { modelCopy } from '../copy/model';
@@ -34,6 +35,14 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
   const noticeRef = useRef<HTMLDivElement>(null);
   const f = screens.form;
   const set = <K extends keyof FormValues>(k: K, v: FormValues[K]) => onChange({ ...values, [k]: v });
+  // Pages named in the description are added to the page boxes once; a page the merchant takes out is not put back.
+  const handled = useRef(new Set<string>());
+  const [addedPages, setAddedPages] = useState(0);
+  const setPrompt = (prompt: string) => {
+    const found = addMentionedPages(values.pageUrls, values.savedHtml, extractPageUrls(prompt), handled.current, LIMITS.pages);
+    if (found.added.length > 0) setAddedPages((n) => n + found.added.length);
+    onChange({ ...values, prompt, pageUrls: found.pageUrls, savedHtml: found.savedHtml });
+  };
 
   useEffect(() => {
     if (errors.length > 0) summaryRef.current?.focus();
@@ -122,7 +131,7 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
           <PredictivePromptField
             id={FIELD_IDS.prompt}
             value={values.prompt}
-            onChange={(v) => set('prompt', v)}
+            onChange={setPrompt}
             provider={provider}
             disabled={promptLocked}
             aria-invalid={errFor(FIELD_IDS.prompt) ? true : undefined}
@@ -171,6 +180,11 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
               <span>{f.pagesLegend}</span>
             </span>
           </legend>
+          {addedPages > 0 ? (
+            <p className="hint" role="status">
+              {f.pagesAdded}
+            </p>
+          ) : null}
           {values.pageUrls.map((url, i) => (
             <div className="page-row" key={i}>
               <div className="hm-field-label-row">

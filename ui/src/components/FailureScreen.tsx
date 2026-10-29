@@ -112,8 +112,8 @@ export function FailureScreen(props: FailureScreenProps) {
           </div>
           {specific ? null : (
             <div className="hm-recovery-card">
-              <strong>What you can do next</strong>
-              <span>Check the request details and try again. If the issue persists, share the reference with support.</span>
+              <strong>{f.nextTitle}</strong>
+              <span>{f.nextLine}</span>
             </div>
           )}
           {props.offerBackup && props.onGetBackup ? (
