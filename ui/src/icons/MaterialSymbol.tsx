@@ -36,7 +36,11 @@ export type MaterialSymbolName =
   | 'touch_app'
   | 'help_outline'
   | 'logout'
-  | 'account_circle';
+  | 'account_circle'
+  | 'warning'
+  | 'download'
+  | 'dns'
+  | 'terminal';
 
 export interface MaterialSymbolProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'children'> {
   name: MaterialSymbolName;

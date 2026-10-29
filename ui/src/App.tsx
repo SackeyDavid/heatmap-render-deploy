@@ -11,6 +11,7 @@ import { WorkingScreen } from './components/WorkingScreen';
 import { startPolling, type PollerOptions } from './polling/poller';
 import { defaultOperationFromEnv } from './partners/catalog';
 import { buildRequestBodyForSubmit, emptyValues, type FormValues } from './request/build';
+import { adapterName } from './request/adapter-name';
 import { readSessionClaims } from './session/claims';
 import { clearToken, getToken, hasUsableToken } from './session/token';
 import { HeatmapBrand } from './components/HeatmapBrand';
@@ -422,8 +423,10 @@ export function App(props: AppProps) {
             code={view.code}
             retryAfterSec={view.retryAfterSec}
             detail={view.detail}
+            adapterName={adapterName(values)}
             supportEmail={supportEmail}
             onTryAgain={backToForm}
+            onEditDescription={backToForm}
             offerBackup={view.offerBackup}
             onGetBackup={getBackup}
           />

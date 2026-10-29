@@ -192,7 +192,24 @@ export const screens = {
     backupButton: 'Get the backup ready',
     title: 'That did not work',
     safe: 'Nothing was changed on your website.',
+    heroLine: 'Nothing was changed. Review the message below, then try the request again.',
+    pipelineChip: '{tool} adapter',
+    pipelineChipUnknown: 'Adapter',
+    pipelineStatus: 'Execution interrupted',
+    pipelineTitle: 'Setup progress',
+    backupHeading: 'Recommended offline fallback',
+    codeLabel: 'Error code',
+    diagTitle: 'View diagnostic details',
+    diagSafe: 'These details are safe to share with our team. They hold no passwords, keys or request text.',
+    diagCode: 'Error code',
+    diagRetry: 'Try again after',
+    diagSeconds: '{n} seconds',
+    diagSite: 'Website',
+    diagEmail: 'Signed in as',
+    diagTime: 'Time of failure',
+    stoppedStep: 'Stopped',
     tryAgain: 'Try again',
+    editDescription: 'Edit description',
     editRequest: 'Go back and change your words',
   },
 
@@ -200,6 +217,10 @@ export const screens = {
     line: 'Need a hand?',
     link: 'Ask our team',
     subject: 'Help with my tracking',
+  },
+
+  brand: {
+    engineTag: 'Adapter Engine',
   },
 
   footer: {
