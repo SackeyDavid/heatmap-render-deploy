@@ -14,6 +14,8 @@ export interface TokenClaims {
   sub: string;
   siteId: string;
   email?: string;
+  /** The website as the person typed it (for display only; siteId is the folder name). */
+  label?: string;
   iat: number;
   exp: number;
 }

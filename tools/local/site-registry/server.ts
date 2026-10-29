@@ -7,8 +7,10 @@ import { authMessagePage, signInLinkPage } from "./auth-pages/pages.ts";
 
 export const DEFAULT_PORT = 8786;
 export const HOST = "127.0.0.1";
-const CODE_TTL_MS = 5 * 60 * 1000;
-const MAX_PENDING = 20;
+/** How long a one-time sign-in link stays valid. */
+export const CODE_TTL_MS = 48 * 60 * 60 * 1000;
+/** Links waiting at once. Each page view makes one, and they now live for two days. */
+const MAX_PENDING = 500;
 const MAX_BODY = 8 * 1024;
 
 export interface Config {
@@ -62,6 +64,17 @@ export function createAuthServer(cfg: Config): Server {
     return found;
   };
 
+  /** A new one-time link for the site. At the cap the oldest waiting link is dropped. */
+  const issueLink = (siteId: string): string => {
+    sweep();
+    if (pending.length >= MAX_PENDING) pending.shift(); // the oldest waiting link goes, so repeated page views can never lock the page out
+    const code = randomBytes(32).toString("base64url");
+    pending.push({ hash: sha(code), siteId, expires: cfg.now() + CODE_TTL_MS });
+    const goUrl = `http://${HOST}:${boundPort}/go/${code}`;
+    cfg.log(`Sign-in link for site "${siteId}" (single use, valid ${CODE_TTL_MS / 3_600_000} hours): ${goUrl}`);
+    return goUrl;
+  };
+
   const send = (res: ServerResponse, status: number, body: string, type = "text/plain; charset=utf-8", extra: Record<string, string> = {}) => {
     res.writeHead(status, { "content-type": type, "cache-control": "no-store", "x-content-type-options": "nosniff", "referrer-policy": "no-referrer", ...extra });
     res.end(body);
@@ -74,7 +87,7 @@ export function createAuthServer(cfg: Config): Server {
     new Promise((resolve) => {
       let size = 0;
       const chunks: Buffer[] = [];
-      req.on("data", (c: Buffer) => { size += c.length; if (size > MAX_BODY) { resolve(undefined); req.destroy(); } else chunks.push(c); });
+      req.on("data", (c: Buffer) => { size += c.length; if (size > MAX_BODY) { resolve(undefined); req.resume(); req.removeAllListeners("data"); req.on("data", () => undefined); } else chunks.push(c); });
       req.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
       req.on("error", () => resolve(undefined));
     });
@@ -91,29 +104,36 @@ export function createAuthServer(cfg: Config): Server {
       if (req.method === "GET" && path === "/signin") {
         const siteId = url.searchParams.get("site") ?? "";
         if (!SITE_ID_RE.test(siteId) || !registry.get(siteId)) return page(res, 404, "Site not found", "That site is not registered. Add it with POST /api/sites or edit the sites file.");
-        sweep();
-        if (pending.length >= MAX_PENDING) return page(res, 429, "Too many links", "Too many sign-in links waiting. Open a recent sign-in tab and use its Continue link, or wait a few minutes.");
-        const code = randomBytes(32).toString("base64url");
-        pending.push({ hash: sha(code), siteId, expires: cfg.now() + CODE_TTL_MS });
-        const goUrl = `http://${HOST}:${boundPort}/go/${code}`;
-        cfg.log(`Sign-in link for site "${siteId}" (single use, 5 minutes): ${goUrl}`);
+        const goUrl = issueLink(siteId);
         const site = registry.get(siteId)!;
-        return send(res, 200, signInLinkPage(siteId, goUrl, site.userEmail, url.searchParams.get("saved") === "1"), "text/html; charset=utf-8");
+        return send(res, 200, signInLinkPage(siteId, goUrl, site.userEmail, url.searchParams.get("saved") === "1", site.label), "text/html; charset=utf-8");
       }
 
       if (req.method === "POST" && path === "/signin/save") {
+        const wantsJson = (req.headers.accept ?? "").includes("application/json");
+        const refuse = (status: number, title: string, msg: string) => (wantsJson ? json(res, status, { error: msg }) : page(res, status, title, msg));
         // A form on this page's own origin only (the pencil edit); no other website may submit it.
-        if (req.headers.origin && req.headers.origin.toLowerCase() !== `http://${host}`) return page(res, 403, "Not allowed", "That request did not come from this page.");
-        if (!(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/x-www-form-urlencoded")) return page(res, 415, "Not allowed", "Please save from the sign-in page.");
+        const origin = (req.headers.origin ?? "").toLowerCase();
+        // A form post from this page can say "Origin: null" (the page sends no referrer), so it must also say it is same-origin.
+        const sameOrigin = origin === "" || origin === `http://${host}` || (origin === "null" && req.headers["sec-fetch-site"] === "same-origin");
+        if (!sameOrigin) return refuse(403, "Not allowed", "That request did not come from this page.");
+        if (!(req.headers["content-type"] ?? "").toLowerCase().startsWith("application/x-www-form-urlencoded")) return refuse(415, "Not allowed", "Please save from the sign-in page.");
         const raw = await readBody(req);
-        if (raw === undefined) return page(res, 413, "Too large", "That request was too large.");
+        if (raw === undefined) return refuse(413, "Too large", "That request was too large.");
         const form = new URLSearchParams(raw);
         const from = registry.get(form.get("from") ?? "");
-        if (!from) return page(res, 404, "Site not found", "That site is not registered.");
+        if (!from) return refuse(404, "Site not found", "That site is not registered.");
         const siteId = siteIdFromWebsite(form.get("website") ?? "");
         const v = validateSite({ siteId, userId: from.userId, userEmail: (form.get("email") ?? "").trim(), label: (form.get("website") ?? "").trim().slice(0, 100) || siteId });
-        if (!v.ok) return page(res, 400, "Could not save", siteId ? "Please check the email address and try again." : "Please type your website, for example example.com.");
+        if (!v.ok) return refuse(400, "Could not save", siteId ? "Please check the email address and try again." : "Please type your website, for example example.com.");
+        // The typed website must not land on a different, existing site (that would hand it another person's name and email).
+        if (v.site.siteId !== from.siteId && registry.get(v.site.siteId)) return refuse(409, "Could not save", "That website is already set up here. Please use a different one.");
         registry.save(v.site);
+        // The page saves in place (no new page): it gets the new link and shows the new values.
+        if ((req.headers.accept ?? "").includes("application/json")) {
+          const goUrl = issueLink(v.site.siteId);
+          return json(res, 200, { siteId: v.site.siteId, label: v.site.label, email: v.site.userEmail, goUrl });
+        }
         return send(res, 303, "", "text/plain; charset=utf-8", { location: `/signin?site=${encodeURIComponent(v.site.siteId)}&saved=1` });
       }
 
@@ -125,7 +145,7 @@ export function createAuthServer(cfg: Config): Server {
         const site = registry.get(entry.siteId);
         if (!site) return page(res, 404, "Site not found", "That site is no longer registered.");
         const iat = Math.floor(cfg.now() / 1000);
-        const token = signToken({ iss: "heatmap-local", sub: site.userId, siteId: site.siteId, email: site.userEmail, iat, exp: iat + cfg.tokenTtlSeconds }, cfg.secret);
+        const token = signToken({ iss: "heatmap-local", sub: site.userId, siteId: site.siteId, email: site.userEmail, label: site.label, iat, exp: iat + cfg.tokenTtlSeconds }, cfg.secret);
         const dest = new URL(cfg.uiBase);
         dest.searchParams.set("token", token);
         return send(res, 302, "", "text/plain; charset=utf-8", { location: dest.toString() });

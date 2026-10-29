@@ -98,7 +98,7 @@ export const ALLOWLIST: Record<string, string[]> = {
   // Special forms.
   special: [
     "Array.prototype.slice.call", "new URL", "local-plain-assignment", "computed-numeric-index", "computed-plain-key",
-    "transport-call", "iife", "bounded-for", "event-name-literal", "event-name-table", "event-name-passthrough", "selector-literal", "selector-table",
+    "transport-call", "timer-poll", "iife", "bounded-for", "event-name-literal", "event-name-table", "event-name-passthrough", "selector-literal", "selector-table",
   ],
 };
 
@@ -717,6 +717,25 @@ export function analyzeScript(source: string, options: ScriptRuleOptions): Scrip
     }
   };
 
+  /**
+   * The one timer form: a bare `setTimeout(function () { ... }, <number expression>);` as a statement. It lets the
+   * script wait for Heatmap's helper to appear. A string or identifier callback (which could evaluate code or hide a
+   * target), an alias, window.setTimeout, setInterval, a second timer site, or a timer started from inside a timer
+   * callback are all still refused, so the number of timers is bounded by the bounded-for loop that starts them.
+   */
+  let timerSites = 0;
+  function timerCallOk(id: N, parent: N | undefined): boolean {
+    if (!parent || parent.type !== "CallExpression" || parent.callee !== id) return false;
+    const args = parent.arguments as N[];
+    if (args.length !== 2 || args[0]!.type !== "FunctionExpression" || (args[0]!.params as N[]).length !== 0 || !an.isNumeric(args[1]!)) return false;
+    if (an.parent.get(parent)?.type !== "ExpressionStatement") return false;
+    for (let p = an.parent.get(parent); p; p = an.parent.get(p)) {
+      if (p.type === "CallExpression" && p.callee.type === "Identifier" && p.callee.name === "setTimeout" && an.isFree(p.callee)) return false; // no timer inside a timer callback
+    }
+    timerSites++;
+    return timerSites === 1;
+  }
+
   // ---- shape: exactly one IIFE
   const body = program.body as N[];
   const iife =
@@ -953,6 +972,8 @@ export function analyzeScript(source: string, options: ScriptRuleOptions): Scrip
             else if (name === "URL") add("no-new", `URL may only be used as new URL(href, base)`, n);
             else if (name === "Array") add("allowlist-global", `Array may only be used in Array.prototype.slice.call(list). ${REQUEST}`, n);
             else add("no-global-alias", `"${name}" may only be used as ${name}.<allowlisted member>; passing, aliasing, assigning or testing it is refused`, n);
+          } else if (name === "setTimeout" && timerCallOk(n, parent)) {
+            use("special", "timer-poll");
           } else deny(name, n, "global");
         }
         break;

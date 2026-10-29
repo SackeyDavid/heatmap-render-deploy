@@ -1,31 +1,49 @@
 /** Page addresses a merchant wrote inside their description ("On https://example.com/pricing, when a visitor clicks ..."). */
 
-const TLDS = 'com|org|net|io|co|app|dev|shop|store|ai|uk|ca|de|fr|au|me|us|eu|nl|se|es|it|biz|info';
+// Only endings that are rarely ordinary words: "page.it" or "e.g.us" are not addresses.
+const TLDS = 'com|org|net|io|co|app|dev|shop|store|ai|uk|ca|au|biz|info|de|fr|nl|jp|ru|br|se';
 // An address with http(s)://, or one that starts with www., or a bare name ending in a common address ending ("example.com/pricing").
-const URL_RE = new RegExp(String.raw`(?:https?:\/\/[^\s<>"'()]+|www\.[^\s<>"'()]+|(?<![@\w.-])[a-z0-9][a-z0-9-]*(?:\.[a-z0-9-]+)*\.(?:${TLDS})(?![a-z0-9-])(?:\/[^\s<>"'()]*)?)`, 'gi');
+const URL_RE = new RegExp(String.raw`(?:https?:\/\/[^\s<>"'()]+|www\.[^\s<>"'()]+|(?<![@\p{L}\p{N}_.:/-])[\p{L}\p{N}][\p{L}\p{N}-]*(?:\.[\p{L}\p{N}-]+)*\.(?:${TLDS})(?![a-z0-9-]|\.[a-z0-9])(?::\d{1,5})?(?:\/[^\s<>"'()]*)?)`, 'giu');
 
 /** Takes off the comma, full stop or bracket that ends a sentence, not the address. */
 const trimEnd = (u: string) => u.replace(/[.,;:!?)\]}]+$/g, '');
 
-/** What two spellings of one page share: scheme, "www.", case of the host and a closing slash do not make a different page. */
+/** A name a visitor could open on the internet: not a bare number, an inside address, or a link that carries a user name. */
+function openablePublicHost(u: URL): boolean {
+  const h = u.hostname;
+  if (u.username || u.password || !h.includes('.')) return false;
+  if (/(^|\.)-|-(\.|$)|\.\.|[^\x21-\x7e]/.test(h)) return false; // empty or badly built name parts, or hidden characters
+  if (/^[\d.]+$/.test(h) || h.startsWith('[') || /^0x/i.test(h)) return false; // numbers, IPv6 and hex addresses
+  if (!/[a-z]/i.test(h.split('.').slice(0, -1).join('.'))) return false; // "1.2.com": a name needs a letter before the ending
+  return !/\.(localhost|local|internal|invalid)$/i.test(h);
+}
+
+/** What two spellings of one page share: scheme, "www.", spelling of the host and a closing slash do not make a different page. A different path or query does. */
 export function pageKey(url: string): string {
+  try {
+    const u = new URL(/^https?:\/\//i.test(url.trim()) ? url.trim() : `https://${url.trim()}`);
+    return `${u.hostname.replace(/^www\./, '')}${u.port ? `:${u.port}` : ''}${u.pathname}${u.search}`.replace(/\/+$/, ''); // café.com and xn--caf-dma.com are one page; the host is not case sensitive (the URL parser lowercases it), the path and query are
+  } catch {
+    // fall through to the plain form
+  }
   return url.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '');
 }
 
 /**
  * The addresses in the text, in the order written, each once, with https:// added when it was left out. Only addresses that can be opened.
- * An address at the very end of the text is skipped: the merchant may still be typing it ("example.co" on the way to "example.com").
+ * Callers wait for a pause in typing first, so an address being typed is not picked up half written.
+ * A name without "https://" or "www." must be all lowercase: "button.It" and "Mr.Smith.com" are words, not pages.
  */
 export function extractPageUrls(text: string): string[] {
   const seen = new Set<string>();
   const out: string[] = [];
   for (const m of text.matchAll(URL_RE)) {
-    if ((m.index ?? 0) + m[0].length >= text.length) continue;
     const raw = trimEnd(m[0]);
+    if (!/^(https?:\/\/|www\.)/i.test(raw) && /[A-Z]/.test(raw.split('/')[0]!)) continue;
     const full = /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
     try {
       const u = new URL(full);
-      if (!u.hostname.includes('.')) continue;
+      if (!openablePublicHost(u)) continue;
     } catch {
       continue;
     }

@@ -66,5 +66,11 @@ export class SiteRegistry {
 /** "https://www.Manduu.com/shop" becomes "manduu-com": the name used for the site's folders, letters, numbers and dashes only. */
 export function siteIdFromWebsite(typed: string): string {
   const host = typed.trim().toLowerCase().replace(/^[a-z]+:\/\//, "").replace(/^www\./, "").split(/[/?#]/)[0] ?? "";
-  return host.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 63);
+  let ascii = host;
+  try {
+    ascii = new URL(`http://${host}`).hostname; // non-English letters become their plain-letter form, so two different names never share a folder
+  } catch {
+    // keep the text as typed
+  }
+  return ascii.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 63);
 }

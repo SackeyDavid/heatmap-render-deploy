@@ -23,23 +23,57 @@ export function evidenceInRequest(evidence: string, request: string): boolean {
 function wordsInOrder(evidence: string, request: string): boolean {
   const tokens = (t: string) => t.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
   const wanted = tokens(evidence);
-  if (wanted.length < 2 || !wanted.some((w) => !FILLER_WORDS.has(w))) return false; // filler alone ("click on") proves nothing
-  const have = tokens(request);
-  for (let from = 0; from < have.length; from++) {
-    if (have[from] !== wanted[0]) continue;
-    let at = 1;
-    let end = from;
-    for (let i = from + 1; i < have.length && at < wanted.length; i++) if (have[i] === wanted[at]) (at++, (end = i));
-    if (at < wanted.length) continue;
-    if (!have.slice(Math.max(0, from - 3), end + 1).some((w) => NEGATIONS.has(w))) return true; // a skipped "never" or "not" would flip the meaning
+  const lead = wanted.findIndex((w) => !FILLER_WORDS.has(w));
+  if (wanted.length < 2 || lead < 0) return false; // filler alone ("click on") proves nothing
+  const prefix = wanted.slice(0, lead).map(stem);
+  const name = wanted.slice(lead); // the control's own words: they must stand together, in the order written
+  const sentences = request.replace(/\.{2,}|\u2026/g, ",").split(/[.!?;\n]+(?=\s|$)/).map(tokens).filter((t) => t.length > 0);
+  return sentences.some((have) => matchesIn(have));
+
+  function matchesIn(have: string[]): boolean {
+    for (let at = 0; at + name.length <= have.length; at++) {
+      if (!name.every((w, k) => have[at + k] === w)) continue;
+      // The leading words ("clicks on") may sit earlier in the same sentence, in order, with other items between ("clicks on Search and Free Session").
+      let from = at;
+      let k = prefix.length - 1;
+      let last = at; // where the nearest leading word sits
+      for (let i = at - 1; i >= 0 && i >= at - MAX_LOOKBACK && k >= 0; i--) if (stem(have[i]!) === prefix[k]) (k--, (from = i), k === prefix.length - 2 && (last = i));
+      if (k >= 0) continue;
+      // Between the verb and the name there may be other list items, but not another action ("clicks on Search and views of Free Session").
+      if (prefix.length > 0 && have.slice(last + 1, at).some((w) => OTHER_ACTIONS.has(w) || CONDITION_WORDS.has(w))) continue;
+      const after = have.slice(at + name.length, at + name.length + 3);
+      const around = [...have.slice(Math.max(0, from - 8), at + name.length), ...after];
+      if (!around.some((w) => NEGATIONS.has(w)) && !followedByAnotherAction(after)) return true; // a "never" or "not" next to the name may flip the meaning
+    }
+    return false;
   }
-  return false;
 }
+
+/** "Pricing page views": an action right after the name. A list connector first ("Checkout and typing in the box") starts a new item, so it does not count. */
+function followedByAnotherAction(after: string[]): boolean {
+  const [first, second] = after;
+  if (first !== undefined && OTHER_ACTIONS.has(first)) return true;
+  return first !== undefined && !LIST_CONNECTORS.has(first) && second !== undefined && OTHER_ACTIONS.has(second);
+}
+const LIST_CONNECTORS = new Set(["and", "or", "then", "also", "plus", "but"]);
+
+/** How far back in a sentence the leading words ("clicks on") may sit from the control's name. */
+const MAX_LOOKBACK = 10;
+
+/** "clicks" and "click" are the same word here. */
+const stem = (w: string) => (w.length > 3 && w.endsWith("s") ? w.slice(0, -1) : w);
 
 /** Words that carry no target on their own. */
 const FILLER_WORDS = new Set(["a", "an", "the", "on", "in", "at", "of", "to", "me", "my", "when", "if", "someone", "somebody", "visitor", "visitors", "click", "clicks", "clicked", "tap", "taps", "tapped", "press", "presses", "tell", "track", "and", "or", "is", "are", "i", "we", "they", "it"]);
 /** A negation inside the matched stretch or just before it means the quoted words may be the opposite of what was asked. */
-const NEGATIONS = new Set(["never", "not", "no", "dont", "don", "doesn", "without", "except", "ignore", "instead", "nor", "neither"]);
+const NEGATIONS = new Set(["never", "not", "no", "dont", "don", "doesn", "didn", "isn", "aren", "wasn", "weren", "won", "wouldn", "shouldn", "couldn", "cannot", "without", "except", "ignore", "instead", "nor", "neither", "skip", "stop", "cancel", "avoid", "exclude", "excluding", "forget", "drop", "remove", "unneeded", "minus", "removed", "deleted", "excluded"]);
+/**
+ * Words that start a different action or condition; they may not sit between a leading verb and the control it is said to govern.
+ * Only the forms a sentence uses ("views of", "visits to"); the plain forms are also button names ("View Pricing", "Open Menu") and are not listed.
+ */
+const OTHER_ACTIONS = new Set(["views", "viewed", "visits", "visited", "submits", "submitted", "submissions", "watches", "watched", "opens", "opened", "plays", "played", "scrolls", "scrolled", "hovers", "types", "typing", "typed", "hover", "hovering", "hovered", "selects", "selected", "sees", "loads", "downloads", "adds", "starts", "finishes", "completes", "enters", "leaves", "closes"]);
+/** Words that start a new condition; between a leading verb and a name they end the list ("clicks on Search, and when someone submits Free Session"). */
+const CONDITION_WORDS = new Set(["when", "whenever", "who", "that", "which", "if", "after", "before", "while"]);
 
 const GENERIC_NOUNS = new Set([
   "page",

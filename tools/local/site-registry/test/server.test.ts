@@ -66,10 +66,13 @@ test("sign-in flow: link on page and in log, single use, token verifies, redirec
   assert.equal((await get(`/go/${code}`)).status, 410);
 });
 
-test("codes expire after 5 minutes", async () => {
+test("codes expire after 48 hours, and not before", async () => {
   await get("/signin?site=example-site");
   const code = codeFrom(logs.at(-1)!);
-  clock += 5 * 60 * 1000 + 1;
+  clock += 47 * 3600 * 1000;
+  const early = await get("/signin?site=example-site"); // a page view just before the end still gets a link
+  assert.match(await early.text(), /Sets up in 2 seconds/);
+  clock += 1 * 3600 * 1000 + 1;
   assert.equal((await get(`/go/${code}`)).status, 410);
 });
 
@@ -119,6 +122,8 @@ test("the sign-in page says Sign in, has a pencil, a Connected badge, and a hidd
   assert.ok(!/local sign-in/i.test(html));
   assert.match(html, /hm-local-auth__pencil/);
   assert.match(html, /Connected/);
+  assert.match(html, /Works always<\/li>\s*<li>[\s\S]*Sets up in 2 seconds<\/li>\s*<li>[\s\S]*Secured<\/li>/);
+  assert.ok(!/Expires in|Local token/.test(html));
   assert.match(html, /hm-local-auth__save"[^>]*hidden/);
 });
 
@@ -142,4 +147,61 @@ test("saving refuses another website's form post, a bad email and an empty websi
   assert.equal((await save({ from: "example-site", website: "x.com", email: "not an email" })).status, 400);
   assert.equal((await save({ from: "example-site", website: "///", email: "a@b.co" })).status, 400);
   assert.equal((await save({ from: "nope", website: "x.com", email: "a@b.co" })).status, 404);
+});
+
+test("saving a website that another site already uses is refused and changes nothing", async () => {
+  await fetch(base + "/api/sites", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ siteId: "bob-com", userId: "bob", userEmail: "bob@bob.com" }) });
+  const r = await save({ from: "example-site", website: "https://www.Bob.com/shop", email: "eve@evil.test" }, { origin: base });
+  assert.equal(r.status, 409);
+  const sites = ((await (await get("/api/sites")).json()) as { sites: { siteId: string; userId: string; userEmail: string }[] }).sites;
+  assert.deepEqual(sites.find((s) => s.siteId === "bob-com"), { siteId: "bob-com", userId: "bob", userEmail: "bob@bob.com", label: "bob-com" });
+});
+
+test("an oversized save is answered with 413, not a dropped connection", async () => {
+  const r = await save({ from: "example-site", website: "x.com", email: "a@b.co", pad: "x".repeat(20000) }, { origin: base });
+  assert.equal(r.status, 413);
+});
+
+test("saving in place answers with JSON and a new link, with no redirect", async () => {
+  const r = await fetch(base + "/signin/save", { method: "POST", redirect: "manual", headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", origin: base }, body: new URLSearchParams({ from: "manduu-com", website: "manduu.com", email: "kofiahen001+testheatmaptracker@gmail.com" }).toString() });
+  assert.equal(r.status, 200);
+  const d = (await r.json()) as { siteId: string; email: string; goUrl: string };
+  assert.equal(d.siteId, "manduu-com");
+  assert.equal(d.email, "kofiahen001+testheatmaptracker@gmail.com");
+  assert.match(d.goUrl, /\/go\/[A-Za-z0-9_-]{20,}$/);
+  const bad = await fetch(base + "/signin/save", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", origin: base }, body: new URLSearchParams({ from: "manduu-com", website: "manduu.com", email: "nope" }).toString() });
+  assert.equal(bad.status, 400);
+  assert.match(((await bad.json()) as { error: string }).error, /email/i);
+});
+
+test("a form post that says Origin: null is accepted only when the browser says it is same-origin", async () => {
+  const post = (extra: Record<string, string>) => save({ from: "example-site", website: "example.site", email: "owner@example.test" }, extra);
+  assert.equal((await post({ origin: "null" })).status, 403);
+  assert.equal((await post({ origin: "null", "sec-fetch-site": "cross-site" })).status, 403);
+  assert.equal((await post({ origin: "null", "sec-fetch-site": "same-origin" })).status, 303);
+});
+
+test("every save error answers in JSON when the page asks for JSON", async () => {
+  const j = (fields: Record<string, string>, headers: Record<string, string> = {}) =>
+    fetch(base + "/signin/save", { method: "POST", headers: { "content-type": "application/x-www-form-urlencoded", accept: "application/json", origin: base, ...headers }, body: new URLSearchParams(fields).toString() });
+  for (const r of [await j({ from: "nope", website: "a.com", email: "a@b.co" }), await j({ from: "example-site", website: "a.com", email: "a@b.co" }, { origin: "http://evil.example" }), await j({ from: "example-site", website: "a.com", email: "a@b.co" }, { "content-type": "text/plain" })]) {
+    assert.match(r.headers.get("content-type") ?? "", /json/);
+    assert.equal(typeof ((await r.json()) as { error: string }).error, "string");
+  }
+});
+
+test("names in other languages keep different folders, and page views never lock the page out", async () => {
+  const a = await save({ from: "example-site", website: "Café.com", email: "a@b.co" }, { origin: base });
+  const b = await save({ from: "example-site", website: "caf.com", email: "a@b.co" }, { origin: base });
+  assert.notEqual(a.headers.get("location"), b.headers.get("location"));
+  const html = await (await get("/signin?site=example-site")).text();
+  const first = codeFromSignInHtml(html);
+  let last = "";
+  for (let i = 0; i < 520; i++) {
+    const r = await get("/signin?site=example-site");
+    assert.equal(r.status, 200);
+    last = codeFromSignInHtml(await r.text());
+  }
+  assert.equal((await get(`/go/${first}`)).status, 410); // the oldest link was dropped at the cap
+  assert.equal((await get(`/go/${last}`)).status, 302); // the newest still works
 });

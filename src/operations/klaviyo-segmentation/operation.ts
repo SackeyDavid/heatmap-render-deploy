@@ -7,6 +7,7 @@ import { SECRET_LIKE } from "../shared/secret-like.ts";
 import { StepFailure } from "../../domain/errors.ts";
 import { scriptIsLive, type Job } from "../../domain/types.ts";
 import { failureEmailDetail } from "../../domain/safe-question.ts";
+import { domainToUnicode } from "node:url";
 import { BRANDED_EMAIL_IMAGES, renderBrandedEmail } from "../../domain/branded-email.ts";
 import type {
   AgenticOperation,
@@ -168,7 +169,7 @@ const ADAPTER_NAME = "Klaviyo";
 /** The host of the first page, for "your website" in the email (falls back to the site folder name). */
 function websiteOf(input: KlaviyoSegmentationInput): string {
   try {
-    return new URL(input.pages[0] ?? "").hostname.replace(/^www\./, "") || input.siteSlug || "your website";
+    return domainToUnicode(new URL(input.pages[0] ?? "").hostname.replace(/^www\./, "")) || input.siteSlug || "your website";
   } catch {
     return input.siteSlug ?? "your website";
   }
@@ -224,7 +225,7 @@ export function successEmail(input: KlaviyoSegmentationInput, job: Job, segments
     html: renderBrandedEmail({
       preheader: `Your ${ADAPTER_NAME} tracking code for ${websiteOf(input)} is live.`,
       heading: "Your tracking code is ready",
-      intro: [`Good news. Your tracking code for ${websiteOf(input)} is live, so ${eventLines.length === 1 ? "this action is" : `these ${eventLines.length || ""} actions are`} now being recorded.`.replace("these  actions","these actions")],
+      intro: [`Good news. Your tracking code for ${websiteOf(input)} is live, so ${eventLines.length === 1 ? "this action is" : eventLines.length > 1 ? `these ${eventLines.length} actions are` : "your actions are"} now being recorded.`],
       sections: [
         { title: "Setup details", items: jobDetailLines(input, job) },
         { title: "Actions it records", items: eventLines },
@@ -242,7 +243,7 @@ export function failureEmail(input: KlaviyoSegmentationInput, job: Job) {
     // The script was published and turned on before this step failed: do not tell the merchant nothing changed.
     return {
       to: input.notifyEmail,
-      subject: "Your tracking script is live, but we hit a problem afterwards",
+      subject: `Your tracking script for ${websiteOf(input)} is live, but we hit a problem afterwards`,
       body: ["Your tracking script is already live on your site.", "", `What happened afterwards: ${failureEmailDetail(f)}`, "", "Nothing you need to do. Reply to this email if anything looks wrong."].join("\n"),
       images: BRANDED_EMAIL_IMAGES,
       html: renderBrandedEmail({
@@ -255,7 +256,7 @@ export function failureEmail(input: KlaviyoSegmentationInput, job: Job) {
   }
   return {
     to: input.notifyEmail,
-    subject: "We need one more detail for your Klaviyo segmentation",
+    subject: `We need one more detail for ${websiteOf(input)}`,
     body: [
       "We could not publish a passing script, so nothing was changed on your site.",
       "",

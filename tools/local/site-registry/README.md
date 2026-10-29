@@ -12,7 +12,7 @@ Or auth alone:
    `HEATMAP_TOKEN_SECRET=<your-32+-char-secret> npm run local:auth`
    The HTTP service must be started with the SAME value in `HEATMAP_TOKEN_SECRET`.
 2. Open `http://127.0.0.1:8786/signin?site=example-site`. The page shows a **Continue sign-in** button with your one-time link (also logged for debugging).
-3. Click **Continue sign-in** (single use, valid 5 minutes). You are sent to the UI (`UI_BASE`, default `http://127.0.0.1:5173`) with `?token=...`.
+3. Click **Continue sign-in** (single use, valid 48 hours). You are sent to the UI (`UI_BASE`, default `http://127.0.0.1:5173`) with `?token=...`.
 
 The first run creates `.local-data/sites.json` (git-ignored) with one example site.
 

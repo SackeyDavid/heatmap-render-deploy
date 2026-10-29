@@ -58,6 +58,6 @@ export function renderBrandedEmail(m: BrandedEmail): string {
 <h1 style="margin:0 0 14px 0;font:600 24px/1.25 Poppins,${FONT};color:#004323;">${esc(m.heading)}</h1>
 ${intro}${sections}${foot}
 </td></tr>
-<tr><td style="padding:14px 8px;text-align:center;font:12px/1.5 ${FONT};color:#5c5c5c;">Sent by Heatmap. We only send the names of the actions you pick.</td></tr>
+<tr><td style="padding:14px 8px;text-align:center;font:12px/1.5 ${FONT};color:#5c5c5c;">Sent by Heatmap.</td></tr>
 </table></td></tr></table></body></html>`;
 }

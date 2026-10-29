@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { LIMITS } from '../api/contract';
 import { fill, screens } from '../copy';
+import { readSessionClaims } from '../session/claims';
 import { AlertIcon, MaterialSymbol, MinusIcon } from '../icons';
 import type { ModelProvider } from '../model/provider';
 import { OPERATION_GENERIC, OPERATION_KLAVIYO, PARTNER_OPTIONS } from '../partners/catalog';
@@ -27,6 +28,12 @@ interface Props {
   helperStandby?: boolean;
 }
 
+/** Pages already handled, kept outside the form so going back to it does not bring a removed page back. */
+const handledPages = { current: new Set<string>() };
+
+/** How long after the last key press the pages in the description are picked up. */
+export const PAGE_PICKUP_DELAY_MS = 800;
+
 export type HelperNotice = 'needed' | 'unavailable' | 'off' | 'could-not-read';
 
 export function RequestForm({ values, onChange, onSubmit, provider, helperNotice, helperKey, onDownloadHelper, onHelperState, promptLocked, helperStandby }: Props) {
@@ -35,14 +42,28 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
   const noticeRef = useRef<HTMLDivElement>(null);
   const f = screens.form;
   const set = <K extends keyof FormValues>(k: K, v: FormValues[K]) => onChange({ ...values, [k]: v });
-  // Pages named in the description are added to the page boxes once; a page the merchant takes out is not put back.
-  const handled = useRef(new Set<string>());
+  // Pages named in the description are added once, a moment after the merchant stops typing (an address half typed is not a page).
+  // A page the merchant takes out is not put back.
+  const handled = handledPages;
   const [addedPages, setAddedPages] = useState(0);
-  const setPrompt = (prompt: string) => {
-    const found = addMentionedPages(values.pageUrls, values.savedHtml, extractPageUrls(prompt), handled.current, LIMITS.pages);
-    if (found.added.length > 0) setAddedPages((n) => n + found.added.length);
-    onChange({ ...values, prompt, pageUrls: found.pageUrls, savedHtml: found.savedHtml });
-  };
+  useEffect(() => {
+    if (values.prompt.trim() === '') handled.current.clear(); // a different person's form must not inherit another's pages
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const latest = useRef(values);
+  latest.current = values;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const now = latest.current;
+      if (now.prompt.trim() === '') handled.current.clear(); // a new description starts fresh
+      const found = addMentionedPages(now.pageUrls, now.savedHtml, extractPageUrls(now.prompt), handled.current, LIMITS.pages);
+      if (found.added.length === 0) return;
+      setAddedPages((n) => n + found.added.length);
+      onChange({ ...now, pageUrls: found.pageUrls, savedHtml: found.savedHtml });
+    }, PAGE_PICKUP_DELAY_MS);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [values.prompt]);
 
   useEffect(() => {
     if (errors.length > 0) summaryRef.current?.focus();
@@ -131,7 +152,7 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
           <PredictivePromptField
             id={FIELD_IDS.prompt}
             value={values.prompt}
-            onChange={setPrompt}
+            onChange={(v) => set('prompt', v)}
             provider={provider}
             disabled={promptLocked}
             aria-invalid={errFor(FIELD_IDS.prompt) ? true : undefined}
@@ -335,7 +356,7 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
             id={FIELD_IDS.email}
             type="email"
             autoComplete="email"
-            placeholder="owner@example.test"
+            placeholder={readSessionClaims().email ?? 'owner@example.test'}
             value={values.notifyEmail}
             onChange={(e) => set('notifyEmail', e.target.value)}
             aria-invalid={errFor(FIELD_IDS.email) ? true : undefined}

@@ -335,7 +335,7 @@ export function App(props: AppProps) {
               <div className="hm-session-chip">
                 <div className="hm-session-chip__details">
                   {session.siteId ? (
-                    <p className="hm-session-chip__site">{fill(screens.session.site, { site: session.siteId })}</p>
+                    <p className="hm-session-chip__site">{fill(screens.session.site, { site: session.label || session.siteId })}</p>
                   ) : null}
                   {session.email ? (
                     <p className="hm-session-chip__email">{fill(screens.session.email, { email: session.email })}</p>
