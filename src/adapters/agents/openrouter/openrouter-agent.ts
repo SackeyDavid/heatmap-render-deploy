@@ -17,7 +17,7 @@ export interface OpenRouterOptions {
   fetch?: Fetch;
   /** Waits between attempts on the same model (ms); tests set it to 0. */
   retryDelayMs?: number;
-  /** Longest one request may take (ms) before the next model gets its turn; a hung free model must not use the whole run. Default 40000. */
+  /** Longest one request may take (ms) before the next model gets its turn; a hung free model must not use the whole run. Default 60000. */
   attemptTimeoutMs?: number;
   endpoint?: string;
 }
@@ -124,7 +124,7 @@ export class OpenRouterAgent implements AgentRunner {
 
   private async ask(model: string, prompt: string, msLeft: number): Promise<string> {
     const ctl = new AbortController();
-    const cap = this.opts.attemptTimeoutMs ?? 40_000;
+    const cap = this.opts.attemptTimeoutMs ?? 60_000;
     const timer = setTimeout(() => ctl.abort(), Math.max(1000, Math.min(msLeft, cap)));
     try {
       const res = await this.fetchFn(this.opts.endpoint ?? ENDPOINT, {

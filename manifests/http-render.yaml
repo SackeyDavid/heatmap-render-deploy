@@ -31,7 +31,7 @@ operations:
     adapter: KlaviyoSegmentationOperation
     steps:
       - inspect: {}
-      - confirm: { interpreter: openrouter, interpretPrompt: prompts/klaviyo/interpret-api.md, maxTurns: 1, timeoutMs: 90000 }
+      - confirm: { interpreter: openrouter, interpretPrompt: prompts/klaviyo/interpret-api.md, maxTurns: 1, timeoutMs: 300000 }
       - generate: { agent: builder, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2 }
       - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 0 }   # the builder's output is deterministic: a repair run would be identical
       - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
