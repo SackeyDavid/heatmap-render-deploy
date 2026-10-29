@@ -30,6 +30,8 @@ export interface KlaviyoConfirmArgs {
   /** The merchant's approval, when this is the run after "awaiting-approval". */
   approval?: { interpretation: unknown; by: "merchant" | "operator" };
   snapshots: PageSnapshot[];
+  /** Optional short tag added in brackets to every event name (see EVENT_TAG); absent for merchants. */
+  eventTag?: string;
   /** Raw answer of the server-side interpreter agent, when it was asked. */
   agentInterpretation?: unknown;
   previous?: Confirmation;

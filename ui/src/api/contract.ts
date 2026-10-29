@@ -19,6 +19,8 @@ export interface CreateRequestBody {
   notifyEmail?: string;
   /** What the in-browser helper (a model) read from the prompt. The server checks it against the page; the merchant approves it. */
   interpretation?: unknown;
+  /** Optional short tag the server adds in brackets to every event name (test sites); omitted for merchants. */
+  eventTag?: string;
 }
 
 export interface CreateRequestResponse {

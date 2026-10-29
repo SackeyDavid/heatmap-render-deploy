@@ -10,7 +10,7 @@ import { renderNotes, renderScript, renderSegments } from "./render.ts";
  * What the builder reads from the workspace through the deterministic runner: the page's controls (inspect step) and the interpretation
  * the merchant APPROVED (confirm step). The merchant's own text is not an input: this module never reads prose.
  */
-export const BUILDER_INPUTS = ["pages/controls.json", "interpretation.json"];
+export const BUILDER_INPUTS = ["pages/controls.json", "interpretation.json", "event-tag.txt"];
 
 /**
  * `error` is the full internal reason (job record, email log). `question` is the merchant-facing version: one of a few fixed
@@ -133,7 +133,8 @@ export function ruleTableBuild(args: { inputs: Record<string, string> }): Built 
     const msg = "We have no reading of your request to build from. Either the helper in your browser or our assistant has to read your description first; nothing was guessed.";
     return { ok: false, error: msg, question: msg };
   }
-  const plan = planFromInterpretation(interpretation, pages);
+  const tag = (args.inputs["event-tag.txt"] ?? "").trim();
+  const plan = planFromInterpretation(interpretation, pages, tag || undefined);
   if (plan.choices.length > 0 && !plan.refusal) {
     const msg = plan.choices.map((c) => choiceMessage(c)).join(" ");
     return { ok: false, error: msg, question: boundQuestion(choiceQuestion(plan.choices[0]!)) };

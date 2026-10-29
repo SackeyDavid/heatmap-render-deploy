@@ -1,4 +1,5 @@
 import { withHttps } from './extract-urls';
+import { getEventTag } from './event-tag';
 import { LIMITS, type CreateRequestBody } from '../api/contract';
 import { fill, screens } from '../copy';
 import { parseModelInterpretation, type ModelInterpretation } from '../model/interpretation';
@@ -180,6 +181,8 @@ export function buildRequestBody(v: FormValues, interpretation?: ModelInterpreta
   const email = v.notifyEmail.trim();
   if (email) body.notifyEmail = email;
   if (interpretation) body.interpretation = interpretation;
+  const tag = getEventTag();
+  if (tag) body.eventTag = tag;
   return body;
 }
 

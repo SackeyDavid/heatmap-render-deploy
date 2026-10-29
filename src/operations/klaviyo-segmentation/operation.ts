@@ -20,6 +20,7 @@ import type {
 import { modelInterpretationSchema } from "./interpretation/schema.ts";
 import { interpretationJsonSchema } from "./interpretation/json-schema.ts";
 import { leftOutFromNotes } from "../shared/left-out.ts";
+import { EVENT_TAG } from "../shared/builder-script-marker.ts";
 import type { KlaviyoChecks, KlaviyoConfirmer } from "./ports.ts";
 
 export const OPERATION_NAME = "klaviyo.segmentation-script";
@@ -42,6 +43,8 @@ export const klaviyoSegmentationInput = z.object({
   platform: z.enum(["custom", "wordpress", "shopify", "bigcommerce", "woocommerce", "other"]).default("custom"),
   notifyEmail: z.string().email(),
   siteSlug: z.string().regex(/^[a-z0-9]+$/).optional(),
+  /** Optional short tag added in brackets to every event name, e.g. "kenn-test"; off unless the request asks for it. */
+  eventTag: z.string().regex(EVENT_TAG).optional(),
   /** What a model (the in-browser helper) read from the description; re-validated here and against the page, never trusted alone. */
   modelInterpretation: modelInterpretationSchema.optional(),
   /** Set by the request mapper when a reading came with the request but none of it could be used (so "turn the helper on" would be the wrong advice). */
@@ -123,6 +126,7 @@ export class KlaviyoSegmentationOperation implements AgenticOperation<KlaviyoSeg
           ...(input.interpretationUnreadable ? { proposalUnreadable: true } : {}),
           ...(input.approval ? { approval: input.approval } : {}),
           snapshots,
+          ...(input.eventTag ? { eventTag: input.eventTag } : {}),
           ...(agentInterpretation !== undefined ? { agentInterpretation } : {}),
           ...(previous ? { previous } : {}),
           interpretPrompt: () =>

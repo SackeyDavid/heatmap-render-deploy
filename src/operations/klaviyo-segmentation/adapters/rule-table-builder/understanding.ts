@@ -165,11 +165,11 @@ export function confirmKlaviyo(args: KlaviyoConfirmArgs): ConfirmOutcome {
     if (args.previous && args.previous.fingerprint !== fingerprint) {
       return refuse("The page changed between the request and its approval.", "The page changed after you looked at what we understood, so we did not build anything. Please send your request again.");
     }
-    const plan = planFromInterpretation(checked.interpretation, pages);
+    const plan = planFromInterpretation(checked.interpretation, pages, args.eventTag);
     if (plan.choices.length > 0 && !plan.refusal) return refuse(plan.choices.map((c) => choiceMessage(c)).join(" "), boundQuestion(choiceQuestion(plan.choices[0]!)));
     const problem = planProblem(plan, pages);
     if (problem) return refuse(problem.error, problem.question);
-    return { kind: "approved", files: { "interpretation.json": `${JSON.stringify(checked.interpretation, null, 2)}\n` } };
+    return { kind: "approved", files: { "interpretation.json": `${JSON.stringify(checked.interpretation, null, 2)}\n`, "event-tag.txt": args.eventTag ?? "" } };
   }
 
   const raw = args.agentInterpretation ?? args.proposed;
@@ -192,7 +192,7 @@ export function confirmKlaviyo(args: KlaviyoConfirmArgs): ConfirmOutcome {
   if (args.agentInterpretation !== undefined && checked.interpretation.behaviours.length === 0 && checked.dropped.some((d) => d.reason === "interpretation-evidence")) {
     return readerFailed("The interpreter's answer quoted words that are not in the request.", "Our assistant could not read your request clearly enough to build from it. Please say it a different way, for example: \"Tell me when someone clicks Search\".");
   }
-  const plan = planFromInterpretation(checked.interpretation, pages);
+  const plan = planFromInterpretation(checked.interpretation, pages, args.eventTag);
   // Choices are questions, not refusals; anything else that cannot work is refused now, before the merchant is asked to approve it.
   const problem = planProblem(plan, pages);
   if (problem) return refuse(problem.error, problem.question);

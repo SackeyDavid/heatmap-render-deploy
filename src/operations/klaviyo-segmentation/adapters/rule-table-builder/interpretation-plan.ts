@@ -17,6 +17,8 @@ import {
 } from "./match-controls.ts";
 import { safeLabel } from "./safe-text.ts";
 import { namesForbiddenGlobal } from "../../../shared/adapters/contract-lint/script-rules.ts";
+import { MAX_EVENT_NAME_LENGTH } from "../../../shared/adapters/contract-lint/name-flow.ts";
+import { EVENT_TAG } from "../../../shared/builder-script-marker.ts";
 
 /** Longest list of behaviours turned into rules; the schema caps the interpretation well below this. */
 const fmt = (n: number) => String(Math.round(n * 100) / 100);
@@ -32,7 +34,7 @@ const describeControl = (c: ControlInfo): string => {
  * depths to the supported set, names events itself (Title Case), and lists everything it did not build with fixed wording.
  * Behaviours are processed in order; a repeated target or depth is one rule.
  */
-export function planFromInterpretation(interpretation: ModelInterpretation, pages: PageControls[]): EventPlan {
+export function planFromInterpretation(interpretation: ModelInterpretation, pages: PageControls[], eventTag?: string): EventPlan {
   const plan: EventPlan = { clicks: [], scrolls: [], unmatched: [], ambiguous: [], choices: [], notTracked: [], notes: [], pages: pages.map((p) => p.url), trace: [] };
   const indexes = new Map<boolean, ControlIndex>();
   const indexFor = (wantsField: boolean): ControlIndex => {
@@ -43,12 +45,14 @@ export function planFromInterpretation(interpretation: ModelInterpretation, page
   const controls = pages.flatMap((p) => p.controls);
   const used = new Set<string>();
   // Names are unique within a script ignoring case: a repeat gets " 2", " 3" ("Clicked Search 2").
+  // With an event tag every name ends in " (tag)"; the bare name is cut so the whole name stays within the event-name limit.
+  const suffix = eventTag && EVENT_TAG.test(eventTag) ? ` (${eventTag})` : "";
   const uniqueName = (base: string): string => {
-    const first = base || "Event";
+    const first = (base || "Event").slice(0, MAX_EVENT_NAME_LENGTH - suffix.length - 3).trim();
     let name = first;
     for (let i = 2; used.has(name.toLowerCase()); i++) name = `${first} ${i}`;
     used.add(name.toLowerCase());
-    return name;
+    return `${name}${suffix}`;
   };
   const trace = (t: BehaviourTrace) => plan.trace.push(t);
 

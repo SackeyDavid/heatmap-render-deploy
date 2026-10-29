@@ -3,6 +3,7 @@ import { PRIVATE_KEY_PREFIX_RE } from "../../domain/secrets.ts";
 import type { MappedRequest, OperationRequestMapper, RequestFacts } from "../../ports/index.ts";
 import { inferPlatform } from "../shared/infer-platform.ts";
 import { leftOutFromNotes } from "../shared/left-out.ts";
+import { EVENT_TAG } from "../shared/builder-script-marker.ts";
 import { SECRET_LIKE } from "../shared/secret-like.ts";
 import { testTagsFromSegments } from "../shared/test-tags.ts";
 import { validateInterpretation } from "./interpretation/validate.ts";
@@ -42,6 +43,8 @@ export const klaviyoRequestMapper: OperationRequestMapper = {
       description: facts.prompt,
       platform: inferPlatform(facts.siteId, facts.pageUrls),
       notifyEmail: facts.notifyEmail,
+      // Optional tag for event names; one that is not a short lower-case word is ignored, never an error.
+      ...(typeof body.eventTag === "string" && EVENT_TAG.test(body.eventTag) ? { eventTag: body.eventTag } : {}),
     };
     // The operation's own schema is the one validator; map its first complaint to a stable code and a plain message.
     const parsed = klaviyoSegmentationInput.safeParse(candidate);
