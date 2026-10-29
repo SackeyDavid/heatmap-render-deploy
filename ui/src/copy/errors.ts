@@ -244,6 +244,9 @@ export function plainTag(tag: string): string {
 }
 
 /** A test tag as the merchant sees it: the plain label, and the exact name to search for (never altered). */
-export function tagParts(tag: string): { label: string; exact: string } {
+export function tagParts(tag: string): { label: string; exact: string; suffix?: string } {
+  // A tag the build adds in brackets at the end ("(adapter)") is shown as written, not turned into a plain label.
+  const m = /^(.*?) \(([a-z0-9][a-z0-9-]*)\)$/.exec(tag);
+  if (m) return { label: plainTag(m[1]!), exact: tag, suffix: `(${m[2]})` };
   return { label: plainTag(tag), exact: tag };
 }

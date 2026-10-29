@@ -200,14 +200,17 @@ export function SuccessScreen(props: SuccessScreenProps) {
           {result.testTags && result.testTags.length > 0 ? (
             <ul>
               {result.testTags.map((t) => {
-                const { label, exact } = tagParts(t);
+                const { label, exact, suffix } = tagParts(t);
                 return (
                   <li key={t} className="hm-test-tag">
                     <span className="hm-test-tag__icon" aria-hidden="true">
                       <MaterialSymbol name="touch_app" size={20} />
                     </span>
                     <span className="hm-test-tag__body">
-                      <span className="hm-test-tag__label">{label}</span>
+                      <span className="hm-test-tag__label">
+                        {label}
+                        {suffix ? <span className="hm-test-tag__suffix"> {suffix}</span> : null}
+                      </span>
                       <span className="hm-test-tag__line">
                         <span className="hm-test-tag__exact">{s.testExactName}</span> <code>{exact}</code>
                       </span>
