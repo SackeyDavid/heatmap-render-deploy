@@ -1,0 +1,16 @@
+<!doctype html>
+<!-- RECONSTRUCTED FIXTURE, NOT A CAPTURE. A tiny made-up page for the rule-table builder tests, not any real site.
+     "Shop Women" and "Shop Men" share one class, one href and have no id or aria-label (indistinguishable to a CSS selector;
+     different hrefs would tell them apart, since the builder can select a link by its href).
+     "Sign In" and "Sign Up" share a class but each has an id (distinguishable). -->
+<html lang="en">
+<head><title>Look-alike buttons (reconstructed)</title></head>
+<body>
+  <nav>
+    <a class="btn" href="/shop">Shop Women</a>
+    <a class="btn" href="/shop">Shop Men</a>
+    <a class="btn" id="sign-in" href="/login">Sign In</a>
+    <a class="btn" id="sign-up" href="/register">Sign Up</a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "name": "agentic-klaviyo-adapter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Hexagonal agent orchestration service; first operation: klaviyo.segmentation-script",
+  "engines": {
+    "node": "^22.13.0 || >=24.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --import tsx --test \"test/**/*.test.ts\"",
+    "check:deps": "node --import tsx scripts/check-deps.ts",
+    "cli": "node --import tsx src/entrypoints/cli.ts",
+    "serve": "HEATMAP_MODE=local node --import tsx src/entrypoints/http/serve.ts",
+    "serve:claude": "HEATMAP_MODE=local HEATMAP_MANIFEST=manifests/http-local-claude.yaml node --import tsx src/entrypoints/http/serve.ts",
+    "serve:dev": "HEATMAP_MODE=local node --watch --import tsx src/entrypoints/http/serve.ts",
+    "lint:deliverables": "node --import tsx scripts/lint-deliverables.ts",
+    "check:pdf": "bash scripts/check-pdf-wording.sh",
+    "pdfs:generate": "bash scripts/generate-deliverable-pdfs.sh",
+    "check:secrets": "bash scripts/check-secrets.sh",
+    "check:other-agent": "bash scripts/check-other-agent-untouched.sh",
+    "verify": "bash scripts/verify.sh",
+    "verify:send": "bash scripts/verify-send.sh",
+    "test:live": "RUN_LIVE=1 node --import tsx --test test/live/claude-code.live.test.ts",
+    "local:auth": "node --import tsx tools/local/site-registry/main.ts",
+    "local:stack": "node --import tsx tools/local/dev-stack.ts",
+    "local:stack:claude": "HEATMAP_MANIFEST=manifests/http-local-claude.yaml node --import tsx tools/local/dev-stack.ts",
+    "local:stack:openrouter": "HEATMAP_MANIFEST=manifests/http-local-openrouter.yaml node --import tsx tools/local/dev-stack.ts",
+    "local:post": "node --import tsx tools/local/post-fixture.ts",
+    "test:local-auth": "node --import tsx --test \"tools/local/site-registry/test/*.test.ts\"",
+    "scripts:host": "node --import tsx tools/local/scripts-host/main.ts",
+    "smoke:local": "node --import tsx scripts/smoke-local.ts",
+    "smoke:stack": "node --import tsx tools/local/smoke-against-stack.ts",
+    "models:fetch": "node --import tsx tools/local/models-fetch.ts",
+    "lab": "node --import tsx tools/local/model-lab-server.ts",
+    "model:lab": "npm run lab --prefix ui",
+    "shopify:theme-dev": "node --import tsx tools/local/shopify/theme-dev.ts",
+    "plug-in:check": "node --import tsx scripts/plug-in-check.ts",
+    "diff:reference": "node --import tsx scripts/diff-reference.ts",
+    "batch:transcripts": "node --import tsx scripts/transcript-batch.ts",
+    "goldens:transcripts": "node --import tsx test/support/mock-interpreter/make-goldens.ts",
+    "demo:page": "node --import tsx tools/local/demo-page.ts",
+    "live:preview": "node --import tsx tools/local/live-preview.ts"
+  },
+  "dependencies": {
+    "acorn": "^8.19.0",
+    "yaml": "^2.6.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^22.7.0",
+    "jsdom": "^29.1.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}

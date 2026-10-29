@@ -1,0 +1,10 @@
+{
+  "sites": [
+    {
+      "siteId": "kenn-test",
+      "userId": "kenn-test-user",
+      "userEmail": "tester@example.test",
+      "label": "Hosted test site"
+    }
+  ]
+}

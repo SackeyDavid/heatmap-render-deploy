@@ -1,0 +1,84 @@
+<!doctype html>
+<!-- RECONSTRUCTED fixture (not a capture), following the structure of the live manduu.com page seen on 2026-10-28, kept small and generic.
+     It reproduces the quirks that broke the rule-table builder on the real page:
+       - a theme utility class (fusion-bar-highlight) on every menu link, so a class cannot tell menu links apart;
+       - menu links whose anchor has NO id: the id is on the parent <li id="menu-item-N">, and each link has its own href
+         (except two that share one href: "Client Portal" and "Free Session");
+       - a parent menu item "Contact" (anchor with no href, a dropdown opener) AND a sub-item "Contact" (with an href);
+       - the Search icon (empty text, aria-label "Search") next to a text field <input type="search" aria-label="Search ...">
+         whose label differs only by a trailing "...";
+       - three cards: div.heading > h2 is a SIBLING of div.content-container that holds the button
+         (a.fusion-button.button-N[data-target] > span.fusion-button-text "LEARN MORE").
+     No FAQ question (summary) elements (the live page has none). No Heatmap or other scripts. -->
+<html lang="en">
+<head><title>Manduu | EMS Training</title></head>
+<body class="wp-theme-Avada">
+  <header>
+    <nav>
+      <ul id="menu-primary-navigation" class="fusion-menu">
+        <li id="menu-item-101" class="menu-item menu-item-has-children">
+          <a class="fusion-bar-highlight" aria-haspopup="true"><span class="menu-text">About</span></a>
+          <ul class="sub-menu">
+            <li id="menu-item-111" class="menu-item"><a class="fusion-bar-highlight" href="https://manduu.com/about-our-team/"><span>Our Team</span></a></li>
+            <li id="menu-item-112" class="menu-item"><a class="fusion-bar-highlight" href="https://manduu.com/about-our-team/franchise-opportunities/"><span>Franchise Opportunities</span></a></li>
+          </ul>
+        </li>
+        <li id="menu-item-102" class="menu-item"><a class="fusion-bar-highlight" href="https://manduu.com/packages-and-locations/find-my-manduu/"><span class="menu-text">Find a Manduu Studio</span></a></li>
+        <li id="menu-item-103" class="menu-item menu-item-has-children">
+          <a class="fusion-bar-highlight" aria-haspopup="true"><span class="menu-text">Contact</span></a>
+          <ul class="sub-menu">
+            <li id="menu-item-113" class="menu-item"><a class="fusion-bar-highlight" href="https://manduu.com/contact/"><span>Contact</span></a></li>
+            <li id="menu-item-114" class="menu-item"><a class="fusion-bar-highlight" href="https://manduu.com/careers/"><span>Careers</span></a></li>
+          </ul>
+        </li>
+        <li id="menu-item-104" class="menu-item"><a class="fusion-bar-highlight" href="https://app.example/account/login"><span class="menu-text">Client Portal</span></a></li>
+        <li id="menu-item-105" class="menu-item fusion-menu-item-button"><a class="fusion-bar-highlight" href="https://app.example/account/login"><span class="menu-text fusion-button button-default button-medium">Free Session</span></a></li>
+        <li class="fusion-custom-menu-item fusion-main-menu-search">
+          <a class="fusion-main-menu-icon fusion-bar-highlight" aria-label="Search" href="#"></a>
+          <div class="fusion-custom-menu-item-contents">
+            <form role="search" class="searchform" method="get" action="https://manduu.com/">
+              <div class="fusion-search-field">
+                <label><span class="screen-reader-text">Search for:</span>
+                  <input type="search" value="" name="s" class="s" placeholder="Search ..." aria-label="Search ...">
+                </label>
+              </div>
+              <input type="submit" class="fusion-search-submit" value="">
+            </form>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <div class="fusion-content-boxes content-boxes columns row">
+      <div class="fusion-column content-box-column">
+        <div class="col content-box-wrapper content-wrapper">
+          <div class="heading"><h2 class="content-box-heading">15 Minutes to Fit</h2></div>
+          <div class="fusion-clearfix"></div>
+          <div class="content-container">Short, intense sessions.
+            <div class="fusion-button-wrapper"><a class="fusion-button button-flat button-large button-default button-2" href="#" data-toggle="modal" data-target=".fusion-modal.fitvideo"><span class="fusion-button-text">LEARN MORE</span></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="fusion-column content-box-column">
+        <div class="col content-box-wrapper content-wrapper">
+          <div class="heading"><h2 class="content-box-heading">Full Body EMS Workout</h2></div>
+          <div class="fusion-clearfix"></div>
+          <div class="content-container">Every major muscle group at once.
+            <div class="fusion-button-wrapper"><a class="fusion-button button-flat button-large button-default button-3" href="#" data-toggle="modal" data-target=".fusion-modal.emsvideo"><span class="fusion-button-text">LEARN MORE</span></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="fusion-column content-box-column">
+        <div class="col content-box-wrapper content-wrapper">
+          <div class="heading"><h2 class="content-box-heading">Fitness for Everyone</h2></div>
+          <div class="fusion-clearfix"></div>
+          <div class="content-container">Any age, any level.
+            <div class="fusion-button-wrapper"><a class="fusion-button button-flat button-large button-default button-4" href="#" data-toggle="modal" data-target=".fusion-modal.fitnessvideo"><span class="fusion-button-text">LEARN MORE</span></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,141 @@
+/* Heatmap.com brand tokens (aligned with live site + heatmap-source tokens.css).
+   Source: https://www.heatmap.com — --brand #10b068, --tint #ebdbbc, Inter. */
+
+:root {
+  /* Brand primitives (heatmap client record / homepage :root) */
+  --brand: #10b068;
+  --brand-strong: #0c8f54;
+  --brand-ink: #0b8a51;
+  --brand-lift: #2ecd86;
+  --tint: #ebdbbc;
+  --tint-strength: 0.1;
+
+  /* Neutral ramp (heatmap tokens.css literals; greys without oklch for broad support) */
+  --neutral-0: #ffffff;
+  --neutral-12: #fbfbfb;
+  --neutral-25: #f7f7f7;
+  --neutral-50: #f0f0f0;
+  --neutral-100: #e9e9e9;
+  --neutral-200: #dcdcdc;
+  --neutral-500: #a3a3a3;
+  --neutral-750: #666666;
+  --neutral-900: #262626;
+  --ink: #262626;
+
+  /* Layout roles (merchant shell uses mint wash like sign-in / local auth) */
+  --background: var(--hm-wash, #f4f9f6);
+  --surface: var(--neutral-0);
+  --canvas: var(--neutral-25);
+  --subtle: var(--neutral-50);
+  --border-subtle: var(--neutral-100);
+  --edge: var(--neutral-200);
+  --text: var(--neutral-900);
+  --text-muted: var(--neutral-750);
+  --icon: var(--neutral-500);
+
+  /* Semantic (heatmap engine set) */
+  --success: #4e9961;
+  --warning: #d97230;
+  --destructive: #b45e55;
+  --info: #3e7bb7;
+  --success-tint: #d8f8e2;
+  --warning-tint: #ffe8d9;
+  --destructive-tint: #ffe9e5;
+  --focus-ring: #61aaf2;
+
+  /* Marketing accent (status callouts on heatmap.com) */
+  --brand-orange: #eb6834;
+
+  /* Typography */
+  --font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: "Poppins", var(--font-family);
+  --font-sans: var(--font-family);
+  --font-size-base: 1.125rem;
+  --line-height-base: 1.5;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --tracking-tight: -0.025em;
+  --tracking-wordmark: -0.02em;
+
+  /* Spacing (4px grid, matches heatmap Tailwind --spacing) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+
+  /* Radii (fields ≈ HubSpot .hs-input 12px; primary CTAs stay pill) */
+  --radius-control: 12px;
+  --radius-button: 9999px;
+  --radius-surface: 8px;
+  --radius-sm: 0.75rem;
+  --radius-lg: 1rem;
+
+  /* Controls & buttons */
+  --control-min-height: 44px;
+  --control-min-width: 44px;
+  --control-padding-y: 0.55rem;
+  --control-padding-x: 1rem;
+  --control-padding-x-primary: 1.35rem;
+  --control-border-width: 2px;
+  --field-border-width: 1px;
+  --btn-primary-bg: var(--brand);
+  --btn-primary-border: var(--brand);
+  --btn-primary-fg: var(--neutral-0);
+  --btn-primary-hover-bg: var(--brand-strong);
+  --btn-secondary-bg: var(--surface);
+  --btn-secondary-fg: var(--brand);
+  --btn-secondary-border: var(--brand);
+
+  /* Fields — live heatmap.com HubSpot + kit (agencies / demo forms, Oct 2026) */
+  --accent-tint: color-mix(in srgb, var(--brand) 12%, white);
+  --field-border: var(--edge);
+  --field-bg: var(--surface);
+  --field-padding-y: 10px;
+  --field-padding-x: 12px;
+  --field-padding-x-textarea: 14px;
+  --field-font-size: 0.9375rem; /* 15px — .hs-input */
+  --field-line-height: 1.5;
+  --field-min-height: 45px;
+  --label-font-size: 0.8125rem; /* 13px */
+  --label-gap: 8px;
+  --placeholder-mix: 55%;
+  --focus-outline-width: 3px;
+  --focus-outline-offset: 2px;
+
+  /* Layout width */
+  --content-max-width: 40rem;
+
+  /* --- Legacy aliases (existing ui/src class rules) --- */
+  --bg: var(--surface);
+  --muted: var(--text-muted);
+  --border: var(--field-border);
+  --accent: var(--brand);
+  --accent-soft: var(--success-tint);
+  --accent-text: var(--btn-primary-fg);
+  --danger: var(--destructive);
+  --focus: var(--hm-focus);
+  --font: var(--font-family);
+  --primary: var(--brand);
+  --primary-foreground: var(--neutral-0);
+
+  /* Legacy --hm-* aliases (sign-in screen + prior brand pass) */
+  --hm-header-bg: #004323;
+  --hm-primary: var(--brand);
+  --hm-primary-strong: var(--brand-strong);
+  --hm-dark: #004323;
+  --hm-tint: #e7fdef;
+  --hm-wash: #f4f9f6;
+  --hm-ink: var(--text);
+  --hm-muted: var(--text-muted);
+  --hm-line: var(--edge);
+  --hm-line-soft: var(--border-subtle);
+  --hm-bg: var(--surface);
+  --hm-radius: var(--radius-surface);
+  --hm-radius-lg: var(--radius-lg);
+  --hm-focus: var(--brand);
+}

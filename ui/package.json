@@ -1,0 +1,33 @@
+{
+  "name": "agentic-klaviyo-ui",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "tsc -p tsconfig.merchant.json --noEmit && vite build",
+    "test": "vitest run",
+    "lint": "tsc -p tsconfig.merchant.json --noEmit",
+    "lab": "vite --config vite.lab.config.ts",
+    "test:real-model": "vitest run test/model.real.test.ts"
+  },
+  "dependencies": {
+    "@mlc-ai/web-llm": "^0.2.84",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/dom": "10.4.0",
+    "@testing-library/jest-dom": "6.6.3",
+    "@testing-library/react": "16.1.0",
+    "@testing-library/user-event": "14.5.2",
+    "@types/react": "18.3.12",
+    "@types/react-dom": "18.3.1",
+    "@vitejs/plugin-react": "4.3.4",
+    "axe-core": "4.10.2",
+    "jsdom": "25.0.1",
+    "typescript": "5.6.3",
+    "vite": "5.4.11",
+    "vitest": "2.1.8"
+  }
+}

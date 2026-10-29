@@ -1,0 +1,34 @@
+# Local HTTP manifest with an OpenRouter model as the INTERPRETER (HEATMAP_MANIFEST=manifests/http-local-openrouter.yaml,
+# or npm run local:stack:openrouter). Needs OPENROUTER_API_KEY in the environment (the local stack reads the git-ignored .env).
+#
+# Who does what: when a request arrives WITHOUT an interpretation (the browser helper was not used or could not read it), the confirm
+# step asks the OpenRouter model to read the description and write interpretation.json (the same JSON the browser helper makes).
+# Fixed code validates it against the page, the merchant approves what was understood, and the deterministic builder renders the script.
+# The model never writes the script. Free models only (ids end in :free) unless `allowPaid: true` is added.
+# Privacy: the merchant's description and the page's button labels are sent to OpenRouter and the model's provider.
+agents:
+  openrouter:
+    adapter: OpenRouterAgent
+    model: nvidia/nemotron-3.5-super-vl:free
+    fallbackModels: [xingchen-agi/xing4.0-29b-a4b:free, google/gemma-4-31b-it:free]
+  builder: { adapter: klaviyo.rule-table-builder }   # renders the approved interpretation; no model
+
+bindings:
+  remoteStorage: local-fs
+  workspace: local-fs
+  pageInspector: { adapter: saved-html, fallbackRoots: [fixtures/pages] }   # saved pages of this request, then the repo's sample pages (local only)
+  contextPack: fixture
+  jobStore: file
+  notifier: console
+
+operations:
+  klaviyo.segmentation-script:
+    adapter: KlaviyoSegmentationOperation
+    steps:
+      - inspect: {}
+      - confirm: { interpreter: openrouter, interpretPrompt: prompts/klaviyo/interpret-api.md, maxTurns: 1, timeoutMs: 90000 }
+      - generate: { agent: builder, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2 }
+      - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 0 }   # the builder's output is deterministic: a repair run would be identical
+      - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
+      - verify: { verifier: klaviyo.test-profile }
+      - notify: { failure: warn }   # the script is already live; a failed email is a warning, not a failed job

@@ -1,0 +1,25 @@
+# Same as operations.yaml, but the fake agent serves the Seat Cover Solutions outputs (a copy of the delivered script).
+# The only place adapters are chosen. Composition validates this at startup.
+agents:
+  fake: { adapter: FakeAgent, outputsFrom: fixtures/fake-agent/seatcover }   # serves canned outputs; no model
+  claude-code: { adapter: DisabledAgent }                                   # no real-agent spend from the local CLI; see manifests/live.yaml for the real one
+  # kimi-code and cursor-sdk arrive in Phase 4
+
+bindings:
+  remoteStorage: local-fs      # s3 arrives in Phase 2
+  workspace: local-fs
+  pageInspector: fixture       # headless Chromium arrives in Phase 2
+  contextPack: fixture
+  jobStore: file
+  notifier: console
+
+operations:
+  klaviyo.segmentation-script:
+    adapter: KlaviyoSegmentationOperation
+    steps:
+      - inspect: {}
+      - generate: { agent: fake, fallback: claude-code, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2 }
+      - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 2 }   # browser-harness and agent-review: Phase 2
+      - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
+      - verify: { verifier: klaviyo.test-profile }
+      - notify: { failure: warn }   # the script is already live by then; a failed email is a warning, not a failed job

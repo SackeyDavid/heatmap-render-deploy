@@ -1,0 +1,2 @@
+/* Compatibility entry for tools that still load /index.css. */
+@import "./src/styles.css";

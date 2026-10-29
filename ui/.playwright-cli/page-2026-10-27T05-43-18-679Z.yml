@@ -1,0 +1,25 @@
+- generic [ref=f12e2]:
+  - link "Skip to the main part of the page" [ref=f12e3] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f12e4]:
+    - generic "heatmap" [ref=f12e6]
+  - generic [ref=f12e11]:
+    - main [ref=f12e12]:
+      - region [ref=f12e13]:
+        - heading "Please sign in to continue" [active] [level=1] [ref=f12e18]
+        - paragraph [ref=f12e19]: Open this page from your Heatmap account. Then we will know who you are.
+        - list [ref=f12e20]:
+          - listitem [ref=f12e21]:
+            - generic [ref=f12e26]: Go back to Heatmap and open this page again.
+          - listitem [ref=f12e27]:
+            - generic [ref=f12e31]: When you return here, we pick up where you left off.
+        - generic [ref=f12e32]:
+          - generic [ref=f12e37]:
+            - paragraph [ref=f12e38]: Local testing
+            - heading "Testing on your computer?" [level=2] [ref=f12e39]
+          - paragraph [ref=f12e40]: Open our local sign-in page in another tab. Use the Continue button on that page when it appears.
+          - link "Open the local sign-in page" [ref=f12e41] [cursor=pointer]:
+            - /url: http://127.0.0.1:8786/signin?site=example-site
+          - paragraph [ref=f12e44]: That page shows your one-time link. After you continue there, come back here to finish.
+    - contentinfo [ref=f12e45]:
+      - paragraph [ref=f12e46]: We only send the names of the actions you pick.

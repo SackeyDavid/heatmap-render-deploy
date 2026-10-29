@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "promptVersion": "interpret-1",
+  "modelId": "mock",
+  "behaviours": [{ "kind": "scroll_depth", "evidence": "scrolls halfway" }],
+  "unsupported": []
+}

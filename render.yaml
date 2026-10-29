@@ -1,0 +1,31 @@
+# Render Blueprint for the free hosted test (copied to the root of the deploy-only folder by make-deploy-folder.sh).
+# Secrets are NOT in this file: Render asks for the "sync: false" values once, when the Blueprint is created.
+services:
+  - type: web
+    name: heatmap-test
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerfilePath: ./deploy/hosted-test/Dockerfile
+    dockerContext: .
+    healthCheckPath: /healthz
+    autoDeployTrigger: "off"
+    envVars:
+      - key: HEATMAP_MANIFEST
+        value: manifests/http-render.yaml
+      - key: HEATMAP_TOKEN_SECRET
+        generateValue: true
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: AWS_REGION
+        sync: false
+      - key: AWS_S3_BUCKET
+        sync: false
+      - key: AWS_S3_ENDPOINT
+        sync: false
+      - key: AWS_S3_PUBLIC_BASE_URL
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false

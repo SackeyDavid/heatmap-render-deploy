@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "models": [
+    {
+      "id": "Qwen2.5-1.5B-Instruct-q4f16_1-MLC",
+      "source": "web-llm-prebuilt",
+      "approxDownloadMB": 900,
+      "license": "unchecked-until-bm-7",
+      "note": "BM-3 uses WebLLM CDN fetch at runtime; self-hosted shards are BM-5."
+    }
+  ]
+}

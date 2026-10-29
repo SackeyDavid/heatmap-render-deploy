@@ -1,0 +1,80 @@
+- generic [ref=f1e2]:
+  - link "Skip to the main part of the page" [ref=f1e3] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f1e4]:
+    - generic [ref=f1e5]:
+      - generic "heatmap" [ref=f1e6]
+      - group "Your session" [ref=f1e11]:
+        - generic [ref=f1e12]:
+          - paragraph [ref=f1e13]: "Website: demo-site"
+          - paragraph [ref=f1e14]: Signed in as merchant@example.com
+        - button "Sign out" [ref=f1e15] [cursor=pointer]
+  - generic [ref=f1e16]:
+    - main [ref=f1e17]:
+      - region [ref=f1e18]:
+        - generic [ref=f1e19]:
+          - generic [ref=f1e24]:
+            - heading "Tell us what you want to track" [active] [level=1] [ref=f1e25]
+            - paragraph [ref=f1e26]: Describe it in your own words. We will set it up for you. No one on our team needs to check it first.
+          - list "How this works" [ref=f1e27]:
+            - listitem [ref=f1e28]:
+              - generic [ref=f1e29]:
+                - generic [aria-hidden] [ref=f1e30]: "1"
+                - strong [ref=f1e31]: Describe it
+            - listitem [ref=f1e32]:
+              - generic [ref=f1e33]:
+                - generic [aria-hidden] [ref=f1e34]: "2"
+                - strong [ref=f1e35]: We set it up
+            - listitem [ref=f1e36]:
+              - generic [ref=f1e37]:
+                - generic [aria-hidden] [ref=f1e38]: "3"
+                - strong [ref=f1e39]: You get your tracking code
+        - generic [ref=f1e40]:
+          - generic [ref=f1e41]:
+            - paragraph [ref=f1e42]:
+              - generic [ref=f1e46]: Your request
+            - generic [ref=f1e47]:
+              - generic [ref=f1e48]: What should we keep track of on your website?
+              - paragraph [ref=f1e53]: "Example: Tell me when a visitor starts picking their vehicle."
+              - textbox "What should we keep track of on your website?" [ref=f1e56]
+          - generic [ref=f1e57]:
+            - paragraph [ref=f1e58]:
+              - generic [ref=f1e63]: Pages
+            - group "Which pages is this on? (up to 10)" [ref=f1e64]:
+              - generic [ref=f1e69]:
+                - generic [ref=f1e70]: Page address 1
+                - paragraph [ref=f1e76]: Start with https://
+                - textbox "Page address 1" [ref=f1e78]
+              - button "Add another page" [ref=f1e79] [cursor=pointer]
+          - generic [ref=f1e82]:
+            - paragraph [ref=f1e83]:
+              - generic [ref=f1e86]: Where should we send this?
+            - group "Where should we send this?" [ref=f1e87]:
+              - paragraph [ref=f1e89]: Pick Klaviyo or another tool. The steps are the same for both.
+              - generic [ref=f1e90] [cursor=pointer]:
+                - radio "Klaviyo Build audiences in Klaviyo from what visitors do. You will need your 6-character Klaviyo public key." [checked] [ref=f1e91]
+                - generic [ref=f1e92]:
+                  - strong [ref=f1e93]: Klaviyo
+                  - text: Build audiences in Klaviyo from what visitors do. You will need your 6-character Klaviyo public key.
+              - generic [ref=f1e94] [cursor=pointer]:
+                - radio "Another tool Send what visitors do to a tool other than Klaviyo. Your developer or the tool gives you a short name to enter." [ref=f1e95]
+                - generic [ref=f1e96]:
+                  - strong [ref=f1e97]: Another tool
+                  - text: Send what visitors do to a tool other than Klaviyo. Your developer or the tool gives you a short name to enter.
+            - generic [ref=f1e98]:
+              - generic [ref=f1e99]: Your Klaviyo public key
+              - paragraph [ref=f1e103]: It is 6 letters and numbers. Do not use the long private key.
+              - textbox "Your Klaviyo public key" [ref=f1e104]
+            - generic [ref=f1e105]:
+              - generic [ref=f1e106]: Send the result to (optional)
+              - paragraph [ref=f1e110]: We use the email on your account if you leave this empty.
+              - textbox "Send the result to (optional)" [ref=f1e111]
+          - group [ref=f1e112]:
+            - generic "More options (optional)" [ref=f1e113] [cursor=pointer]
+          - button "Set it up" [ref=f1e121] [cursor=pointer]
+        - paragraph [ref=f1e126]:
+          - text: Need a hand?
+          - link "Ask our team" [ref=f1e127] [cursor=pointer]:
+            - /url: mailto:help@example.com?subject=Help%20with%20my%20tracking
+    - contentinfo [ref=f1e128]:
+      - paragraph [ref=f1e129]: We only send the names of the actions you pick.

@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/main.tsx",
+    "src/App.tsx",
+    "src/vite-env.d.ts",
+    "src/components/**/*.tsx",
+    "src/copy/**/*.ts",
+    "src/api/**/*.ts",
+    "src/session/**/*.ts",
+    "src/polling/**/*.ts",
+    "src/request/**/*.ts",
+    "src/model/**/*.ts",
+    "src/browser-model/**/*.ts",
+    "vite.config.ts"
+  ]
+}

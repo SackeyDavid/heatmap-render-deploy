@@ -1,0 +1,24 @@
+# NOT the default manifest. Used only by the opt-in live test (RUN_LIVE=1, test/live/claude-code.live.test.ts):
+# the generate step runs the real `claude -p` (no fake, no fallback), with hard caps on turns and time.
+# It runs on David's own Claude login with NO network or filesystem isolation (spec: per-job container, Deferred D6).
+agents:
+  claude-code: { adapter: ClaudeCodeRunner, maxBudgetUsd: 2 }   # US dollars per run: a live test cannot spend without a limit
+
+bindings:
+  remoteStorage: local-fs
+  workspace: local-fs
+  pageInspector: fixture       # the Seat Cover page is the RECONSTRUCTED fixture, not a capture
+  contextPack: fixture
+  jobStore: file
+  notifier: console
+
+operations:
+  klaviyo.segmentation-script:
+    adapter: KlaviyoSegmentationOperation
+    steps:
+      - inspect: {}
+      - generate: { agent: claude-code, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2, maxTurns: 20, timeoutMs: 600000 }
+      - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 2 }
+      - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
+      - verify: { verifier: klaviyo.test-profile }
+      - notify: { failure: warn }   # the script is already live by then; a failed email is a warning, not a failed job

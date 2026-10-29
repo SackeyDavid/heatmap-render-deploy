@@ -1,0 +1,142 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "promptVersion",
+    "modelId",
+    "behaviours",
+    "unsupported"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "const": 1
+    },
+    "promptVersion": {
+      "type": "string",
+      "maxLength": 24
+    },
+    "modelId": {
+      "type": "string",
+      "maxLength": 80
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "high",
+        "medium",
+        "low"
+      ]
+    },
+    "behaviours": {
+      "type": "array",
+      "maxItems": 30,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "kind",
+          "evidence"
+        ],
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "click",
+              "scroll_depth",
+              "faq_open",
+              "form_start",
+              "form_submit",
+              "form_abandon",
+              "video_play",
+              "tab_switch"
+            ]
+          },
+          "evidence": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "target": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "heading": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "field": {
+            "type": "boolean"
+          },
+          "depthPercent": {
+            "type": "number"
+          },
+          "scopePaths": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            }
+          }
+        }
+      }
+    },
+    "unsupported": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "evidence",
+          "reason"
+        ],
+        "properties": {
+          "evidence": {
+            "type": "string",
+            "maxLength": 160
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "exclusion",
+              "own_event_name",
+              "count",
+              "condition",
+              "page_limit",
+              "visitor_filter",
+              "first_time",
+              "faq_specific",
+              "faq_close",
+              "hover",
+              "keyboard",
+              "window_change",
+              "leaving_page",
+              "double_click",
+              "long_press",
+              "tab_switch",
+              "video_play",
+              "form_activity",
+              "cart",
+              "time_delay",
+              "time_on_page",
+              "page_view",
+              "typing",
+              "visitor_details",
+              "scroll_other",
+              "other_language",
+              "unreadable",
+              "not_understood",
+              "in_view",
+              "value_capture",
+              "other_site",
+              "not_an_action",
+              "other"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

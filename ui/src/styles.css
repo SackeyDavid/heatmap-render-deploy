@@ -1,0 +1,9 @@
+/* Merchant UI stylesheet entry (same chain as ui/index.css; no ../ hop — avoids broken resolve during brand edits). */
+@import "./theme/heatmap-tokens.css";
+@import "./styles/global.css";
+@import "./styles/components.css";
+@import "./styles/flow-layout.css";
+@import "./styles/icons.css";
+/* merchant-final.css is the only authored visual override layer. The sheets
+   above provide compatibility primitives and class contracts. */
+@import "./styles/merchant-final.css";

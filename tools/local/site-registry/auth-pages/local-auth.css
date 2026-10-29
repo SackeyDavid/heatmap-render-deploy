@@ -1,0 +1,351 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body.hm-local-auth {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 82% 56% at 50% 0%, rgba(16, 176, 104, 0.1) 0%, transparent 58%),
+    radial-gradient(ellipse 70% 50% at 100% 100%, rgba(0, 67, 35, 0.045) 0%, transparent 50%),
+    var(--hm-wash);
+  color: var(--hm-ink);
+  font: 17px/1.55 var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.hm-local-auth__header {
+  position: relative;
+  z-index: 10;
+  background: #004323;
+  color: #fff;
+  padding: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: none;
+}
+
+.hm-local-auth__header-inner {
+  width: 100%;
+  max-width: 68rem;
+  margin: 0 auto;
+  height: 3.25rem;
+  min-height: 3.25rem;
+  padding: 0.75rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.hm-local-auth__mark {
+  width: 1.75rem;
+  height: 1.75rem;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.hm-local-auth__mark svg {
+  display: block;
+  width: 1.65rem;
+  height: 1.65rem;
+  fill: var(--hm-primary);
+}
+
+.hm-local-auth__wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.3rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.hm-local-auth__page {
+  width: 100%;
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: clamp(1rem, 4vh, 2.5rem) clamp(0.75rem, 3vw, 2rem) 3rem;
+}
+
+.hm-local-auth__card {
+  position: relative;
+  overflow: hidden;
+  width: min(100%, 42rem);
+  margin: 0 auto;
+  background: var(--hm-bg);
+  border: 1px solid color-mix(in srgb, var(--hm-primary) 10%, var(--hm-line-soft));
+  border-radius: 1.4rem;
+  box-shadow: 0 24px 60px -38px rgba(0, 35, 17, 0.32), 0 4px 14px -10px rgba(0, 35, 17, 0.18);
+  padding: clamp(1.35rem, 4vw, 2.5rem);
+}
+
+.hm-local-auth__card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--hm-primary-strong) 0%, var(--hm-primary) 48%, #7dd3a8 100%);
+}
+
+.hm-local-auth__card-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 1.15rem;
+}
+
+.hm-local-auth__hero-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-bottom: 1rem;
+  border-radius: 50%;
+  color: var(--hm-primary-strong);
+  background: color-mix(in srgb, var(--hm-primary) 9%, #fff);
+  border: 1px solid rgba(16, 176, 104, 0.24);
+  box-shadow: 0 12px 30px -20px rgba(0, 35, 17, 0.32);
+}
+
+.hm-local-auth__hero-icon svg {
+  width: 1.45rem;
+  height: 1.45rem;
+}
+
+.hm-local-auth__card h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3vw, 2.1rem);
+  letter-spacing: -0.035em;
+  color: var(--hm-dark);
+  margin: 0 0 0.35rem;
+  line-height: 1.25;
+}
+
+.hm-local-auth__card p {
+  margin: 0.65rem 0;
+}
+
+.hm-local-auth__muted {
+  color: var(--hm-muted);
+  font-size: 0.92rem;
+}
+
+.hm-local-auth__site-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin: 0.65rem 0 1.2rem;
+  padding: 0.85rem 1rem;
+  background: color-mix(in srgb, var(--hm-primary) 5%, #fff);
+  border: 0;
+  border-radius: 0.9rem;
+}
+
+.hm-local-auth__row-icon {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  color: var(--hm-primary-strong);
+  background: #fff;
+  border: 1px solid rgba(16, 176, 104, 0.18);
+}
+
+.hm-local-auth__row-icon svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.hm-local-auth__site-row .hm-local-auth__muted {
+  margin: 0;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.hm-local-auth__site {
+  display: block;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+
+.hm-local-auth__badge {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--hm-primary-strong);
+  background: var(--hm-tint);
+  border: 1px solid rgba(16, 176, 104, 0.35);
+  border-radius: 999px;
+}
+
+.hm-local-auth__facts {
+  margin: 0.9rem 0 0;
+  padding: 0.8rem 1rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  background: color-mix(in srgb, var(--hm-primary) 4%, #fff);
+  border-radius: 0.85rem;
+}
+
+.hm-local-auth__facts li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--hm-muted);
+}
+
+.hm-local-auth__facts svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  color: var(--hm-primary);
+}
+
+.hm-local-auth__cta-wrap {
+  margin: 1.4rem 0 1rem;
+  text-align: center;
+}
+
+.hm-local-auth__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.72rem 1.65rem;
+  min-height: 48px;
+  font-weight: 600;
+  text-decoration: none;
+  color: #fff;
+  background: #087a46;
+  border: 1px solid #087a46;
+  border-radius: 9999px;
+  box-shadow: 0 10px 24px -12px rgba(0, 67, 35, 0.4);
+  transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hm-local-auth__cta svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: none;
+}
+
+.hm-local-auth__cta:hover {
+  background: var(--hm-dark);
+  border-color: var(--hm-dark);
+  box-shadow: 0 12px 26px -12px rgba(0, 67, 35, 0.48);
+}
+
+.hm-local-auth__link-block {
+  margin-top: 1.25rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--hm-line-soft);
+}
+
+.hm-local-auth__link-block .hm-local-auth__muted {
+  margin: 0 0 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hm-local-auth__link-block .hm-local-auth__muted svg {
+  width: 0.95rem;
+  height: 0.95rem;
+  color: var(--hm-primary);
+}
+
+.hm-local-auth__code {
+  display: block;
+  margin: 0;
+  padding: 0.75rem 0.85rem;
+  word-break: break-all;
+  font-size: 0.82rem;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  color: #33443a;
+  background: var(--hm-wash);
+  border: 1px solid color-mix(in srgb, var(--hm-primary) 12%, var(--hm-line-soft));
+  border-radius: 0.75rem;
+}
+
+.hm-local-auth__foot {
+  margin-top: 1.25rem;
+  padding: 0.8rem 0.9rem;
+  font-size: 0.88rem;
+  color: var(--hm-muted);
+  background: var(--hm-wash);
+  border-radius: 0.75rem;
+  text-align: center;
+}
+
+.hm-local-auth__card--error {
+  border-left: 4px solid var(--hm-danger);
+}
+
+.hm-local-auth__card--error h1 {
+  color: var(--hm-danger);
+  font-size: 1.25rem;
+}
+
+.hm-local-auth__card--error .hm-local-auth__card-head {
+  align-items: flex-start;
+  text-align: left;
+}
+
+:focus-visible {
+  outline: 3px solid var(--hm-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 520px) {
+  .hm-local-auth__header {
+    padding-inline: 0;
+  }
+
+  .hm-local-auth__header-inner {
+    padding-inline: 1rem;
+  }
+
+  .hm-local-auth__page {
+    padding: 0.75rem 0.65rem 2rem;
+  }
+
+  .hm-local-auth__card {
+    border-radius: 1.15rem;
+  }
+
+  .hm-local-auth__facts {
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .hm-local-auth__cta {
+    width: 100%;
+  }
+}

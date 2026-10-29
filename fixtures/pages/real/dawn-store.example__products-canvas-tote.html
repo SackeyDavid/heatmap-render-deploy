@@ -1,0 +1,90 @@
+<!doctype html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <TITLE>Canvas Tote Bag &ndash; Dawn Demo Store</TITLE>
+  <link rel="canonical" href="https://dawn-store.example/products/canvas-tote">
+  <script>
+    window.Shopify = { shop: "dawn-store.example" };
+    document.write('<button id="from-script">Never a control</button>');
+  </script>
+  <script type="application/ld+json">{"@type":"Product","name":"Canvas Tote","description":"<a href=\"/x\">not a link</a>"}</script>
+  <style>.hidden{display:none} .btn::after{content:"<button>"}</style>
+  <noscript><link rel="stylesheet" href="/assets/component-noscript.css"><button id="noscript-button">Enable JS</button></noscript>
+</head>
+<body class="gradient">
+  <a class="skip-to-content-link button visually-hidden" href="#MainContent">Skip to content</a>
+  <header class="header-wrapper">
+    <header-drawer data-breakpoint="tablet">
+      <details id="Details-menu-drawer-container" class="menu-drawer-container">
+        <summary class="header__icon header__icon--menu header__icon--summary link focus-inset" aria-label="Menu">
+          <span><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-hamburger" viewBox="0 0 18 16"><title>Menu icon</title><a href="#svg-link"><path d="M1 1h16"/></a><path d="M1 8h16" /></svg></span>
+        </summary>
+      </details>
+    </header-drawer>
+    <nav class="header__inline-menu">
+      <ul class="list-menu list-menu--inline">
+        <li><a id="HeaderMenu-catalog" href="/collections/all" class="header__menu-item list-menu__item link link--text focus-inset">Catalog</a>
+        <li><a id="HeaderMenu-contact" href="/pages/contact" class="header__menu-item list-menu__item link">Contact &amp; Support</a>
+      </ul>
+    </nav>
+    <a href="/cart" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble" aria-label="Cart"><span class="visually-hidden">Cart</span></a>
+  </header>
+  <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
+    <section class="product">
+      <h1>Canvas Tote Bag</h1>
+      <p class="price">$24.00 USD
+      <variant-radios id="variant-radios-1" data-section="template--1" data-url="/products/canvas-tote">
+        <fieldset class="js product-form__input">
+          <legend class="form__label">Color</legend>
+          <input type="radio" id="template--1-1-0" name="Color" value="Natural" form="product-form-1" checked>
+          <label for="template--1-1-0">Natural</label>
+          <input type="radio" id="template--1-1-1" name="Color" value="Black" form="product-form-1">
+          <label for="template--1-1-1" class='color-swatch' data-swatch-name='Black "Ink"'>Black</label>
+        </fieldset>
+      </variant-radios>
+      <product-form class="product-form">
+        <form method="post" action="/cart/add" id="product-form-1" accept-charset="UTF-8" class="form" enctype="multipart/form-data" novalidate="novalidate" data-type="add-to-cart-form">
+          <input type="hidden" name="form_type" value="product">
+          <input type="hidden" name="utf8" value="&#10003;">
+          <input type="hidden" name="id" value="4411223344">
+          <div class="product-form__quantity">
+            <input class="quantity__input" type="number" name="quantity" id="Quantity-template--1" min="1" value="1" aria-label="Quantity">
+            <button class="quantity__button no-js-hidden" name="minus" type="button"><span class="visually-hidden">Decrease quantity for Canvas Tote Bag</span><svg class="icon"><path d="M0 0"/></svg></button>
+          </div>
+          <div class="product-form__buttons">
+            <BUTTON type="submit" name="add" id="ProductSubmitButton-template--1" class="product-form__submit button button--full-width button--secondary">
+              <span>Add to cart</span>
+              <div class="loading-overlay__spinner hidden"><svg aria-hidden="true" focusable="false" class="spinner" viewBox="0 0 66 66"><circle cx="33" cy="33" r="30"/></svg></div>
+            </BUTTON>
+            <div data-shopify="payment-button" class="shopify-payment-button">
+              <button type="button" class="shopify-payment-button__button shopify-payment-button__button--unbranded" data-testid="Checkout-button">Buy it now</button>
+            </div>
+          </div>
+        </form>
+      </product-form>
+      <div class="product__accordion accordion">
+        <details id="Details-1-template--1"><summary><h2 class="accordion__title">Materials</h2></summary><div class="accordion__content"><p>12oz cotton canvas.</p></div></details>
+        <details id="Details-2-template--1"><summary><h2 class="accordion__title">Shipping &amp; Returns</h2></summary><div class="accordion__content"><p>Free over $50.</div></details>
+      </div>
+    </section>
+    <template id="quick-add-modal"><button id="template-button" class="quick-add__submit">Quick add</button></template>
+  </main>
+  <cart-drawer class="drawer is-empty" hidden>
+    <div id="CartDrawer" class="drawer__inner" role="dialog" aria-modal="true" aria-label="Cart drawer">
+      <button class="drawer__close" type="button" onclick="this.closest('cart-drawer').close()" aria-label="Close">X</button>
+      <a href="/collections/all" class="button">Continue shopping</a>
+    </div>
+  </cart-drawer>
+  <div class="newsletter" style="display: none !important"><button type="submit" id="newsletter-submit">Subscribe</button></div>
+  <div class="cookie-banner" aria-hidden="true"><button class="cookie-accept" id="cookie-accept">Accept all</button></div>
+  <footer>
+    <ul><li><a href="/policies/privacy-policy">Privacy policy</a><li><a href="/policies/refund-policy">Refund policy</a></ul>
+    <form method="post" action="/contact#ContactFooter" id="ContactFooter" class="footer__newsletter newsletter-form">
+      <input type="email" name="contact[email]" id="NewsletterForm--footer" class="field__input" placeholder="Email" aria-required="true" required>
+      <button type="submit" class="newsletter-form__button field__button" name="commit" aria-label="Subscribe">&rarr;</button>
+    </form>
+  </footer>
+</body>
+</html>

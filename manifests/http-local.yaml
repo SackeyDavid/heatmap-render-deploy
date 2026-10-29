@@ -1,0 +1,26 @@
+# Local HTTP serve manifest: same pipeline as operations.yaml but reads merchant-uploaded saved HTML per request.
+agents:
+  fake:
+    adapter: FakeAgent
+    outputsFrom: fixtures/fake-agent/klaviyo
+    outputsWhen: { platform: { shopify: fixtures/fake-agent/dawn-smoke } }   # a job whose platform is shopify gets the Dawn smoke outputs
+  claude-code: { adapter: DisabledAgent }   # no Claude spend; use manifests/http-local-claude.yaml for the real agent
+
+bindings:
+  remoteStorage: local-fs
+  workspace: local-fs
+  pageInspector: { adapter: saved-html, fallbackRoots: [fixtures/pages] }   # saved pages of this request, then the repo's sample pages (local only)
+  contextPack: fixture
+  jobStore: file
+  notifier: console
+
+operations:
+  klaviyo.segmentation-script:
+    adapter: KlaviyoSegmentationOperation
+    steps:
+      - inspect: {}
+      - generate: { agent: fake, fallback: claude-code, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2 }
+      - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 2 }
+      - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
+      - verify: { verifier: klaviyo.test-profile }
+      - notify: { failure: warn }   # the script is already live; a failed email is a warning, not a failed job

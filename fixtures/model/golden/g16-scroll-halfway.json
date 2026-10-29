@@ -1,0 +1,3 @@
+{
+  "rawText": "{\"schemaVersion\":1,\"promptVersion\":\"interpret-1\",\"modelId\":\"mock\",\"behaviours\":[{\"kind\":\"scroll_depth\",\"evidence\":\"scrolls halfway\",\"depthPercent\":50}],\"unsupported\":[]}"
+}

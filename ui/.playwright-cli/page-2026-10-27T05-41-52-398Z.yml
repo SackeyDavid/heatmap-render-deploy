@@ -1,0 +1,1711 @@
+- generic [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "heatmap home" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e9]: heatmap
+        - navigation "Primary" [ref=e10]:
+          - button "Events" [ref=e12] [cursor=pointer]
+          - button "Resources" [ref=e14] [cursor=pointer]
+          - link "Agencies" [ref=e16] [cursor=pointer]:
+            - /url: /agencies
+          - link "Pricing" [ref=e17] [cursor=pointer]:
+            - /url: /pricing
+          - link "FAQs" [ref=e18] [cursor=pointer]:
+            - /url: /faq
+        - generic [ref=e19]:
+          - button "Book a Demo" [ref=e20] [cursor=pointer]
+          - link "Start for Free" [ref=e21] [cursor=pointer]:
+            - /url: https://portal.heatmap.com/auth/signup?plan=32&period=month
+    - main [ref=e22]:
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - generic [ref=e26]: Revenue growth
+          - heading "AI insights that show revenue leaks, and what it’s costing you." [level=1] [ref=e27]
+          - paragraph [ref=e28]: Heatmap watches your store, works out what's costing you money, and tells you in plain language what to fix first.
+          - generic [ref=e29]:
+            - button "Book a Demo" [ref=e30] [cursor=pointer]
+            - link "Start for Free" [ref=e31] [cursor=pointer]:
+              - /url: https://portal.heatmap.com/auth/signup?plan=32&period=month
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - img "Wilson, CRO expert, with Site Understanding at 13%"
+              - generic:
+                - generic:
+                  - generic:
+                    - 'img "The Context Engine counts: site pages, policies, ad landing pages, product data, reviews, captures, and the site and consistency reviews"'
+              - generic:
+                - generic:
+                  - generic:
+                    - img "The Add context button"
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - 'img "The audit score surface: 66 out of 100 on a banded dial"'
+                - generic:
+                  - generic:
+                    - 'img "The industry benchmark surface: the score distribution across 1,240 Beauty & Cosmetics stores, this store at 66 against a median of 74"'
+              - generic:
+                - generic [aria-hidden]: Findings
+                - img "Seven ranked findings — arrival, price, mobile, choice, search, weight and returns — tagged P1 to P3, with Start here on the first"
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - 'img "Wilson in the analysis chat: cross-checking every claim against every other surface it appears on"'
+              - generic:
+                - generic:
+                  - generic:
+                    - 'img "Cross-checking claims across surfaces at 100%: first analysis ready"'
+              - generic:
+                - generic:
+                  - generic:
+                    - 'img "The live counters: 38 facts learned, 41 pages mapped, 6 sources contributing"'
+              - generic:
+                - generic:
+                  - generic:
+                    - 'img "Knowledge coverage: page content 92%, policies and offers 88%, product data 90%, visitor behavior 0%"'
+        - generic [ref=e45]:
+          - generic [ref=e46]:
+            - generic [ref=e47]:
+              - generic [ref=e48]: $2.5M
+              - img "Obvi" [ref=e50]
+            - generic [ref=e51]:
+              - generic [ref=e52]: $16M
+              - img "Loop Earplugs" [ref=e54]
+            - generic [ref=e55]:
+              - generic [ref=e56]: $600K
+              - img "Original Grain" [ref=e58]
+            - generic [ref=e59]:
+              - generic [ref=e60]: $34,067/mo
+              - img "Ripley Rader" [ref=e62]
+          - paragraph [ref=e63]: Revenue found by agencies and brands using Heatmap.
+      - generic [ref=e65]:
+        - generic [ref=e66]:
+          - generic [ref=e67]: Evidence
+          - heading "Built on billions of real customer interactions." [level=2] [ref=e68]
+          - paragraph [ref=e69]: We don't guess what your visitors are doing. We analyze it.
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - generic [ref=e72]: 225M+
+            - generic [ref=e73]: Real-time transactions
+          - generic [ref=e74]:
+            - generic [ref=e75]: 1.2B
+            - generic [ref=e76]: Sessions
+          - generic [ref=e77]:
+            - generic [ref=e78]: 10.5B
+            - generic [ref=e79]: Clicks
+          - generic [ref=e80]:
+            - generic [ref=e81]: 162B+
+            - generic [ref=e82]: Interactions analyzed
+      - generic [ref=e84]:
+        - generic [ref=e85]:
+          - generic [ref=e86]: Heatmaps & scrollmaps
+          - heading "Clicks don’t pay the bills. Revenue does." [level=2] [ref=e87]: Clicks don’t pay the bills.Revenue does.
+          - paragraph [ref=e88]: "Every element on every page carries a number: what it earned, not how many times it was touched. Scrollmaps show how far people actually get, and what the ones who never scroll are costing you."
+        - figure "Every block on the page, with what it earned attached." [ref=e90]:
+          - generic [ref=e91]:
+            - generic [ref=e92]:
+              - generic [ref=e96]: Heatmap
+              - generic [ref=e97]: Live
+              - generic [ref=e100]:
+                - button "30 days" [ref=e101] [cursor=pointer]
+                - button "Filters" [ref=e107] [cursor=pointer]
+                - tablist "Device" [ref=e109]:
+                  - tab "Desktop · 4,610 sessions" [selected] [ref=e110] [cursor=pointer]: 4.6K
+                  - tab "Tablet · 1,070 sessions" [ref=e113] [cursor=pointer]: 1.1K
+                  - tab "Mobile · 12,740 sessions" [ref=e117] [cursor=pointer]: 12.7K
+            - generic [ref=e121]:
+              - generic [ref=e123]:
+                - tablist "Heatmap view" [ref=e125]:
+                  - tab "Heatmap" [selected] [ref=e126] [cursor=pointer]
+                  - tab "Interactive" [ref=e131] [cursor=pointer]
+                  - tab "Scrollmap" [ref=e134] [cursor=pointer]
+                - generic [ref=e138]:
+                  - button "AI Insights" [ref=e139] [cursor=pointer]
+                  - button "Page Groups" [ref=e140] [cursor=pointer]
+                  - button "Element Data" [ref=e141] [cursor=pointer]
+              - generic [ref=e142]:
+                - generic [ref=e143]:
+                  - img "Sample Store home page, desktop, heatmap view" [ref=e145]:
+                    - img "Sample Store home page, desktop" [ref=e147]
+                  - generic [ref=e149]:
+                    - generic [ref=e150]: "Most clicked: Shop New Arrivals · 1,960"
+                    - generic [ref=e151]:
+                      - generic [ref=e152]: Fewer
+                      - generic [ref=e154]: More
+                - dialog [ref=e156]:
+                  - generic [ref=e157]:
+                    - generic [ref=e158]: "2"
+                    - generic [ref=e160]: Best Sellers Tile
+                    - button "Close" [ref=e161] [cursor=pointer]
+                  - generic [ref=e162]:
+                    - generic [ref=e163]:
+                      - generic [ref=e164]:
+                        - generic [ref=e165]: Clicks
+                        - generic [ref=e166] [cursor=pointer]
+                      - generic [ref=e174]:
+                        - generic [ref=e175]: 1,480
+                        - generic [ref=e176]: 16.0%
+                    - generic [ref=e177]:
+                      - generic [ref=e178]:
+                        - generic [ref=e179]: Purchases
+                        - generic [ref=e180] [cursor=pointer]
+                      - generic [ref=e188]:
+                        - generic [ref=e189]: "212"
+                        - generic [ref=e190]: 24.4%
+                    - generic [ref=e191]:
+                      - generic [ref=e192]:
+                        - generic [ref=e193]: Revenue
+                        - generic [ref=e194] [cursor=pointer]
+                      - generic [ref=e202]:
+                        - generic [ref=e203]: $42,060.80
+                        - generic [ref=e204]: 25.5%
+                    - generic [ref=e205]:
+                      - generic [ref=e206]:
+                        - generic [ref=e207]: Avg. Order Value
+                        - generic [ref=e208] [cursor=pointer]
+                      - generic [ref=e212]: $198.40
+                    - generic [ref=e218]:
+                      - generic [ref=e219]:
+                        - generic [ref=e220]: Conversion Rate
+                        - generic [ref=e221] [cursor=pointer]
+                      - generic [ref=e225]: 14.3%
+                    - generic [ref=e231]:
+                      - generic [ref=e232]:
+                        - generic [ref=e233]: Scroll Depth
+                        - generic [ref=e234] [cursor=pointer]
+                      - generic [ref=e238]: 45.7%
+                    - generic [ref=e244]:
+                      - generic [ref=e245]:
+                        - generic [ref=e246]: Rev. per Click
+                        - generic [ref=e247] [cursor=pointer]
+                      - generic [ref=e251]: $28.42
+                    - generic [ref=e257]:
+                      - generic [ref=e258]:
+                        - generic [ref=e259]: Rev. per Session
+                        - generic [ref=e260] [cursor=pointer]
+                      - generic [ref=e264]: $9.12
+                  - button "Add Element Data" [ref=e271] [cursor=pointer]
+                - dialog [ref=e273]:
+                  - generic [ref=e274]:
+                    - generic [ref=e275]: "4"
+                    - generic [ref=e277]: Callie Sling Bag
+                    - button "Close" [ref=e278] [cursor=pointer]
+                  - generic [ref=e279]:
+                    - generic [ref=e280]:
+                      - generic [ref=e281]:
+                        - generic [ref=e282]: Clicks
+                        - generic [ref=e283] [cursor=pointer]
+                      - generic [ref=e291]:
+                        - generic [ref=e292]: 1,090
+                        - generic [ref=e293]: 11.8%
+                    - generic [ref=e294]:
+                      - generic [ref=e295]:
+                        - generic [ref=e296]: Purchases
+                        - generic [ref=e297] [cursor=pointer]
+                      - generic [ref=e305]:
+                        - generic [ref=e306]: "131"
+                        - generic [ref=e307]: 15.1%
+                    - generic [ref=e308]:
+                      - generic [ref=e309]:
+                        - generic [ref=e310]: Revenue
+                        - generic [ref=e311] [cursor=pointer]
+                      - generic [ref=e319]:
+                        - generic [ref=e320]: $27,850.60
+                        - generic [ref=e321]: 16.9%
+                    - generic [ref=e322]:
+                      - generic [ref=e323]:
+                        - generic [ref=e324]: Avg. Order Value
+                        - generic [ref=e325] [cursor=pointer]
+                      - generic [ref=e329]: $212.60
+                    - generic [ref=e335]:
+                      - generic [ref=e336]:
+                        - generic [ref=e337]: Conversion Rate
+                        - generic [ref=e338] [cursor=pointer]
+                      - generic [ref=e342]: 12.0%
+                    - generic [ref=e348]:
+                      - generic [ref=e349]:
+                        - generic [ref=e350]: Scroll Depth
+                        - generic [ref=e351] [cursor=pointer]
+                      - generic [ref=e355]: 17.0%
+                    - generic [ref=e361]:
+                      - generic [ref=e362]:
+                        - generic [ref=e363]: Rev. per Click
+                        - generic [ref=e364] [cursor=pointer]
+                      - generic [ref=e368]: $25.55
+                    - generic [ref=e374]:
+                      - generic [ref=e375]:
+                        - generic [ref=e376]: Rev. per Session
+                        - generic [ref=e377] [cursor=pointer]
+                      - generic [ref=e381]: $6.04
+                  - button "Add Element Data" [ref=e388] [cursor=pointer]
+              - generic [ref=e392]: Maya R
+        - generic [ref=e394]:
+          - generic [ref=e395]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - dialog:
+                    - generic:
+                      - generic: "2"
+                      - generic: Best Sellers Tile
+                      - button
+                    - generic:
+                      - generic:
+                        - generic: Revenue
+                        - generic:
+                          - generic:
+                            - generic: $42,060.80
+                            - generic: 25.5%
+                      - generic:
+                        - generic: Clicks
+                        - generic:
+                          - generic:
+                            - generic: 1,480
+                            - generic: 16.0%
+                      - generic:
+                        - generic: Purchases
+                        - generic:
+                          - generic:
+                            - generic: "212"
+                            - generic: 24.4%
+                      - generic:
+                        - generic: Avg. Order Value
+                        - generic: $198.40
+                - generic: Maya R
+            - generic [ref=e396]:
+              - heading "Revenue per element" [level=3] [ref=e397]
+              - generic [ref=e398]: "What every button, image and block earned. Not clicks: dollars."
+          - generic [ref=e399]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic [aria-hidden]:
+                    - generic: 47% reach here
+            - generic [ref=e400]:
+              - heading "Revenue scrollmaps" [level=3] [ref=e401]
+              - generic [ref=e402]: How far people actually get, and what sits below where most of them stop.
+          - generic [ref=e403]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Sessions recorded
+                      - generic: 18,420 of 18,420
+                  - generic:
+                    - list:
+                      - listitem:
+                        - generic: /products/callie-sling-bag
+                        - generic: $212.60
+                      - listitem:
+                        - generic: /collections/best-sellers
+                        - generic: $0
+                      - listitem:
+                        - generic: /
+                        - generic: $0
+                      - listitem:
+                        - generic: /products/lindsey-tote-bag
+                        - generic: $168.00
+                      - listitem:
+                        - generic: /cart
+                        - generic: $0
+                      - listitem:
+                        - generic: /products/crosby-sling-bag
+                        - generic: $146.40
+                      - listitem:
+                        - generic: /products/callie-sling-bag
+                        - generic: $212.60
+                      - listitem:
+                        - generic: /collections/best-sellers
+                        - generic: $0
+                      - listitem:
+                        - generic: /
+                        - generic: $0
+                      - listitem:
+                        - generic: /products/lindsey-tote-bag
+                        - generic: $168.00
+                      - listitem:
+                        - generic: /cart
+                        - generic: $0
+                      - listitem:
+                        - generic: /products/crosby-sling-bag
+                        - generic: $146.40
+            - generic [ref=e404]:
+              - heading "Every session, no sampling" [level=3] [ref=e405]
+              - generic [ref=e406]: Not a slice of your traffic with the rest inferred. All of it.
+      - generic [ref=e408]:
+        - generic [ref=e409]:
+          - generic [ref=e410]: Journey analysis
+          - heading "Pages don’t convert. Journeys do." [level=2] [ref=e411]
+          - paragraph [ref=e412]: "Follow the real path from first landing to checkout: what your best customers open, what they skip, and where everybody else quietly loses momentum in the gap between two pages."
+        - generic [ref=e414]:
+          - generic [ref=e418]:
+            - generic [ref=e419]:
+              - generic [ref=e420]: Starting point
+              - generic [ref=e421]: Step +1
+              - generic [ref=e422]: Step +2
+              - generic [ref=e423]: Step +3
+              - generic [ref=e424]: Step +4
+            - generic [ref=e425]:
+              - generic [ref=e457]:
+                - generic [ref=e458]: All Sessions
+                - generic [ref=e459]: 148K
+              - generic [ref=e462]:
+                - generic [ref=e463]: /products/miracle-balm
+                - generic [ref=e464]: 71.4K
+              - generic [ref=e467]:
+                - generic [ref=e468]: /collections/bestsellers
+                - generic [ref=e469]: 34.2K
+              - generic [ref=e472]:
+                - generic [ref=e473]: /
+                - generic [ref=e474]: 19.8K
+              - generic [ref=e477]:
+                - generic [ref=e478]: /products/lip-tint
+                - generic [ref=e479]: 8.6K
+              - generic [ref=e482]:
+                - generic [ref=e483]: Exit
+                - generic [ref=e484]: 6.9K
+              - generic [ref=e487]:
+                - generic [ref=e488]: + 20 more
+                - generic [ref=e489]: 7.1K
+              - generic [ref=e492]:
+                - generic [ref=e493]: /cart
+                - generic [ref=e494]: 60.6K
+              - generic [ref=e497]:
+                - generic [ref=e498]: /pages/shade-finder
+                - generic [ref=e499]: 17.1K
+              - generic [ref=e502]:
+                - generic [ref=e503]: /products/the-bundle
+                - generic [ref=e504]: 6.8K
+              - generic [ref=e507]:
+                - generic [ref=e508]: Exit
+                - generic [ref=e509]: 49.5K
+              - generic [ref=e512]:
+                - generic [ref=e513]: /checkout
+                - generic [ref=e514]: 44.6K
+              - generic [ref=e517]:
+                - generic [ref=e518]: /policies/shipping
+                - generic [ref=e519]: 7.6K
+              - generic [ref=e522]:
+                - generic [ref=e523]: Exit
+                - generic [ref=e524]: 32.3K
+              - generic [ref=e527]:
+                - generic [ref=e528]: Order Confirmed
+                - generic [ref=e529]: 27.3K
+              - generic [ref=e532]:
+                - generic [ref=e533]: Back to Cart
+                - generic [ref=e534]: 9.6K
+              - generic [ref=e537]:
+                - generic [ref=e538]: Exit
+                - generic [ref=e539]: 15.3K
+          - dialog [ref=e541]:
+            - generic [ref=e542]:
+              - generic [ref=e543]: "+4"
+              - generic [ref=e545]: Order Confirmed
+              - button "Close" [ref=e546] [cursor=pointer]
+            - generic [ref=e547]:
+              - generic [ref=e548]:
+                - generic [ref=e549]:
+                  - generic [ref=e550]: Sessions
+                  - generic [ref=e551] [cursor=pointer]
+                - generic [ref=e559]:
+                  - generic [ref=e560]: 27,300
+                  - generic [ref=e561]: 18.4%
+              - generic [ref=e562]:
+                - generic [ref=e563]:
+                  - generic [ref=e564]: From /checkout
+                  - generic [ref=e565] [cursor=pointer]
+                - generic [ref=e573]:
+                  - generic [ref=e574]: 27,300
+                  - generic [ref=e575]: 61.2%
+          - dialog [ref=e577]:
+            - generic [ref=e578]:
+              - generic [ref=e579]: "+2"
+              - generic [ref=e581]: Exit after step +1
+              - button "Close" [ref=e582] [cursor=pointer]
+            - generic [ref=e583]:
+              - generic [ref=e584]:
+                - generic [ref=e585]:
+                  - generic [ref=e586]: Sessions
+                  - generic [ref=e587] [cursor=pointer]
+                - generic [ref=e595]:
+                  - generic [ref=e596]: 49,500
+                  - generic [ref=e597]: 33.4%
+              - generic [ref=e598]:
+                - generic [ref=e599]:
+                  - generic [ref=e600]: From /products/miracle-balm
+                  - generic [ref=e601] [cursor=pointer]
+                - generic [ref=e609]:
+                  - generic [ref=e610]: 17,900
+                  - generic [ref=e611]: 25.1%
+              - generic [ref=e612]:
+                - generic [ref=e613]:
+                  - generic [ref=e614]: From /
+                  - generic [ref=e615] [cursor=pointer]
+                - generic [ref=e623]:
+                  - generic [ref=e624]: 13,100
+                  - generic [ref=e625]: 66.2%
+              - generic [ref=e626]:
+                - generic [ref=e627]:
+                  - generic [ref=e628]: From /collections/bestsellers
+                  - generic [ref=e629] [cursor=pointer]
+                - generic [ref=e637]:
+                  - generic [ref=e638]: 12,100
+                  - generic [ref=e639]: 35.4%
+          - generic [ref=e643]: Maya R
+        - generic [ref=e644]:
+          - generic [ref=e645]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: All Sessions
+                              - generic: 148K
+                          - generic:
+                            - generic:
+                              - generic: /products/miracle-balm
+                              - generic: 71.4K
+                          - generic:
+                            - generic:
+                              - generic: /collections/bestsellers
+                              - generic: 34.2K
+                          - generic:
+                            - generic:
+                              - generic: /
+                              - generic: 19.8K
+                          - generic:
+                            - generic:
+                              - generic: /products/lip-tint
+                              - generic: 8.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 6.9K
+                          - generic:
+                            - generic:
+                              - generic: + 20 more
+                              - generic: 7.1K
+                          - generic:
+                            - generic:
+                              - generic: /cart
+                              - generic: 60.6K
+                          - generic:
+                            - generic:
+                              - generic: /pages/shade-finder
+                              - generic: 17.1K
+                          - generic:
+                            - generic:
+                              - generic: /products/the-bundle
+                              - generic: 6.8K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 49.5K
+                          - generic:
+                            - generic:
+                              - generic: /checkout
+                              - generic: 44.6K
+                          - generic:
+                            - generic:
+                              - generic: /policies/shipping
+                              - generic: 7.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 32.3K
+                          - generic:
+                            - generic:
+                              - generic: Order Confirmed
+                              - generic: 27.3K
+                          - generic:
+                            - generic:
+                              - generic: Back to Cart
+                              - generic: 9.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 15.3K
+            - generic [ref=e646]:
+              - heading "The paths that end in a purchase" [level=3] [ref=e647]
+              - generic [ref=e648]: What your best customers do that the rest never do.
+          - generic [ref=e649]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: All Sessions
+                              - generic: 148K
+                          - generic:
+                            - generic:
+                              - generic: /products/miracle-balm
+                              - generic: 71.4K
+                          - generic:
+                            - generic:
+                              - generic: /collections/bestsellers
+                              - generic: 34.2K
+                          - generic:
+                            - generic:
+                              - generic: /
+                              - generic: 19.8K
+                          - generic:
+                            - generic:
+                              - generic: /products/lip-tint
+                              - generic: 8.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 6.9K
+                          - generic:
+                            - generic:
+                              - generic: + 20 more
+                              - generic: 7.1K
+                          - generic:
+                            - generic:
+                              - generic: /cart
+                              - generic: 60.6K
+                          - generic:
+                            - generic:
+                              - generic: /pages/shade-finder
+                              - generic: 17.1K
+                          - generic:
+                            - generic:
+                              - generic: /products/the-bundle
+                              - generic: 6.8K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 49.5K
+                          - generic:
+                            - generic:
+                              - generic: /checkout
+                              - generic: 44.6K
+                          - generic:
+                            - generic:
+                              - generic: /policies/shipping
+                              - generic: 7.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 32.3K
+                          - generic:
+                            - generic:
+                              - generic: Order Confirmed
+                              - generic: 27.3K
+                          - generic:
+                            - generic:
+                              - generic: Back to Cart
+                              - generic: 9.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 15.3K
+            - generic [ref=e650]:
+              - heading "The transitions where intent dies" [level=3] [ref=e651]
+              - generic [ref=e652]: Not all of it happens on a page. Some happens between two.
+          - generic [ref=e653]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: All Sessions
+                              - generic: 148K
+                          - generic:
+                            - generic:
+                              - generic: /products/miracle-balm
+                              - generic: 71.4K
+                          - generic:
+                            - generic:
+                              - generic: /collections/bestsellers
+                              - generic: 34.2K
+                          - generic:
+                            - generic:
+                              - generic: /
+                              - generic: 19.8K
+                          - generic:
+                            - generic:
+                              - generic: /products/lip-tint
+                              - generic: 8.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 6.9K
+                          - generic:
+                            - generic:
+                              - generic: + 20 more
+                              - generic: 7.1K
+                          - generic:
+                            - generic:
+                              - generic: /cart
+                              - generic: 60.6K
+                          - generic:
+                            - generic:
+                              - generic: /pages/shade-finder
+                              - generic: 17.1K
+                          - generic:
+                            - generic:
+                              - generic: /products/the-bundle
+                              - generic: 6.8K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 49.5K
+                          - generic:
+                            - generic:
+                              - generic: /checkout
+                              - generic: 44.6K
+                          - generic:
+                            - generic:
+                              - generic: /policies/shipping
+                              - generic: 7.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 32.3K
+                          - generic:
+                            - generic:
+                              - generic: Order Confirmed
+                              - generic: 27.3K
+                          - generic:
+                            - generic:
+                              - generic: Back to Cart
+                              - generic: 9.6K
+                          - generic:
+                            - generic:
+                              - generic: Exit
+                              - generic: 15.3K
+            - generic [ref=e654]:
+              - heading "The routes you never designed" [level=3] [ref=e655]
+              - generic [ref=e656]: Shortcuts that convert faster. Loops that mean someone is lost.
+      - generic [ref=e658]:
+        - generic [ref=e659]:
+          - generic [ref=e660]: Results
+          - paragraph [ref=e661]: The numbers our customers see once heatmap is watching their store.
+        - generic [ref=e662]:
+          - generic [ref=e663]:
+            - generic [ref=e664]: +23%
+            - generic [ref=e665]: first-purchase profitability, YoY
+          - generic [ref=e666]:
+            - generic [ref=e667]: +8%
+            - generic [ref=e668]: revenue per session
+          - generic [ref=e669]:
+            - generic [ref=e670]: 15 min
+            - generic [ref=e671]: to your first findings
+          - generic [ref=e672]:
+            - generic [ref=e673]: 1,000+
+            - generic [ref=e674]: ecommerce brands
+      - generic [ref=e676]:
+        - generic [ref=e677]:
+          - generic [ref=e678]: Web analytics
+          - heading "The numbers, without the dashboard tax." [level=2] [ref=e679]
+          - paragraph [ref=e680]: Revenue per session by page, product and traffic source, live. No data layer, no tagging plan, no analyst to book. Install it and the numbers are there.
+        - generic [ref=e682]:
+          - generic [ref=e683]:
+            - generic [ref=e684]:
+              - generic [ref=e685]:
+                - generic [ref=e686]:
+                  - generic [ref=e690]: Sessions
+                  - generic [ref=e691] [cursor=pointer]
+                - button "Analyze" [ref=e696] [cursor=pointer]
+              - generic [ref=e697]: 3,565
+            - generic [ref=e720]:
+              - generic [ref=e721]:
+                - generic [ref=e722]:
+                  - generic [ref=e727]: Revenue
+                  - generic [ref=e728] [cursor=pointer]
+                - button "Analyze" [ref=e733] [cursor=pointer]
+              - generic [ref=e734]: $24,345
+            - generic [ref=e747]:
+              - generic [ref=e748]:
+                - generic [ref=e749]:
+                  - generic [ref=e757]: CVR
+                  - generic [ref=e758] [cursor=pointer]
+                - button "Analyze" [ref=e763] [cursor=pointer]
+              - generic [ref=e764]: 3.6%
+            - generic [ref=e787]:
+              - generic [ref=e788]:
+                - generic [ref=e789]:
+                  - generic [ref=e793]: RPS
+                  - generic [ref=e794] [cursor=pointer]
+                - button "Analyze" [ref=e799] [cursor=pointer]
+              - generic [ref=e800]: $6.83
+            - generic [ref=e813]:
+              - generic [ref=e814]:
+                - generic [ref=e815]:
+                  - generic [ref=e821]: AOV
+                  - generic [ref=e822] [cursor=pointer]
+                - button "Analyze" [ref=e827] [cursor=pointer]
+              - generic [ref=e828]: $190
+            - generic [ref=e851]:
+              - generic [ref=e852]:
+                - generic [ref=e853]:
+                  - generic [ref=e858]: Page Views
+                  - generic [ref=e859] [cursor=pointer]
+                - button "Analyze" [ref=e864] [cursor=pointer]
+              - generic [ref=e865]: "5.1"
+          - generic [ref=e878]:
+            - generic [ref=e879]:
+              - generic [ref=e880]:
+                - generic [ref=e886]: Conversion Rate
+                - generic [ref=e887] [cursor=pointer]
+              - separator [ref=e891]
+              - button "Close" [ref=e892] [cursor=pointer]
+            - generic [ref=e897]:
+              - generic [ref=e898]:
+                - generic [ref=e899]:
+                  - generic [ref=e900]: 3.6%
+                  - generic [ref=e905]: Trending up since last week
+                - button "Chart shape" [ref=e907] [cursor=pointer]: Line
+              - generic [ref=e908]:
+                - generic [ref=e909]:
+                  - generic [ref=e910]:
+                    - generic [ref=e911]: "This Period: Mar 17-23, 2025"
+                    - generic [ref=e914]:
+                      - generic [ref=e915]: 3.6%
+                      - generic [ref=e916]: Average conversion rate
+                  - generic [ref=e917]:
+                    - generic [ref=e918]: "Last Period: Mar 9-16, 2025"
+                    - generic [ref=e921]:
+                      - generic [ref=e922]: 3.1%
+                      - generic [ref=e923]: Average conversion rate
+                - generic [ref=e925]:
+                  - generic [ref=e927]:
+                    - generic [ref=e928]: 4%
+                    - generic [ref=e929]: 2%
+                    - generic [ref=e930]: 0%
+                  - generic [ref=e943]:
+                    - generic [ref=e944]: 17 Mar
+                    - generic [ref=e945]: "18"
+                    - generic [ref=e946]: "19"
+                    - generic [ref=e947]: "20"
+                    - generic [ref=e948]: "21"
+                    - generic [ref=e949]: "22"
+                    - generic [ref=e950]: 23 Mar
+          - generic [ref=e954]: Maya R
+        - generic [ref=e955]:
+          - generic [ref=e956]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - table:
+                      - rowgroup:
+                        - row:
+                          - columnheader: Page
+                          - columnheader:
+                            - generic: RPS
+                          - columnheader:
+                            - generic: Sessions
+                      - rowgroup:
+                        - row:
+                          - cell:
+                            - generic: /products/miracle-balm
+                          - cell: $11.20
+                          - cell: 2,551
+                        - row:
+                          - cell:
+                            - generic: /cart
+                          - cell: $9.40
+                          - cell: 2,318
+                        - row:
+                          - cell:
+                            - generic: /collections/bestsellers
+                          - cell: $7.85
+                          - cell: 2,864
+                        - row:
+                          - cell:
+                            - generic: /
+                          - cell: $4.10
+                          - cell: 3,102
+                        - row:
+                          - cell:
+                            - generic: /products/lip-tint
+                          - cell: $3.20
+                          - cell: 1,999
+                - generic: Maya R
+            - generic [ref=e957]:
+              - heading "Revenue per session, not conversion rate" [level=3] [ref=e958]
+              - generic [ref=e959]: "Dollars per visit. Compare like traffic: the mix moves it too."
+          - generic [ref=e960]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - tablist:
+                      - tab [selected]: Device
+                      - tab: Source
+                      - tab: Campaign
+                  - generic:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: 3,565
+                          - generic: Sessions
+                      - generic:
+                        - generic:
+                          - generic: Mobile
+                          - generic:
+                            - generic: 2,237
+                            - generic: (62.7%)
+                        - generic:
+                          - generic: Desktop
+                          - generic:
+                            - generic: 1,003
+                            - generic: (28.1%)
+                        - generic:
+                          - generic: Tablet
+                          - generic:
+                            - generic: "325"
+                            - generic: (9.1%)
+            - generic [ref=e961]:
+              - heading "Segment it yourself" [level=3] [ref=e962]
+              - generic [ref=e963]: Source, device, campaign, behavior. None of it needs a ticket.
+          - generic [ref=e964]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: This hour
+                    - generic: Live
+                  - generic:
+                    - generic: 21 sessions
+                    - generic: $143 revenue
+            - generic [ref=e965]:
+              - heading "Real time" [level=3] [ref=e966]
+              - generic [ref=e967]: No sampling, no overnight rollup. This hour is already in it.
+      - generic [ref=e969]:
+        - generic [ref=e970]:
+          - generic [ref=e971]: Funnels
+          - heading "See where the money walks out." [level=2] [ref=e972]
+          - paragraph [ref=e973]: Build a funnel in minutes, then watch intent turn into nothing. Every drop-off carries the revenue that left with it, so the list of what to fix sorts itself.
+        - figure "Every drop-off, with what it cost." [ref=e975]:
+          - generic [ref=e976]:
+            - generic [ref=e977]: Funnels
+            - generic [ref=e983]:
+              - generic [ref=e984]:
+                - generic [ref=e985]:
+                  - generic [ref=e986]: Purchase Journey
+                  - generic [ref=e988]: Benchmark
+                  - tablist "Segment" [ref=e994]:
+                    - tab "All Devices" [selected] [ref=e995] [cursor=pointer]
+                    - tab "Mobile" [ref=e996] [cursor=pointer]
+                - generic [ref=e998]:
+                  - generic [ref=e999]:
+                    - generic [ref=e1000]: Steps
+                    - generic [ref=e1002]:
+                      - generic [ref=e1003]: 148K
+                      - generic [ref=e1004]: 98K
+                      - generic [ref=e1005]: 49K
+                      - generic [ref=e1006]: "0"
+                    - generic [ref=e1007]: Users
+                  - generic [ref=e1009]:
+                    - generic [ref=e1011]:
+                      - generic [ref=e1012]: "1"
+                      - generic [ref=e1013]: All Sessions
+                    - generic [ref=e1016]:
+                      - generic [ref=e1017]:
+                        - generic [ref=e1018]: Completed
+                        - generic [ref=e1019]:
+                          - generic [ref=e1020]: 148K
+                          - generic [ref=e1021]: 100%
+                      - generic [ref=e1022]:
+                        - generic [ref=e1023]: Abandoned
+                        - generic [ref=e1024]:
+                          - generic [ref=e1025]: 0K
+                          - generic [ref=e1026]: 0%
+                  - generic [ref=e1027]:
+                    - generic [ref=e1029]:
+                      - generic [ref=e1030]: "2"
+                      - generic [ref=e1031]: Product Viewed
+                    - generic [ref=e1032]: 57%
+                    - generic [ref=e1040]:
+                      - generic [ref=e1041]:
+                        - generic [ref=e1042]: Completed
+                        - generic [ref=e1043]:
+                          - generic [ref=e1044]: 64K
+                          - generic [ref=e1045]: 43%
+                      - generic [ref=e1046]:
+                        - generic [ref=e1047]: Abandoned
+                        - generic [ref=e1048]:
+                          - generic [ref=e1049]: 84K
+                          - generic [ref=e1050]: 57%
+                  - generic [ref=e1051]:
+                    - generic [ref=e1053]:
+                      - generic [ref=e1054]: "3"
+                      - generic [ref=e1055]: Add to Cart
+                    - generic [ref=e1056]: 41%
+                    - generic [ref=e1064]:
+                      - generic [ref=e1065]:
+                        - generic [ref=e1066]: Completed
+                        - generic [ref=e1067]:
+                          - generic [ref=e1068]: 38K
+                          - generic [ref=e1069]: 26%
+                      - generic [ref=e1070]:
+                        - generic [ref=e1071]: Abandoned
+                        - generic [ref=e1072]:
+                          - generic [ref=e1073]: 26K
+                          - generic [ref=e1074]: 41%
+                  - generic [ref=e1075]:
+                    - generic [ref=e1077]:
+                      - generic [ref=e1078]: "4"
+                      - generic [ref=e1079]: Begin Checkout
+                    - generic [ref=e1080]: 63%
+                    - generic [ref=e1088]:
+                      - generic [ref=e1089]:
+                        - generic [ref=e1090]: Completed
+                        - generic [ref=e1091]:
+                          - generic [ref=e1092]: 14K
+                          - generic [ref=e1093]: 9%
+                      - generic [ref=e1094]:
+                        - generic [ref=e1095]: Abandoned
+                        - generic [ref=e1096]:
+                          - generic [ref=e1097]: 24K
+                          - generic [ref=e1098]: 63%
+                  - generic [ref=e1099]:
+                    - generic [ref=e1101]:
+                      - generic [ref=e1102]: "5"
+                      - generic [ref=e1103]: Purchase
+                    - generic [ref=e1104]: 75%
+                    - generic [ref=e1112]:
+                      - generic [ref=e1113]:
+                        - generic [ref=e1114]: Completed
+                        - generic [ref=e1115]:
+                          - generic [ref=e1116]: 3.5K
+                          - generic [ref=e1117]: 2%
+                      - generic [ref=e1118]:
+                        - generic [ref=e1119]: Abandoned
+                        - generic [ref=e1120]:
+                          - generic [ref=e1121]: 10.5K
+                          - generic [ref=e1122]: 75%
+              - generic [ref=e1126]: Maya R
+        - generic [ref=e1128]:
+          - generic [ref=e1129]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - paragraph:
+                    - text: New funnel
+                    - generic: Purchase Journey
+                  - list:
+                    - listitem:
+                      - generic: "1"
+                      - combobox:
+                        - generic: Page viewed
+                      - textbox [aria-hidden]: Page viewed
+                      - textbox: /products/*
+                    - listitem:
+                      - generic: "2"
+                      - combobox:
+                        - generic: Event
+                      - textbox [aria-hidden]: Event
+                      - textbox: add_to_cart
+                    - listitem:
+                      - generic: "3"
+                      - combobox:
+                        - generic: Page viewed
+                      - textbox [aria-hidden]: Page viewed
+                      - textbox: /checkout
+                    - listitem:
+                      - generic: "4"
+                      - combobox:
+                        - generic: Event
+                      - textbox [aria-hidden]: Event
+                      - textbox: purchase
+                - generic: Maya R
+            - generic [ref=e1130]:
+              - heading "Built in minutes" [level=3] [ref=e1131]
+              - generic [ref=e1132]: Pick the pages and the events. No tagging plan, no developer.
+          - generic [ref=e1133]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Purchase Journey
+                      - generic: Benchmark
+                    - generic:
+                      - generic:
+                        - generic:
+                          - generic: Steps
+                          - generic:
+                            - generic: 148K
+                            - generic: 98K
+                            - generic: 49K
+                            - generic: "0"
+                          - generic: Users
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "1"
+                              - generic: All Sessions
+                          - generic:
+                            - generic:
+                              - generic: Completed
+                              - generic:
+                                - generic: 148K
+                                - generic: 100%
+                            - generic:
+                              - generic: Abandoned
+                              - generic:
+                                - generic: 0K
+                                - generic: 0%
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "2"
+                              - generic: Product Viewed
+                          - generic: 57%
+                          - generic:
+                            - generic:
+                              - generic: Completed
+                              - generic:
+                                - generic: 64K
+                                - generic: 43%
+                            - generic:
+                              - generic: Abandoned
+                              - generic:
+                                - generic: 84K
+                                - generic: 57%
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "3"
+                              - generic: Add to Cart
+                          - generic: 41%
+                          - generic:
+                            - generic:
+                              - generic: Completed
+                              - generic:
+                                - generic: 38K
+                                - generic: 26%
+                            - generic:
+                              - generic: Abandoned
+                              - generic:
+                                - generic: 26K
+                                - generic: 41%
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "4"
+                              - generic: Begin Checkout
+                          - generic: $1.14M lost
+                          - generic:
+                            - generic:
+                              - generic: Completed
+                              - generic:
+                                - generic: 14K
+                                - generic: 9%
+                            - generic:
+                              - generic: Abandoned
+                              - generic:
+                                - generic: 24K
+                                - generic: 63%
+                        - generic:
+                          - generic:
+                            - generic:
+                              - generic: "5"
+                              - generic: Purchase
+                          - generic: 75%
+                          - generic:
+                            - generic:
+                              - generic: Completed
+                              - generic:
+                                - generic: 3.5K
+                                - generic: 2%
+                            - generic:
+                              - generic: Abandoned
+                              - generic:
+                                - generic: 10.5K
+                                - generic: 75%
+            - generic [ref=e1134]:
+              - heading "Priced drop-offs" [level=3] [ref=e1135]
+              - generic [ref=e1136]: Each leak carries what it cost, which turns a chart into a plan.
+          - generic [ref=e1137]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - tablist:
+                      - tab: All Devices
+                      - tab [selected]: Mobile
+                      - tab: Desktop
+                  - generic:
+                    - generic:
+                      - generic: 96K
+                      - generic: 64K
+                      - generic: 32K
+                      - generic: "0"
+                    - generic:
+                      - generic:
+                        - generic: All Sessions
+                        - generic: 96K
+                      - generic:
+                        - generic: Product Viewed
+                        - generic: 38K
+                      - generic:
+                        - generic: Add to Cart
+                        - generic: 17K
+                      - generic:
+                        - generic: Begin Checkout
+                        - generic: 5.2K
+                      - generic:
+                        - generic: Purchase
+                        - generic: 1.1K
+            - generic [ref=e1138]:
+              - heading "Split by segment" [level=3] [ref=e1139]
+              - generic [ref=e1140]: Source, device, campaign. It is rarely leaking for everyone.
+      - generic [ref=e1142]:
+        - generic [ref=e1143]: Customers
+        - paragraph [ref=e1144]: The brands that trust heatmap to tell them what to fix first.
+        - generic [ref=e1145]:
+          - img "Jones Road" [ref=e1147]
+          - img "Obvi" [ref=e1149]
+          - img "Carnivore Snax" [ref=e1151]
+          - img "VKTRY" [ref=e1153]
+          - img "Everyday Dose" [ref=e1155]
+          - img "As We Move" [ref=e1157]
+          - img "Infinite Icon" [ref=e1159]
+      - generic [ref=e1165]:
+        - img "Marketing Max" [ref=e1166]
+        - paragraph [ref=e1167]:
+          - generic [ref=e1168]: "\""
+          - text: I've been looking for a GA4 replacement ever since it dropped, and finally heatmap's new Web Analytics platform has blown me away. Setup takes just seconds, the data's more accurate, and I'm able to pull actionable insights easily. Plus, the flat-fee pricing has made it super easy to scale across all my agency's ecommerce clients. 10/10 recommend!"
+        - generic [ref=e1169]:
+          - img "Marketing Max" [ref=e1170]
+          - paragraph [ref=e1172]: Marketing Max, Founder
+      - generic [ref=e1175]:
+        - generic [ref=e1176]:
+          - generic [ref=e1177]: Surveys
+          - heading "Stop guessing. Ask them." [level=2] [ref=e1178]
+          - paragraph [ref=e1179]: Behavior shows you where people hesitate. It cannot tell you why. Put the question on that page and read the answers back as themes, not a spreadsheet.
+          - generic [ref=e1180]:
+            - generic [ref=e1181]:
+              - term [ref=e1182]: Live in five minutes
+              - definition [ref=e1183]: On any page, or at the step where people stall.
+            - generic [ref=e1184]:
+              - term [ref=e1185]: Themes, not transcripts
+              - definition [ref=e1186]: Open answers summarized into what people keep saying, with the mood attached.
+            - generic [ref=e1187]:
+              - term [ref=e1188]: Who saw it, who bailed
+              - definition [ref=e1189]: Its own drop-off too, so you know what the silence meant.
+        - generic [aria-hidden] [ref=e1191]:
+          - generic [ref=e1192]:
+            - paragraph [ref=e1193]:
+              - text: Exit Survey Answers
+              - generic [ref=e1194]: Last 7 days
+            - generic [ref=e1195]:
+              - generic [ref=e1196]:
+                - generic:
+                  - generic: "0"
+                  - generic: Responses
+              - generic [ref=e1203]:
+                - generic [ref=e1204]:
+                  - generic [ref=e1206]: Found what I wanted
+                  - generic [ref=e1207]: "0"
+                - generic [ref=e1208]:
+                  - generic [ref=e1210]: Still deciding
+                  - generic [ref=e1211]: "0"
+                - generic [ref=e1212]:
+                  - generic [ref=e1214]: Price too high
+                  - generic [ref=e1215]: "0"
+                - generic [ref=e1216]:
+                  - generic [ref=e1218]: Could not find it
+                  - generic [ref=e1219]: "0"
+          - generic [ref=e1220]:
+            - paragraph [ref=e1221]:
+              - text: Response Rate
+              - generic [ref=e1222]: This week
+            - generic [ref=e1223]:
+              - generic [ref=e1224]: 0.0%
+              - generic [ref=e1228]:
+                - generic [ref=e1229]: 6%
+                - generic [ref=e1230]: 4%
+                - generic [ref=e1231]: 2%
+                - generic [ref=e1232]: 0%
+              - generic [ref=e1244]:
+                - generic [ref=e1245]: 17 Mar
+                - generic [ref=e1246]: "18"
+                - generic [ref=e1247]: "19"
+                - generic [ref=e1248]: "20"
+                - generic [ref=e1249]: "21"
+                - generic [ref=e1250]: "22"
+                - generic [ref=e1251]: 23 Mar
+              - generic [ref=e1252]:
+                - generic [ref=e1253]: This week
+                - generic [ref=e1255]: Last week
+      - generic [ref=e1261]:
+        - generic [ref=e1262]:
+          - generic [ref=e1263]: Screen recordings
+          - heading "Stop watching random sessions." [level=2] [ref=e1264]
+          - paragraph [ref=e1265]: "Every recording carries what the session was worth and how close it came, so you watch the ones that matter: the buyers, and the near-misses that look exactly like them right up until they don’t."
+          - generic [ref=e1266]:
+            - generic [ref=e1267]:
+              - term [ref=e1268]: Sorted by revenue and intent
+              - definition [ref=e1269]: Not by whichever session happened to be the most recent.
+            - generic [ref=e1270]:
+              - term [ref=e1271]: Jump to the moment
+              - definition [ref=e1272]: Add to cart, checkout error, rage click. The timeline is indexed.
+            - generic [ref=e1273]:
+              - term [ref=e1274]: Share a session with a link
+              - definition [ref=e1275]: No login on the other end, for the client or the developer.
+        - generic [ref=e1278]:
+          - 'img "Session recording: a visitor browsing the Latico storefront" [ref=e1280]':
+            - generic [ref=e1285]: Visitor
+          - generic [ref=e1286]:
+            - generic [ref=e1287]:
+              - combobox [ref=e1288] [cursor=pointer]:
+                - generic [ref=e1289]: 1x
+              - textbox [aria-hidden] [ref=e1293]: 1x
+              - generic [ref=e1294]:
+                - text: 00:00
+                - generic [ref=e1295]: / 05:09
+            - button "Pause" [ref=e1296] [cursor=pointer]
+            - generic [ref=e1297]:
+              - generic "Dead Click at 00:19" [ref=e1299]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Dead Click
+                      - generic: 00:19
+              - generic "Page Click at 01:36" [ref=e1301]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Page Click
+                      - generic: 01:36
+              - generic "Page Click at 02:28" [ref=e1303]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Page Click
+                      - generic: 02:28
+              - generic "Dead Click at 03:58" [ref=e1305]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Dead Click
+                      - generic: 03:58
+              - generic "Dead Click at 04:26" [ref=e1307]:
+                - generic:
+                  - generic:
+                    - generic:
+                      - generic: Dead Click
+                      - generic: 04:26
+            - generic [ref=e1309]:
+              - generic [ref=e1310] [cursor=pointer]:
+                - switch "Skip Inactivity" [checked] [ref=e1311]
+                - checkbox [checked] [aria-hidden] [ref=e1313]
+                - generic [ref=e1314]: Skip Inactivity
+              - button "Fullscreen" [ref=e1315] [cursor=pointer]
+      - generic [ref=e1323]:
+        - generic [ref=e1324]:
+          - generic [ref=e1325]: A/B tests
+          - heading "Ship the version that made money." [level=2] [ref=e1326]
+          - paragraph [ref=e1327]: "Test a page, then read the result the way the rest of heatmap reads everything: revenue per session, by variant, with the significance called for you. Conversion rate is there too. It is not the number that decides."
+          - generic [ref=e1328]:
+            - generic [ref=e1329]:
+              - term [ref=e1330]: Revenue per session, per variant
+              - definition [ref=e1331]: A variant can convert more and earn less. You see both, so the winner is the one that paid.
+            - generic [ref=e1332]:
+              - term [ref=e1333]: Significance, called for you
+              - definition [ref=e1334]: The test says when it is done. No calculator, and no argument about sample size.
+            - generic [ref=e1335]:
+              - term [ref=e1336]: A heatmap for each variant
+              - definition [ref=e1337]: Not just which version won, but what people did differently inside it.
+        - generic [aria-hidden] [ref=e1339]:
+          - generic [ref=e1340]:
+            - paragraph [ref=e1341]:
+              - text: Free shipping threshold
+              - generic [ref=e1342]:
+                - generic [ref=e1343]: Starting
+                - generic [ref=e1344]: "Winner: Variant B"
+            - generic [ref=e1348]:
+              - generic [ref=e1349]:
+                - generic [ref=e1350]: Revenue per session
+                - generic [ref=e1351]: $0.00
+              - generic [ref=e1354]:
+                - generic [ref=e1355]: $6
+                - generic [ref=e1356]: $4
+                - generic [ref=e1357]: $2
+                - generic [ref=e1358]: $0
+              - generic [ref=e1370]:
+                - generic [ref=e1371]: Day 1
+                - generic [ref=e1372]: "3"
+                - generic [ref=e1373]: "5"
+                - generic [ref=e1374]: "7"
+                - generic [ref=e1375]: "9"
+                - generic [ref=e1376]: "11"
+                - generic [ref=e1377]: Day 14
+              - generic [ref=e1378]:
+                - generic [ref=e1379]: Variant B
+                - generic [ref=e1381]: Control
+          - generic [ref=e1385]:
+            - table [ref=e1387]:
+              - rowgroup [ref=e1388]:
+                - row [ref=e1389]:
+                  - columnheader [ref=e1390]: Variant
+                  - columnheader [ref=e1391]: Sessions
+                  - columnheader [ref=e1392]: RPS
+                  - columnheader [ref=e1393]: CVR
+              - rowgroup [ref=e1394]:
+                - row [ref=e1395]:
+                  - cell [ref=e1396]: Variant B
+                  - cell [ref=e1397]: "0"
+                  - cell [ref=e1398]: $0.00
+                  - cell [ref=e1399]: 0.0%
+                - row [ref=e1400]:
+                  - cell [ref=e1401]: Control
+                  - cell [ref=e1402]: "0"
+                  - cell [ref=e1403]: $0.00
+                  - cell [ref=e1404]: 0.0%
+            - generic [ref=e1406]:
+              - generic [ref=e1407]: Statistical significance
+              - generic [ref=e1409]: 0% · 95% to call
+      - generic [ref=e1414]:
+        - generic [ref=e1415]:
+          - generic [ref=e1416]: Attention map
+          - heading "Clicks are the last 5%. See the rest." [level=2] [ref=e1417]
+          - paragraph [ref=e1418]: "Reading, comparing, hovering, hesitating: most of a decision happens with nothing clicked. The Attention Map cuts every page into 20 bands and measures, for each one, how many people got there and how many actually took it in."
+          - generic [ref=e1419]:
+            - generic [ref=e1420]:
+              - term [ref=e1421]: Reach and attention, per band
+              - definition [ref=e1422]: How many visitors got this far, and of those, how many had it in view long enough to read it.
+            - generic [ref=e1423]:
+              - term [ref=e1424]: Hesitancy on every element
+              - definition [ref=e1425]: How long the cursor sat on a button before the click. Fifteen seconds on a CTA is an objection, not a layout problem.
+            - generic [ref=e1426]:
+              - term [ref=e1427]: Predicted against measured
+              - definition [ref=e1428]: What the design invites people to look at, beside what they actually did.
+        - generic [aria-hidden] [ref=e1430]:
+          - generic [ref=e1431]:
+            - generic [aria-hidden]:
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 100%
+                    - generic: ·
+                    - generic: Attention 48%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 100%
+                    - generic: ·
+                    - generic: Attention 62%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 98%
+                    - generic: ·
+                    - generic: Attention 74%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 96%
+                    - generic: ·
+                    - generic: Attention 71%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 92%
+                    - generic: ·
+                    - generic: Attention 40%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 88%
+                    - generic: ·
+                    - generic: Attention 31%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 81%
+                    - generic: ·
+                    - generic: Attention 36%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 76%
+                    - generic: ·
+                    - generic: Attention 33%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 70%
+                    - generic: ·
+                    - generic: Attention 44%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 66%
+                    - generic: ·
+                    - generic: Attention 68%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 61%
+                    - generic: ·
+                    - generic: Attention 72%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 56%
+                    - generic: ·
+                    - generic: Attention 58%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 51%
+                    - generic: ·
+                    - generic: Attention 54%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 46%
+                    - generic: ·
+                    - generic: Attention 41%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 41%
+                    - generic: ·
+                    - generic: Attention 47%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 37%
+                    - generic: ·
+                    - generic: Attention 76%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 33%
+                    - generic: ·
+                    - generic: Attention 74%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 29%
+                    - generic: ·
+                    - generic: Attention 61%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 25%
+                    - generic: ·
+                    - generic: Attention 49%
+              - generic:
+                - generic:
+                  - generic:
+                    - generic: Reach 20%
+                    - generic: ·
+                    - generic: Attention 22%
+          - generic:
+            - generic: 0.0s
+            - text: hesitancy
+          - generic [ref=e1435]: Maya R
+      - generic [ref=e1439]:
+        - img "Obvi" [ref=e1440]
+        - paragraph [ref=e1441]:
+          - generic [ref=e1442]: "\""
+          - text: I've been able to figure out what elements actually increase AOV and optimize our landing pages to drive more first purchase profitability, we're up 23% YoY."
+        - generic [ref=e1443]:
+          - img "Ashvin Melwani" [ref=e1444]
+          - paragraph [ref=e1446]: Ashvin Melwani, CMO & Co-Founder
+      - generic [ref=e1449]:
+        - generic [ref=e1450]:
+          - generic [ref=e1451]: Chrome extension
+          - heading "Read any page without leaving it." [level=2] [ref=e1452]
+          - paragraph [ref=e1453]: The heatmap extension opens a side panel on any store page and reads it right there. On your own site, that is your heatmaps, funnels, recordings and surveys beside the page they describe. On any other, Wilson scans the page and lists what to fix first.
+          - generic [ref=e1454]:
+            - generic [ref=e1455]:
+              - term [ref=e1456]: A free scan on any site
+              - definition [ref=e1457]: Open the panel on a page and get a prioritized list of what to fix. No account, no code.
+            - generic [ref=e1458]:
+              - term [ref=e1459]: Your data, beside the page
+              - definition [ref=e1460]: Heatmaps, funnels, recordings and surveys for the page you are looking at, for subscribers.
+            - generic [ref=e1461]:
+              - term [ref=e1462]: The finding, pointed at
+              - definition [ref=e1463]: Each recommendation highlights the element it is about, on the page itself.
+          - link "Add to Chrome" [ref=e1465] [cursor=pointer]:
+            - /url: https://chromewebstore.google.com/detail/heatmap/kadklllcjcpikllfglelngcobbkgfhid
+        - 'figure "Any page, read on the spot: the scan, then the fix, pointed at on the page." [ref=e1467]':
+          - generic [ref=e1468]:
+            - generic [ref=e1469]: latico.com
+            - generic [aria-hidden] [ref=e1477]:
+              - generic [ref=e1478]: "1"
+              - complementary [ref=e1482]:
+                - generic [ref=e1483]:
+                  - generic [ref=e1486]: heatmap
+                  - generic [ref=e1487]: Latico Leathers
+                - generic [ref=e1490]:
+                  - generic [ref=e1491]: Scanning this page
+                  - generic [ref=e1493]: 0%
+                - generic [ref=e1495]:
+                  - article [ref=e1497]:
+                    - generic [ref=e1498]: $4,900 / mo
+                    - paragraph [ref=e1499]: Shop New Arrivals sits below the fold on mobile
+                    - generic [ref=e1500]: Fix first
+                  - article [ref=e1502]:
+                    - generic [ref=e1503]: $2,100 / mo
+                    - paragraph [ref=e1504]: "The review stars aren’t a link: 2,300 dead clicks"
+                    - generic [ref=e1505]: Quick win
+                  - article [ref=e1507]:
+                    - generic [ref=e1508]: $1,400 / mo
+                    - paragraph [ref=e1509]: Best sellers reach 37% of visitors
+                    - generic [ref=e1510]: Test
+                - generic: Show Me Where
+      - generic [ref=e1514]:
+        - generic [ref=e1515]:
+          - generic [ref=e1516]: Ask it anything
+          - heading "Stop reading dashboards. Ask your store what happened." [level=2] [ref=e1517]: Stop reading dashboards.Ask your store what happened.
+          - paragraph [ref=e1518]: Connect heatmap to Claude, ChatGPT, Cursor or Codex and ask why checkout revenue dropped last week, in plain English.
+          - link "Explore the MCP Server" [ref=e1520] [cursor=pointer]:
+            - /url: /mcp
+        - generic [ref=e1537]:
+          - generic [ref=e1538]:
+            - generic [ref=e1539]:
+              - generic [ref=e1543]:
+                - text: heatmap
+                - generic [ref=e1544]: New
+              - generic [ref=e1545]: Analytics
+            - paragraph [ref=e1548]: Your store’s sessions, funnels and revenue
+            - generic [ref=e1550]:
+              - generic [ref=e1551]: Connect
+              - generic [ref=e1552]: Connected
+          - generic:
+            - generic: Why did checkout revenue drop last week?
+            - generic:
+              - generic:
+                - paragraph: Mobile checkout lost $8,400 last week.
+                - paragraph: The express-pay button stopped rendering on iOS Safari on Tuesday.
+            - generic: Write a message…
+            - generic:
+              - generic: Add folder
+              - generic: Auto
+              - generic: Opus 5
+              - generic: High
+      - generic [ref=e1561]:
+        - generic [ref=e1562]:
+          - generic [ref=e1563]: For agencies
+          - heading "Walk into the client call already knowing their store." [level=2] [ref=e1564]
+          - paragraph [ref=e1565]: Install once, bring the fix list to the first meeting, and report in the number the client actually cares about.
+          - link "Agency Partnerships" [ref=e1567] [cursor=pointer]:
+            - /url: /agencies
+        - generic [ref=e1569]:
+          - generic [aria-hidden]:
+            - generic:
+              - generic:
+                - generic: Drop-off
+                - generic: Where sessions die
+              - generic:
+                - generic: A/B Tests
+                - generic: Which version made money
+              - generic:
+                - generic: Comparisons
+                - generic: This client against the last
+      - generic [ref=e1571]:
+        - generic [ref=e1572]:
+          - generic [ref=e1573]: Case studies
+          - heading "What it found, and what it was worth." [level=2] [ref=e1574]
+        - link "Latico Leathers +13% Revenue per session How Latico Leathers Increased Revenue per Session by 13% with heatmapAI Latico swapped a discount code shoppers weren’t using for strikethrough prices with the saving shown on every product card. Read the Case Study" [ref=e1576] [cursor=pointer]:
+          - /url: /case-studies/latico-leathers-increased-revenue-per-session-heatmap
+          - generic [ref=e1578]:
+            - img "Latico Leathers" [ref=e1580]
+            - paragraph [ref=e1581]:
+              - generic [ref=e1582]: +13%
+              - generic [ref=e1583]: Revenue per session
+            - heading "How Latico Leathers Increased Revenue per Session by 13% with heatmapAI" [level=2] [ref=e1584]
+            - paragraph [ref=e1585]: Latico swapped a discount code shoppers weren’t using for strikethrough prices with the saving shown on every product card.
+            - generic [ref=e1586]: Read the Case Study
+        - link "View All Case Studies" [ref=e1591] [cursor=pointer]:
+          - /url: /case-studies
+    - generic [ref=e1593]:
+      - heading "Start free. Pay when it’s paying for itself." [level=2] [ref=e1594]
+      - paragraph [ref=e1595]: Give it fifteen minutes and see what it finds.
+      - generic [ref=e1596]:
+        - button "Book a Demo" [ref=e1597] [cursor=pointer]
+        - link "Start for Free" [ref=e1598] [cursor=pointer]:
+          - /url: https://portal.heatmap.com/auth/signup?plan=32&period=month
+    - contentinfo [ref=e1599]:
+      - generic [ref=e1600]:
+        - generic [ref=e1601]:
+          - paragraph [ref=e1602]: The analytics that tell you what to fix, and what it’s worth.
+          - generic [ref=e1603]:
+            - link "heatmap on LinkedIn" [ref=e1604] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/heatmapdotcom/
+            - link "heatmap on X" [ref=e1607] [cursor=pointer]:
+              - /url: https://x.com/heatmapme
+        - generic [ref=e1611]:
+          - navigation "Footer" [ref=e1612]:
+            - link "Upcoming Events" [ref=e1613] [cursor=pointer]:
+              - /url: /webinar-klaviyo-traffic
+            - link "Past Events" [ref=e1614] [cursor=pointer]:
+              - /url: /webinar-ai-shopping
+            - link "Blog" [ref=e1615] [cursor=pointer]:
+              - /url: /blog
+            - link "Case Studies" [ref=e1616] [cursor=pointer]:
+              - /url: /case-studies
+            - link "Knowledge Base" [ref=e1617] [cursor=pointer]:
+              - /url: https://intercom.help/heatmap-inc/en/
+            - link "MCP Server" [ref=e1618] [cursor=pointer]:
+              - /url: /mcp
+            - link "Site Grader" [ref=e1619] [cursor=pointer]:
+              - /url: https://sitegrader.heatmapcore.com/?hVisitId=610270541476570064&hVUUID=6446fb08-71e9-44e1-a25d-6e7625b66dd0&__hstc=29721376.447154e5110b20be38f13dd5573c0b57.1793079712305.1793079712305.1793079712305.1&__hssc=29721376.1.1793079712305&__hsfp=e2a1171de52a79947ec612bac9370d62
+            - link "Shopify App" [ref=e1620] [cursor=pointer]:
+              - /url: /shopify-app
+            - link "Agencies" [ref=e1621] [cursor=pointer]:
+              - /url: /agencies
+            - link "Pricing" [ref=e1622] [cursor=pointer]:
+              - /url: /pricing
+            - link "FAQs" [ref=e1623] [cursor=pointer]:
+              - /url: /faq
+          - link "Log In" [ref=e1624] [cursor=pointer]:
+            - /url: https://portal.heatmap.com
+      - link "heatmap.com" [ref=e1626] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e1629]: heatmap
+        - generic [ref=e1630]: .com
+      - generic [ref=e1632]:
+        - generic [ref=e1633]: © 2026 Heatmap, Inc. All rights reserved.
+        - generic [ref=e1634]:
+          - link "Terms" [ref=e1635] [cursor=pointer]:
+            - /url: /terms-of-service
+          - link "Privacy" [ref=e1636] [cursor=pointer]:
+            - /url: /privacy-policy
+    - generic [ref=e1640] [cursor=pointer]:
+      - generic [ref=e1641]: Talk to an expert
+      - generic [ref=e1642]:
+        - generic [ref=e1643]: Book a Demo
+        - link "Start for Free" [ref=e1644]:
+          - /url: https://portal.heatmap.com/auth/signup?plan=32&period=month
+  - dialog "Cookie banner" [active] [ref=e1645]:
+    - generic [ref=e1646]:
+      - button "Dismiss cookie banner" [ref=e1648] [cursor=pointer]
+      - paragraph [ref=e1653]: We use cookies to understand how people use our site and to make it better. You can accept or decline. Privacy Policy
+      - paragraph [ref=e1654]: If you decline, your information won’t be tracked when you visit this website. A single cookie will be used in your browser to remember your preference not to be tracked.
+      - generic [ref=e1657]:
+        - button "Accept" [ref=e1658] [cursor=pointer]
+        - button "Decline" [ref=e1659] [cursor=pointer]
+  - iframe

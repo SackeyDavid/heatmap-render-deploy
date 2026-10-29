@@ -1,0 +1,113 @@
+[    2425ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  122616ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  124218ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  136231ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  142796ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  149396ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  167520ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  263167ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:8786/favicon.ico:0
+[  275354ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[  571410ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 1751568ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 1880555ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 1887829ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 1920388ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 2183832ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 2253834ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 2501647ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 2509592ms] ReferenceError: ShieldIcon is not defined
+    at RequestForm (http://127.0.0.1:5173/src/components/RequestForm.tsx?t=1793197408790:730:32)
+    at renderWithHooks (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:11548:26)
+    at updateFunctionComponent (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14582:28)
+    at beginWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:15924:22)
+    at HTMLUnknownElement.callCallback2 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3674:22)
+    at Object.invokeGuardedCallbackDev (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3699:24)
+    at invokeGuardedCallback (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3733:39)
+    at beginWork$1 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19765:15)
+    at performUnitOfWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19198:20)
+    at workLoopSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19137:13)
+[ 2509592ms] ReferenceError: ShieldIcon is not defined
+    at RequestForm (http://127.0.0.1:5173/src/components/RequestForm.tsx?t=1793197408790:730:32)
+    at renderWithHooks (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:11548:26)
+    at updateFunctionComponent (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14582:28)
+    at beginWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:15924:22)
+    at HTMLUnknownElement.callCallback2 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3674:22)
+    at Object.invokeGuardedCallbackDev (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3699:24)
+    at invokeGuardedCallback (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3733:39)
+    at beginWork$1 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19765:15)
+    at performUnitOfWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19198:20)
+    at workLoopSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19137:13)
+[ 2509593ms] [ERROR] The above error occurred in the <RequestForm> component:
+
+    at RequestForm (http://127.0.0.1:5173/src/components/RequestForm.tsx?t=1793197408790:39:31)
+    at div
+    at section
+    at FormScreen (http://127.0.0.1:5173/src/components/FormScreen.tsx?t=1793197398798:37:94)
+    at main
+    at div
+    at App (http://127.0.0.1:5173/src/App.tsx?t=1793197398798:56:12)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14031
+[ 2509594ms] ReferenceError: ShieldIcon is not defined
+    at RequestForm (http://127.0.0.1:5173/src/components/RequestForm.tsx?t=1793197408790:730:32)
+    at renderWithHooks (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:11548:26)
+    at updateFunctionComponent (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14582:28)
+    at beginWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:15924:22)
+    at beginWork$1 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19753:22)
+    at performUnitOfWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19198:20)
+    at workLoopSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19137:13)
+    at renderRootSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19116:15)
+    at recoverFromConcurrentError (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:18736:28)
+    at performSyncWorkOnRoot (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:18879:28)
+[ 3141735ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550
+[ 3192806ms] ReferenceError: SparkIcon is not defined
+    at MerchantHelper (http://127.0.0.1:5173/src/components/MerchantHelper.tsx?t=1793198091993:100:132)
+    at renderWithHooks (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:11548:26)
+    at updateFunctionComponent (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14582:28)
+    at beginWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:15924:22)
+    at HTMLUnknownElement.callCallback2 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3674:22)
+    at Object.invokeGuardedCallbackDev (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3699:24)
+    at invokeGuardedCallback (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3733:39)
+    at beginWork$1 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19765:15)
+    at performUnitOfWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19198:20)
+    at workLoopSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19137:13)
+[ 3192807ms] ReferenceError: SparkIcon is not defined
+    at MerchantHelper (http://127.0.0.1:5173/src/components/MerchantHelper.tsx?t=1793198091993:100:132)
+    at renderWithHooks (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:11548:26)
+    at updateFunctionComponent (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14582:28)
+    at beginWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:15924:22)
+    at HTMLUnknownElement.callCallback2 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3674:22)
+    at Object.invokeGuardedCallbackDev (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3699:24)
+    at invokeGuardedCallback (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:3733:39)
+    at beginWork$1 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19765:15)
+    at performUnitOfWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19198:20)
+    at workLoopSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19137:13)
+[ 3192808ms] [ERROR] The above error occurred in the <MerchantHelper> component:
+
+    at MerchantHelper (http://127.0.0.1:5173/src/components/MerchantHelper.tsx?t=1793198091993:24:34)
+    at div
+    at div
+    at form
+    at RequestForm (http://127.0.0.1:5173/src/components/RequestForm.tsx?t=1793198091993:26:31)
+    at div
+    at section
+    at FormScreen (http://127.0.0.1:5173/src/components/FormScreen.tsx?t=1793198091993:37:94)
+    at main
+    at div
+    at App (http://127.0.0.1:5173/src/App.tsx?t=1793198091993:56:12)
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries. @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14031
+[ 3192808ms] ReferenceError: SparkIcon is not defined
+    at MerchantHelper (http://127.0.0.1:5173/src/components/MerchantHelper.tsx?t=1793198091993:100:132)
+    at renderWithHooks (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:11548:26)
+    at updateFunctionComponent (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:14582:28)
+    at beginWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:15924:22)
+    at beginWork$1 (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19753:22)
+    at performUnitOfWork (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19198:20)
+    at workLoopSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19137:13)
+    at renderRootSync (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:19116:15)
+    at recoverFromConcurrentError (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:18736:28)
+    at performSyncWorkOnRoot (http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:18879:28)
+[ 3929658ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://127.0.0.1:5173/node_modules/.vite/deps/chunk-36CNJZTX.js?v=88d263d2:21550

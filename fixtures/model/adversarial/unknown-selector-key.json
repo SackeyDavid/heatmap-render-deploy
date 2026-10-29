@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "promptVersion": "interpret-1",
+  "modelId": "mock",
+  "behaviours": [
+    {
+      "kind": "click",
+      "evidence": "opens a FAQ",
+      "target": "FAQ",
+      "selector": "#faq"
+    }
+  ],
+  "unsupported": []
+}

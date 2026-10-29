@@ -1,0 +1,291 @@
+/* Shared inline icon utilities (import from index.css). */
+
+.hm-icon {
+  display: block;
+  flex: none;
+}
+
+.hm-btn-with-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+}
+
+.hm-icon--trailing {
+  margin-left: 0.05rem;
+}
+
+.hm-icon--brand {
+  color: var(--brand);
+}
+
+.hm-icon--on-dark {
+  color: var(--brand-lift, #2ecd86);
+}
+
+.hm-section-divider {
+  border: 0;
+  height: 1px;
+  margin: var(--space-6) 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--brand) 35%, var(--border-subtle)) 20%,
+    color-mix(in srgb, var(--brand) 35%, var(--border-subtle)) 80%,
+    transparent
+  );
+}
+
+/* Step list (sign-in and similar) */
+.hm-step-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.hm-step {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.hm-step__icon {
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--brand) 28%, var(--border-subtle));
+  color: var(--brand-strong);
+  box-shadow: 0 2px 8px -4px color-mix(in srgb, var(--hm-dark) 18%, transparent);
+}
+
+.hm-step__text {
+  flex: 1;
+  padding-top: 0.35rem;
+  line-height: 1.45;
+}
+
+/* Panel headers with icon */
+.hm-panel-head {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+
+.hm-panel-head__icon {
+  flex: none;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-surface);
+  background: color-mix(in srgb, var(--brand) 12%, var(--surface));
+  color: var(--brand-strong);
+}
+
+.hm-panel-head__icon--success {
+  background: var(--success-tint);
+  color: var(--success);
+}
+
+.hm-panel-head__icon--warn {
+  background: var(--destructive-tint);
+  color: var(--destructive);
+}
+
+.hm-panel-head__icon--pulse {
+  animation: hm-spark-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes hm-spark-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.82;
+    transform: scale(1.06);
+  }
+}
+
+/* Success celebration band */
+.hm-success-hero {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-5);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--success) 35%, transparent);
+  background: linear-gradient(135deg, var(--success-tint) 0%, var(--surface) 55%, var(--canvas) 100%);
+  box-shadow: 0 10px 28px -18px color-mix(in srgb, var(--brand-strong) 45%, transparent);
+}
+
+.hm-success-hero__icon {
+  flex: none;
+  width: 3.25rem;
+  height: 3.25rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--success);
+  border: 2px solid color-mix(in srgb, var(--success) 40%, transparent);
+  animation: hm-check-pop 0.55s ease-out;
+}
+
+@keyframes hm-check-pop {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.6;
+  }
+  60% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.hm-success-hero__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  line-height: 1.25;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-tight);
+  color: var(--hm-dark, #004323);
+}
+
+.hm-status-box {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.hm-status-box__icon {
+  flex: none;
+  margin-top: 0.1rem;
+  color: var(--brand-orange);
+}
+
+.hm-status-box__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.hm-status-box__body p {
+  margin: 0 0 var(--space-2);
+}
+
+.hm-status-box__body p:last-child {
+  margin-bottom: 0;
+}
+
+.hm-error-summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.hm-error-summary__icon {
+  flex: none;
+  color: var(--destructive);
+  margin-top: 0.15rem;
+}
+
+.hm-error-summary__body h2 {
+  margin: 0 0 var(--space-2);
+  font-size: 1.1rem;
+  color: var(--destructive);
+}
+
+.hm-error-summary__body p {
+  margin: 0 0 var(--space-2);
+}
+
+.hm-error-summary__body p:last-child {
+  margin-bottom: 0;
+}
+
+.hm-helper-panel .hm-panel-head {
+  margin-bottom: var(--space-2);
+}
+
+.hm-helper-panel__copy {
+  margin: 0;
+  flex: 1;
+  line-height: 1.45;
+}
+
+.hm-panel-head--hero {
+  margin-bottom: 0;
+}
+
+.hm-panel-head--hero h1 {
+  margin: 0 0 var(--space-2);
+}
+
+.hm-panel-head--hero .hm-flow__lede {
+  margin: 0;
+}
+
+.hm-field-legend-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.hm-field-legend-icon {
+  color: var(--brand-strong);
+}
+
+.hm-progress__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 1.1rem;
+  margin: 0 auto var(--space-1);
+  color: var(--brand-strong);
+}
+
+.hm-progress__step--active .hm-progress__icon {
+  color: var(--brand-orange);
+}
+
+.hm-progress__step--done .hm-progress__icon {
+  color: var(--brand);
+}
+
+.hm-flow__hero .hm-success-hero {
+  margin-bottom: var(--space-4);
+}
+
+.hm-form-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.hm-form-title-row .hm-panel-head__icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-panel-head__icon--pulse,
+  .hm-success-hero__icon {
+    animation: none !important;
+  }
+}

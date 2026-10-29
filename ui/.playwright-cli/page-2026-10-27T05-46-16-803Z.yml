@@ -1,0 +1,66 @@
+- generic [ref=f3e2]:
+  - link "Skip to the main part of the page" [ref=f3e3] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f3e4]:
+    - generic [ref=f3e5]:
+      - generic "heatmap" [ref=f3e6]
+      - group "Your session" [ref=f3e11]:
+        - generic [ref=f3e12]:
+          - paragraph [ref=f3e13]: "Website: example-site"
+          - paragraph [ref=f3e14]: Signed in as owner@example.test
+        - button "Sign out" [ref=f3e15] [cursor=pointer]
+  - generic [ref=f3e16]:
+    - main [ref=f3e17]:
+      - region [ref=f3e18]:
+        - generic [ref=f3e19]:
+          - generic [ref=f3e24]:
+            - heading "Tell us what you want to track" [active] [level=1] [ref=f3e25]
+            - paragraph [ref=f3e26]: Describe it in your own words. We will set it up for you. No one on our team needs to check it first.
+          - list "How this works" [ref=f3e27]:
+            - listitem [ref=f3e28]:
+              - generic [ref=f3e29]: Describe
+            - listitem [ref=f3e39]:
+              - generic [ref=f3e40]: We build it for you
+            - listitem [ref=f3e49]:
+              - generic [ref=f3e50]: You get labels
+        - generic [ref=f3e55]:
+          - generic [ref=f3e56]:
+            - paragraph [ref=f3e57]:
+              - generic [ref=f3e61]: Your request
+            - generic [ref=f3e62]:
+              - generic [ref=f3e63]: What should we keep track of on your website?
+              - paragraph [ref=f3e68]: "Example: Tell me when a visitor starts picking their vehicle."
+              - generic [ref=f3e69]:
+                - generic [ref=f3e70]:
+                  - generic [aria-hidden]: Tell me when someone opens a FAQ.
+                  - textbox "What should we keep track of on your website?" [ref=f3e71]
+                - paragraph [ref=f3e72]: Tab completes the grey suggestion. Esc dismisses it.
+          - generic [ref=f3e73]:
+            - paragraph [ref=f3e74]:
+              - generic [ref=f3e79]: Pages
+            - group "Which pages is this on? (up to 4)" [ref=f3e80]:
+              - generic [ref=f3e85]:
+                - generic [ref=f3e86]: Page address 1
+                - paragraph [ref=f3e92]: Start with https://
+                - textbox "Page address 1" [ref=f3e94]
+              - button "Add another page" [ref=f3e95] [cursor=pointer]
+          - generic [ref=f3e98]:
+            - paragraph [ref=f3e99]:
+              - generic [ref=f3e102]: Klaviyo
+            - generic [ref=f3e103]:
+              - generic [ref=f3e104]: Your Klaviyo public key
+              - paragraph [ref=f3e108]: It is 6 letters and numbers. Do not use the long private key.
+              - textbox "Your Klaviyo public key" [ref=f3e109]
+            - generic [ref=f3e110]:
+              - generic [ref=f3e111]: Send the result to (optional)
+              - paragraph [ref=f3e115]: We use the email on your account if you leave this empty.
+              - textbox "Send the result to (optional)" [ref=f3e116]
+          - group [ref=f3e117]:
+            - generic "Details for your developer" [ref=f3e118] [cursor=pointer]
+          - button "Set it up" [ref=f3e126] [cursor=pointer]
+        - paragraph [ref=f3e131]:
+          - text: Need a hand?
+          - link "Ask our team" [ref=f3e132] [cursor=pointer]:
+            - /url: mailto:help@example.com?subject=Help%20with%20my%20tracking
+    - contentinfo [ref=f3e133]:
+      - paragraph [ref=f3e134]: We only send the names of the actions you pick.

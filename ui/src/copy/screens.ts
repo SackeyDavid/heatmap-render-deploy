@@ -1,0 +1,208 @@
+// ALL merchant-visible words live in src/copy/. Voice rules: docs/self-serve/B-merchant-surface.md section 4.2.
+// Short plain sentences, everyday words, no exclamation marks, no blame.
+// test/copy-lint.test.ts scans every string below. Dynamic parts use {braces}.
+
+export const screens = {
+  pageTitle: 'Track what matters on your website',
+  skipLink: 'Skip to the main part of the page',
+
+  signIn: {
+    title: 'Please sign in to continue',
+    body: 'Open this page from your Heatmap account. Then we will know who you are.',
+    dashboardLink: 'Open Heatmap dashboard',
+    dashboardHint: 'Use the dashboard link to start a secure sign-in session.',
+    next: 'Go back to Heatmap and open this page again.',
+    returnNote: 'When you return here, we pick up where you left off.',
+    localBadge: 'Local testing',
+    localTitle: 'Testing on your computer?',
+    localBody: 'Open our local sign-in page in another tab. Use the Continue button on that page when it appears.',
+    localLink: 'Open the local sign-in page',
+    localHint: 'That page shows your one-time link. After you continue there, come back here to finish.',
+  },
+
+  session: {
+    site: 'Website: {site}',
+    email: 'Signed in as {email}',
+    signOut: 'Sign out',
+  },
+
+  form: {
+    title: 'Tell us what you want to track',
+    intro:
+      'Describe it in your own words. We will set it up for you. No one on our team needs to check it first.',
+    productTease: ['Describe it', 'We set it up', 'You get your tracking code'] as const,
+    railFoot: 'Handled privately on our side.',
+    promptLabel: 'What should we keep track of on your website?',
+    promptHint: 'Example: Tell me when a visitor starts picking their vehicle.',
+    predictiveHint: 'Tab completes the suggestion. Esc dismisses it.',
+    predictiveHintHelper: 'Suggested by the helper. Tab completes it. Esc dismisses it.',
+    predictiveListLabel: 'Suggested ways to say it',
+    pagesLegend: 'Which pages is this on? (up to 10)',
+    pageLabel: 'Page address {n}',
+    pageHint: 'Start with https://',
+    addPage: 'Add another page',
+    removePage: 'Remove page {n}',
+    partnerLegend: 'Where should we send this?',
+    partnerHint: 'Pick Klaviyo or another tool. The steps are the same for both.',
+    keyLabel: 'Your Klaviyo public key',
+    keyHint: 'It is 6 letters and numbers. Do not use the long private key.',
+    partnerDestinationLabel: 'Name of the other tool',
+    partnerDestinationHint: 'Your developer or the tool can give you this short name. Use lowercase letters, numbers or hyphens.',
+    partnerDestinationExample: 'Example: custom-partner.',
+    emailLabel: 'Send the result to (optional)',
+    emailHint: 'We use the email on your account if you leave this empty.',
+    detailsSummary: 'More options (optional)',
+    detailsIntro: 'Optional. A saved copy of a page helps us find the right buttons.',
+    savedHowTo:
+      'Right-click the page in your browser and choose Save page as (page only). Open the file in a text editor and paste it below.',
+    savedLabel: 'Saved copy of page {n}',
+    mockInterpretationLegend: 'Local testing only',
+    mockInterpretationHint:
+      'Paste a saved result from the understanding tool on your computer. Leave unchecked for normal setup.',
+    mockInterpretationLabel: 'Send a saved understanding result with this request',
+    mockInterpretationField: 'Saved understanding result',
+    submit: 'Set it up',
+    errorSummaryTitle: 'Please fix these before we go on',
+    errorSummaryLink: '{field}: {message}',
+  },
+
+  fields: {
+    prompt: 'What you want to track',
+    pageUrls: 'Page address',
+    pageUrl: 'Page address {n}',
+    publicKey: 'Klaviyo public key',
+    partner: 'Where to send it',
+    partnerDestination: 'Name of the other tool',
+    notifyEmail: 'Email',
+    savedPage: 'Saved copy of page {n}',
+    mockInterpretation: 'Saved understanding result',
+  },
+
+  validation: {
+    promptShort: 'Tell us a bit more. Write at least 10 characters.',
+    promptLong: 'That is too long. Please keep it under 4,000 characters.',
+    pageMissing: 'Add the address of at least one page.',
+    pageInvalid: 'That does not look like a page address. Start it with https://',
+    pageDuplicate: 'You already added this page.',
+    keyInvalid: 'Use exactly 6 letters and numbers.',
+    keyPrivate: 'That looks like a private key. Take it out and use the short 6-character public key.',
+    partnerDestinationInvalid:
+      'Use 2 to 32 lowercase letters, numbers, or hyphens. Start with a letter (example: custom-partner).',
+    emailInvalid: 'That does not look like an email address.',
+    savedTooBig: 'That is too big. Paste a smaller saved copy.',
+    mockInterpretationEmpty: 'Paste a saved understanding result, or turn this option off.',
+    mockInterpretationInvalidJson: 'That does not look like saved text from the tool. Copy the result again.',
+    mockInterpretationInvalidShape:
+      'That saved result does not look right. Run the understanding tool again and paste what it shows.',
+  },
+
+  /** The three-step bar and card footer shared by the working and confirm screens. */
+  flow: {
+    stepsLabel: 'Request progress',
+    steps: ['Understand', 'Build', 'Finish'],
+    badgeActive: 'Active step',
+    badgeReview: 'Review step',
+    stateProgress: 'In progress',
+    stateReview: 'Ready for review',
+    stateDone: 'Done',
+    stateUpcoming: 'Upcoming',
+    stateQueued: 'Queued',
+  },
+
+  working: {
+    backup: 'Getting the backup ready… {percent}%',
+    backupNote: 'This happens only once. Please keep this page open.',
+    backupCancel: 'Cancel',
+    title: "We're working on it",
+    subtitle: 'Keep this tab open while we prepare and check your tracking code.',
+    queued: "You're in line. This page will update by itself.",
+    running: 'We are making your tracking code and testing it.',
+    wait: 'You can leave this page. We will email you when it is ready.',
+    waitLocal:
+      'You can leave this page. On your computer we print a confirmation in the server log instead of sending mail.',
+    slow: 'This is taking longer than usual. You can leave this page. We will email you when it is done.',
+    slowLocal:
+      'This is taking longer than usual. On your computer we print a confirmation in the server log instead of sending mail.',
+    checkingFailed: 'We could not check on your request just now. We will try again.',
+    interpreting: 'We are reading your words and checking them against your page.',
+    approved: 'Thank you. We are making your tracking code now.',
+  },
+
+  confirm: {
+    title: 'Here is what we understood',
+    intro: 'Please check this. We make nothing until you say yes.',
+    waitNote: 'You can leave this page anytime. We make nothing until you say yes.',
+    waitNoteLocal: 'You can leave this page anytime. On your computer we print a confirmation in the server log instead of sending mail.',
+    unsure: 'We are not sure we understood everything. Please read this with care.',
+    trackHeading: 'We will keep track of',
+    onPage: 'On your page: {control}',
+    youWrote: 'You wrote:',
+    testName: 'The name you will see:',
+    nothingToTrack: 'We did not find anything we can keep track of yet.',
+    notTrackedHeading: 'We will not keep track of',
+    notesHeading: 'Good to know',
+    questionHeading: 'Please pick one',
+    pickRequired: 'Please pick one before you go on.',
+    approve: 'Yes, this is right',
+    change: 'No, let me change my words',
+    sending: 'Sending your answer',
+  },
+
+  success: {
+    title: 'Your tracking code is ready',
+    codeHeading: 'Your tracking code address',
+    codeHint: 'Add this address to your website.',
+    copy: 'Copy the address',
+    copied: 'Copied',
+    copyFailed: 'We could not copy it. Select the address and copy it yourself.',
+    snippetCopyFailed: 'We could not copy the snippet. Select it and copy it yourself.',
+    snippetHeading: 'Paste this into your website',
+    snippetLabel: 'Ready-to-paste snippet',
+    snippetCopy: 'Copy the snippet',
+    snippetWhere:
+      'Paste it once into the footer of your website. Some themes and page builders call this box "before the closing body".',
+    snippetAfter: 'Put it after the Heatmap snippet that is already there.',
+    snippetNeeds: 'Heatmap must already be on your website for this to work.',
+    testHeading: 'Things to test',
+    testIntro: 'Open your website and do each of these. Then look for it in Klaviyo.',
+    testNone: 'We did not list anything to test this time.',
+    testExactName: 'Exact name to search for:',
+    leftHeading: 'We left these out',
+    leftIntro: 'These parts of your request are not in your tracking code.',
+    emailed: "We've also emailed you.",
+    emailedLocal:
+      'On your computer, a confirmation is printed in the server log. It is not sent to your inbox.',
+    another: 'Set up another tracking action',
+    pipelineTag: 'Tracking setup',
+    pipelineTitle: 'Setup progress',
+    pipelineReady: 'Ready',
+    nextStep: 'Your next step is to add the snippet, then test one of the actions below.',
+    addTitle: 'Add your tracking code',
+    addText: 'Place it on your site, then try the actions below to check it works.',
+    snippetBar: 'Footer code',
+    snippetBarNote: 'Loads in the background',
+    snippetNote: 'Loads in the background, so it does not slow your page down.',
+    testSubtitle: 'Do each of these on your website, then look for it in Klaviyo.',
+    testReady: 'Ready to check',
+  },
+
+  failure: {
+    backupIntro: 'You can also use a helper on this device.',
+    backupSize: 'It downloads only once and is a bit under a gigabyte. Wi-Fi is best.',
+    backupButton: 'Get the backup ready',
+    title: 'That did not work',
+    safe: 'Nothing was changed on your website.',
+    tryAgain: 'Try again',
+    editRequest: 'Go back and change your words',
+  },
+
+  support: {
+    line: 'Need a hand?',
+    link: 'Ask our team',
+    subject: 'Help with my tracking',
+  },
+
+  footer: {
+    note: 'We only send the names of the actions you pick.',
+  },
+} as const;

@@ -1,0 +1,13 @@
+{
+  "events": [
+    { "name": "add_to_cart", "trigger": "Add to cart on a product or quick-add control", "once": "session", "pages": ["/products/*"] },
+    { "name": "newsletter_signup", "trigger": "Newsletter form submit", "once": "session", "pages": ["/"] },
+    { "name": "contact_form_submitted", "trigger": "Contact form submit", "once": "session", "pages": ["/pages/contact"] },
+    { "name": "viewed_product", "trigger": "Product page view", "once": "session", "pages": ["/products/*"] },
+    { "name": "viewed_collection", "trigger": "Collection page view", "once": "session", "pages": ["/collections/*"] }
+  ],
+  "segments": [
+    { "name": "Cart intent", "conditions": "Has done add_to_cart at least once in the last 30 days" },
+    { "name": "Newsletter interest", "conditions": "Has done newsletter_signup at least once in the last 30 days" }
+  ]
+}

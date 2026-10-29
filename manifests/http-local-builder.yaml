@@ -1,0 +1,24 @@
+# Local HTTP manifest with the rule-table builder: the published script is built from THIS request and THIS saved page (http-local.yaml serves canned outputs instead).
+agents:
+  builder: { adapter: klaviyo.rule-table-builder }   # no model: reads the request and the saved page, builds the script from fixed rules
+  claude-code: { adapter: DisabledAgent }   # no Claude spend; use manifests/http-local-claude.yaml for the real agent
+
+bindings:
+  remoteStorage: local-fs
+  workspace: local-fs
+  pageInspector: { adapter: saved-html, fallbackRoots: [fixtures/pages] }   # saved pages of this request, then the repo's sample pages (local only)
+  contextPack: fixture
+  jobStore: file
+  notifier: console
+
+operations:
+  klaviyo.segmentation-script:
+    adapter: KlaviyoSegmentationOperation
+    steps:
+      - inspect: {}
+      - confirm: {}   # a model's reading of the request is shown to the merchant and must be approved before anything is built
+      - generate: { agent: builder, fallback: claude-code, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2 }
+      - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 2 }
+      - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
+      - verify: { verifier: klaviyo.test-profile }
+      - notify: { failure: warn }   # the script is already live; a failed email is a warning, not a failed job

@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "promptVersion": "interpret-1",
+  "modelId": "test",
+  "behaviours": [
+    {
+      "kind": "click",
+      "evidence": "this phrase is nowhere",
+      "target": "FAQ"
+    }
+  ],
+  "unsupported": []
+}

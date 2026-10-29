@@ -1,0 +1,3 @@
+{
+  "rawText": "{\"schemaVersion\":1,\"promptVersion\":\"interpret-1\",\"modelId\":\"mock\",\"confidence\":\"high\",\"behaviours\":[{\"kind\":\"faq_open\",\"evidence\":\"opens a FAQ\"}],\"unsupported\":[]}"
+}

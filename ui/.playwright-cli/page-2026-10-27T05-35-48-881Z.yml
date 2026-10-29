@@ -1,0 +1,20 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e3]: heatmap
+  - article [ref=f1e9]:
+    - generic [ref=f1e10]:
+      - paragraph [ref=f1e15]: Local testing
+      - heading "Local sign-in" [level=1] [ref=f1e16]
+    - generic [ref=f1e22]:
+      - paragraph [ref=f1e23]: Website
+      - paragraph [ref=f1e24]: example-site
+    - paragraph [ref=f1e25]: Your one-time sign-in link is ready.
+    - list [ref=f1e26]:
+      - listitem [ref=f1e27]: Works once
+      - listitem [ref=f1e30]: Expires in 5 minutes
+    - link "Continue sign-in" [ref=f1e35] [cursor=pointer]:
+      - /url: http://127.0.0.1:8786/go/t8ITYG-xJlyUAqJAd6EdAgKPik9LrwSYfYb5URpx1hQ
+    - generic [ref=f1e38]:
+      - paragraph [ref=f1e39]: Or open this address
+      - code [ref=f1e43]: http://127.0.0.1:8786/go/t8ITYG-xJlyUAqJAd6EdAgKPik9LrwSYfYb5URpx1hQ
+    - paragraph [ref=f1e44]: Served on your computer for local testing only. Not Heatmap production login.

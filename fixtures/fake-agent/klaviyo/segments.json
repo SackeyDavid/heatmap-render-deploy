@@ -1,0 +1,10 @@
+{
+  "events": [
+    { "name": "faq_opened", "trigger": "A FAQ is opened", "once": "session", "pages": ["/"] },
+    { "name": "scrolled_50_percent", "trigger": "Visitor scrolls halfway down the page", "once": "session", "pages": ["/"] }
+  ],
+  "segments": [
+    { "name": "FAQ readers", "conditions": "Has done faq_opened at least once in the last 30 days" },
+    { "name": "Engaged readers", "conditions": "Has done scrolled_50_percent at least once in the last 30 days" }
+  ]
+}

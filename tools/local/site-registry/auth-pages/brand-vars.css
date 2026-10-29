@@ -1,0 +1,21 @@
+/* Standalone subset for loopback /signin + /go HTML only — mirrors ui/src/theme/heatmap-tokens.css. */
+:root {
+  --hm-primary: #10b068;
+  --hm-primary-strong: #0c8f54;
+  --hm-dark: #004323;
+  --hm-tint: #e7fdef;
+  --hm-wash: #f4f9f6;
+  --hm-ink: #191919;
+  --hm-muted: #5c5c5c;
+  --hm-line: #dcdcdc;
+  --hm-line-soft: #e8e8e8;
+  --hm-bg: #ffffff;
+  --hm-danger: #b00020;
+  --hm-focus: #10b068;
+  --hm-shadow: 0 12px 32px -12px rgba(0, 35, 17, 0.14);
+  --hm-shadow-lg: 0 20px 48px -24px rgba(0, 35, 17, 0.22);
+  --hm-radius: 10px;
+  --hm-radius-lg: 14px;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: "Poppins", "Inter", system-ui, -apple-system, sans-serif;
+}

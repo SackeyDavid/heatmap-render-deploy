@@ -1,0 +1,79 @@
+/* Global base styles — Heatmap merchant UI */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+body.hm-app {
+  background: var(--hm-wash, var(--background));
+  min-height: 100vh;
+}
+
+body.hm-app .hm-page main > section > h1 {
+  font-family: "Poppins", var(--font-family);
+  margin-top: 0;
+}
+
+main,
+footer {
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  padding: var(--space-4) var(--space-5) var(--space-8);
+}
+
+.hm-page main,
+.hm-page footer {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-size: 1.6rem;
+  line-height: 1.25;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1:focus {
+  outline: none;
+}
+
+h2 {
+  font-weight: var(--font-weight-semibold);
+}
+
+:focus-visible {
+  outline: var(--focus-outline-width) solid var(--focus);
+  outline-offset: var(--focus-outline-offset);
+}
+
+a {
+  color: var(--brand);
+}
+
+a:hover {
+  color: var(--brand-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

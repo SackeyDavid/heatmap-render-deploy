@@ -1,0 +1,36 @@
+# Example production manifest (not loaded by default). Copy or set HEATMAP_MANIFEST to this path after plug-ins are configured.
+# See docs/KENN-PLUG-IN-SETUP.md and env.example.
+
+# Production runs with HEATMAP_MODE=production, which refuses local-only adapters at startup (FakeAgent, console and
+# in-memory notifier/job store, the fixture inspector, fake verifiers). A real agent must generate, so this example
+# binds the Claude Code agent and the gateway pair (operation KlaviyoSegmentationOperationLive + verifier klaviyo.gateway-profile),
+# which exist only when HEATMAP_KLAVIYO_GATEWAY_URL is set.
+agents:
+  claude-code: { adapter: ClaudeCodeRunner, maxBudgetUsd: 2 }   # US dollars per run: required in production (set the limit you are comfortable with)
+  builder: { adapter: klaviyo.rule-table-builder }   # renders the approved interpretation; no model
+  # To read with an OpenRouter model instead of the Claude agent (key in OPENROUTER_API_KEY on the server; free models need a fallback in production):
+  # openrouter: { adapter: OpenRouterAgent, model: nvidia/nemotron-3.5-super-vl:free, fallbackModels: [xingchen-agi/xing4.0-29b-a4b:free, google/gemma-4-31b-it:free] }
+  # then change the confirm step to: interpreter: openrouter, interpretPrompt: prompts/klaviyo/interpret-api.md, maxTurns: 1, timeoutMs: 90000
+  # A paid model needs allowPaid: true and maxTokens. See docs/KENN-PLUG-IN-SETUP.md section 1b.
+
+bindings:
+  remoteStorage: s3
+  workspace: local-fs
+  pageInspector: saved-html
+  contextPack: fixture
+  jobStore: file
+  notifier: smtp
+
+operations:
+  klaviyo.segmentation-script:
+    adapter: KlaviyoSegmentationOperationLive
+    steps:
+      - inspect: {}
+      # A model reads the description (the merchant's in-browser helper sends its reading with the request; otherwise the Claude agent
+      # writes the same JSON), the merchant approves what was understood, and fixed code renders the script. See HANDOFF "Update 46".
+      - confirm: { interpreter: claude-code, interpretPrompt: prompts/klaviyo/interpret.md, maxTurns: 8, timeoutMs: 180000 }
+      - generate: { agent: builder, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2 }
+      - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 0 }
+      - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
+      - verify: { verifier: klaviyo.gateway-profile }
+      - notify: { failure: warn }   # the script is already live; a failed email is a warning, not a failed job

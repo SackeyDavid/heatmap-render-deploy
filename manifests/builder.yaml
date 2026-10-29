@@ -1,0 +1,28 @@
+# CLI manifest with the rule-table builder: the script is built from the request and the saved page (fixtures/pages/<host>__<path>.html),
+# read by the saved-html inspector (classes, data-target and nearest heading are needed to build Manduu's "LEARN MORE" buttons; the
+# fixture inspector does not read them).
+agents:
+  builder: { adapter: klaviyo.rule-table-builder }   # no model: builds the script from this request and this page
+  claude-code: { adapter: DisabledAgent }                                   # no real-agent spend from the local CLI; see manifests/live.yaml for the real one
+  # kimi-code and cursor-sdk arrive in Phase 4
+
+bindings:
+  remoteStorage: local-fs      # s3: see http-production.example.yaml
+  workspace: local-fs
+  pageInspector: { adapter: saved-html, fallbackRoots: [fixtures/pages] }   # a live-fetch inspector is not built
+  contextPack: fixture
+  jobStore: file
+  notifier: console
+
+operations:
+  klaviyo.segmentation-script:
+    adapter: KlaviyoSegmentationOperation
+    steps:
+      - inspect: {}
+      - confirm: {}   # a model's reading of the request is shown to the merchant and must be approved before anything is built
+      - generate: { agent: builder, fallback: claude-code, prompt: prompts/klaviyo/generate.md, repairPrompt: prompts/klaviyo/repair.md, context: klaviyo-onsite-events@v2 }
+      - qa: { gates: [klaviyo.contract-lint], maxRepairLoops: 2 }   # browser-harness and agent-review: Phase 2
+      - publish: { key: "sites/{siteId}/klaviyo/{version}/script.js", pointer: "sites/{siteId}/klaviyo/current.json" }
+      - verify: { verifier: klaviyo.test-profile }
+      - notify: { failure: warn }   # the script is already live by then; a failed email is a warning, not a failed job
+

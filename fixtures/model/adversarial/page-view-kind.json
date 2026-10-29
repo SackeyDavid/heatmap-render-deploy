@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "promptVersion": "interpret-1",
+  "modelId": "mock",
+  "behaviours": [{ "kind": "page_view", "evidence": "views the page" }],
+  "unsupported": []
+}

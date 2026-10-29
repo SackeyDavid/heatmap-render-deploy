@@ -1,0 +1,3 @@
+{
+  "rawText": "{\"schemaVersion\":1,\"promptVersion\":\"interpret-1\",\"modelId\":\"mock\",\"behaviours\":[{\"kind\":\"form_start\",\"evidence\":\"gets going with the vehicle picker\",\"target\":\"vehicle picker\"}],\"unsupported\":[]}"
+}

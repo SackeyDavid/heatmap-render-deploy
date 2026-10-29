@@ -1,0 +1,16 @@
+{
+  "events": [
+    { "name": "vehicle_selector_started", "trigger": "First Year/Make/Model choice made in the vehicle selector", "once": "session" },
+    { "name": "vehicle_selector_submitted", "trigger": "Vehicle selector submitted with Year, Make and Model chosen" },
+    { "name": "vehicle_selector_abandoned", "trigger": "Page hidden after the selector was started and never submitted", "once": "session" },
+    { "name": "homepage_video_watched", "trigger": "First unique homepage video review played", "once": "session", "pages": ["/"] },
+    { "name": "homepage_videos_multiple", "trigger": "Second unique homepage video review played", "once": "session", "pages": ["/"] },
+    { "name": "homepage_videos_five_or_more", "trigger": "Fifth unique homepage video review played", "once": "session", "pages": ["/"] },
+    { "name": "switched_to_photo_reviews", "trigger": "Photo Reviews tab opened when it was not already active", "once": "session", "pages": ["/"] }
+  ],
+  "segments": [
+    { "name": "Started, did not submit", "conditions": "Has done vehicle_selector_abandoned and has not done vehicle_selector_submitted since that abandon" },
+    { "name": "Submitted", "conditions": "Has done vehicle_selector_submitted at least once" },
+    { "name": "Heavy video and review consumption", "conditions": "Has done homepage_videos_five_or_more AND has done switched_to_photo_reviews in the last 30 days" }
+  ]
+}
