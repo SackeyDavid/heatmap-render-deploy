@@ -59,6 +59,7 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
       const found = addMentionedPages(now.pageUrls, now.savedHtml, extractPageUrls(now.prompt), handled.current, LIMITS.pages);
       if (found.added.length === 0) return;
       setAddedPages((n) => n + found.added.length);
+      setErrors((e) => e.filter((x) => !x.fieldId.startsWith('field-page-'))); // the page error is stale once a page has been added
       onChange({ ...now, pageUrls: found.pageUrls, savedHtml: found.savedHtml });
     }, PAGE_PICKUP_DELAY_MS);
     return () => clearTimeout(timer);

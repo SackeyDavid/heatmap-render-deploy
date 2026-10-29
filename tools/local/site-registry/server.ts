@@ -2,7 +2,7 @@
 import { createServer, type IncomingMessage, type Server, type ServerResponse } from "node:http";
 import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
 import { MIN_SECRET_LENGTH, SITE_ID_RE, signToken } from "./token.ts";
-import { SiteRegistry, siteIdFromWebsite, validateSite } from "./registry.ts";
+import { SiteRegistry, displayHost, siteIdFromWebsite, validateSite } from "./registry.ts";
 import { authMessagePage, signInLinkPage } from "./auth-pages/pages.ts";
 
 export const DEFAULT_PORT = 8786;
@@ -124,7 +124,7 @@ export function createAuthServer(cfg: Config): Server {
         const from = registry.get(form.get("from") ?? "");
         if (!from) return refuse(404, "Site not found", "That site is not registered.");
         const siteId = siteIdFromWebsite(form.get("website") ?? "");
-        const v = validateSite({ siteId, userId: from.userId, userEmail: (form.get("email") ?? "").trim(), label: (form.get("website") ?? "").trim().slice(0, 100) || siteId });
+        const v = validateSite({ siteId, userId: from.userId, userEmail: (form.get("email") ?? "").trim(), label: displayHost(form.get("website") ?? "") || siteId });
         if (!v.ok) return refuse(400, "Could not save", siteId ? "Please check the email address and try again." : "Please type your website, for example example.com.");
         // The typed website must not land on a different, existing site (that would hand it another person's name and email).
         if (v.site.siteId !== from.siteId && registry.get(v.site.siteId)) return refuse(409, "Could not save", "That website is already set up here. Please use a different one.");

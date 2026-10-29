@@ -210,7 +210,7 @@ export function successEmail(input: KlaviyoSegmentationInput, job: Job, segments
     body: [
       "Your site-specific tracking script is live.",
       "",
-      `Version: ${job.state.published?.version ?? "unknown"}`,
+      ...jobDetailLines(input, job),
       "",
       "Events it records:",
       events || "  (see segments.json)",

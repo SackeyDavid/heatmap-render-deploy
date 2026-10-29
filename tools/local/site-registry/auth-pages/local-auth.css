@@ -384,3 +384,6 @@ body.hm-local-auth {
 .hm-local-auth__cancel { all: unset; cursor: pointer; text-align: center; font-size: 0.8em; color: var(--hm-muted); padding: 0.2em 0.6em; border-radius: 999px; }
 .hm-local-auth__cancel:hover { color: var(--hm-ink); text-decoration: underline; }
 .hm-local-auth__cancel:focus-visible { outline: 3px solid var(--hm-focus); }
+.hm-local-auth__site-row { flex-wrap: wrap; }
+.hm-local-auth__site { overflow-wrap: anywhere; min-width: 0; }
+.hm-local-auth__who-fields { flex: 1 1 12rem; }

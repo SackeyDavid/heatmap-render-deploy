@@ -40,7 +40,7 @@ export const screens = {
     pagesAdded: 'We added the pages you wrote about. You can change or remove them.',
     pagesLegend: 'Which pages is this on? (up to 10)',
     pageLabel: 'Page address {n}',
-    pageHint: 'Start with https://',
+    pageHint: 'For example: example.com/pricing',
     addPage: 'Add another page',
     removePage: 'Remove page {n}',
     partnerLegend: 'Where should we send this?',

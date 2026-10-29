@@ -74,3 +74,8 @@ export function siteIdFromWebsite(typed: string): string {
   }
   return ascii.replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 63);
 }
+
+/** What to show for the typed website: "https://www.Acme-Shop.com/store" is shown as "acme-shop.com". */
+export function displayHost(typed: string): string {
+  return typed.trim().toLowerCase().replace(/^[a-z]+:\/\//, "").replace(/^www\./, "").split(/[/?#]/)[0]?.slice(0, 100) ?? "";
+}

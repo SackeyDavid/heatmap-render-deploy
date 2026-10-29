@@ -27,7 +27,7 @@ function wordsInOrder(evidence: string, request: string): boolean {
   if (wanted.length < 2 || lead < 0) return false; // filler alone ("click on") proves nothing
   const prefix = wanted.slice(0, lead).map(stem);
   const name = wanted.slice(lead); // the control's own words: they must stand together, in the order written
-  const sentences = request.replace(/\b(?:do not|don['\u2019]?t) (?:forget|miss|overlook)\b/gi, "also").replace(/\.{2,}|\u2026/g, ",").replace(/\r?\n+/g, ", ").split(/(?<!(?:^|\s)\d{1,2})[.!?;]+(?=\s|$)/).filter((t) => tokens(t).length > 0);
+  const sentences = request.replace(/\b(vs|etc|inc|ltd|mr|mrs|dr|approx)\./gi, "$1").replace(/\be\.g\./gi, "eg").replace(/\bi\.e\./gi, "ie").replace(/\b(?:do not|don['\u2019]?t) (?:forget|miss|overlook)\b/gi, "also").replace(/\.{2,}|\u2026/g, ",").replace(/\r?\n+/g, ", ").split(/(?<!(?:^|\s)\d{1,2})[.!?;]+(?=\s|$)/).filter((t) => tokens(t).length > 0);
   return sentences.some((sentence) => matchesIn(sentence));
 
   function matchesIn(sentence: string): boolean {
@@ -108,12 +108,13 @@ const stem = (w: string) => {
   if (x.length > 4 && x.endsWith("sses")) x = x.slice(0, -2); // presses
   else if (x.length > 3 && x.endsWith("s") && !x.endsWith("ss")) x = x.slice(0, -1); // clicks
   else if (x.length > 4 && x.endsWith("ed")) x = x.slice(0, -2); // clicked, pressed
-  if (x.length > 3 && x !== w && /([^aeiou])\1$/.test(x) && w.endsWith("ed")) x = x.slice(0, -1); // tapped
+  else if (x.length > 5 && x.endsWith("ing")) x = x.slice(0, -3); // clicking, pressing
+  if (x.length > 3 && x !== w && /([^aeiou])\1$/.test(x) && (w.endsWith("ed") || w.endsWith("ing"))) x = x.slice(0, -1); // tapped, tapping
   return x;
 };
 
 /** Words that carry no target on their own. */
-const FILLER_WORDS = new Set(["a", "an", "the", "on", "in", "at", "of", "to", "me", "my", "when", "if", "someone", "somebody", "visitor", "visitors", "click", "clicks", "clicked", "tap", "taps", "tapped", "press", "presses", "pressed", "select", "selects", "selected", "choose", "chooses", "chose", "choosing", "tell", "track", "and", "or", "is", "are", "i", "we", "they", "it"]);
+const FILLER_WORDS = new Set(["a", "an", "the", "on", "in", "at", "of", "to", "me", "my", "when", "if", "someone", "somebody", "visitor", "visitors", "click", "clicks", "clicked", "clicking", "tapping", "pressing", "selecting", "tap", "taps", "tapped", "press", "presses", "pressed", "select", "selects", "selected", "choose", "chooses", "chose", "choosing", "tell", "track", "and", "or", "is", "are", "i", "we", "they", "it"]);
 /** A negation inside the matched stretch or just before it means the quoted words may be the opposite of what was asked. */
 const NEGATIONS = new Set(["never", "not", "no", "dont", "don", "doesn", "didn", "isn", "aren", "wasn", "weren", "won", "wouldn", "shouldn", "couldn", "cannot", "without", "except", "ignore", "instead", "nor", "neither", "skip", "stop", "cancel", "avoid", "exclude", "excluding", "forget", "drop", "remove", "unneeded", "minus", "removed", "deleted", "excluded", "besides", "scrap", "omit", "omitting", "ignoring", "skipping", "dropping", "removing", "sans", "bar"]);
 /**

@@ -19,6 +19,6 @@ export const modelCopy = {
   needed: "We need to get ready before we can set up your tracking. It takes a few minutes, once.",
   neededDownload: "Get ready now",
   neededUnavailable: "This browser can't run the tool we need. Please open this page in a recent Chrome or Edge on a computer.",
-  neededOff: "This isn't switched on here, and we need it to set up your tracking. Please ask your team to turn it on.",
+  neededOff: "The assistant that reads your description is switched off here. We need it to set up your tracking. Please ask your team to switch it on.",
   couldNotRead: "We couldn't make sense of that this time. Please say it a different way and try again.",
 } as const;

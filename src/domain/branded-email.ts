@@ -27,7 +27,10 @@ const FONT = "Inter,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif";
 
 function item(line: string): string {
   const at = line.indexOf(": ");
-  const text = at > 0 && at < 60 ? `<strong style="color:#004323;">${esc(line.slice(0, at))}</strong>: ${esc(line.slice(at + 2))}` : esc(line);
+  const value = at > 0 && at < 60 ? line.slice(at + 2) : line;
+  // A web address in the value becomes a link a merchant can click.
+  const shown = /^https?:\/\/\S+$/i.test(value) ? `<a href="${esc(value)}" style="color:#0c8f54;word-break:break-all;">${esc(value)}</a>` : esc(value);
+  const text = at > 0 && at < 60 ? `<strong style="color:#004323;">${esc(line.slice(0, at))}</strong>: ${shown}` : shown;
   return `<tr><td style="padding:6px 0 6px 0;font:15px/1.5 ${FONT};color:#191919;"><span style="color:#10b068;font-weight:700;">&#10003;</span>&nbsp; ${text}</td></tr>`;
 }
 

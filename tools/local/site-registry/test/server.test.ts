@@ -206,3 +206,9 @@ test("names in other languages keep different folders, and page views never lock
   assert.equal((await get(`/go/${first}`)).status, 410); // the oldest link was dropped at the cap
   assert.equal((await get(`/go/${last}`)).status, 302); // the newest still works
 });
+
+test("the website is shown without its scheme, www and path", async () => {
+  const r = await save({ from: "example-site", website: "https://www.Acme-Shop.com/store", email: "a@b.co" }, { origin: base });
+  const html = await (await get(r.headers.get("location")!)).text();
+  assert.match(html, /<span data-view data-site>acme-shop\.com<\/span>/);
+});
