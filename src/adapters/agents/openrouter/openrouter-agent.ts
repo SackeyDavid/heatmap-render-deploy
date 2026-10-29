@@ -90,6 +90,7 @@ export class OpenRouterAgent implements AgentRunner {
     const deadline = started + task.limits.timeoutMs;
     const tried: string[] = [];
     let lastError = "no model answered";
+    const errors: string[] = []; // every failed attempt, so one log line shows why each model gave up
 
     for (const model of this.models) {
       for (let attempt = 0; attempt < 2; attempt++) {
@@ -101,6 +102,7 @@ export class OpenRouterAgent implements AgentRunner {
           return { ok: true, exitStatus: 0, filesProduced: ["interpretation.json"], transcript: `read by ${model} (attempts: ${tried.join(", ")})`, durationMs: Date.now() - started };
         } catch (e) {
           lastError = e instanceof Error ? e.message : "request failed";
+          errors.push(lastError);
           if (e instanceof Fatal) return this.fail(started, tried, lastError); // a bad key is bad for every model
           if (!(e instanceof Transient)) break; // this model refuses the request: try the next one
           const wait = Math.min(this.opts.retryDelayMs ?? 1500, Math.max(0, deadline - Date.now()));
@@ -108,7 +110,7 @@ export class OpenRouterAgent implements AgentRunner {
         }
       }
     }
-    return this.fail(started, tried, lastError);
+    return this.fail(started, tried, errors.length > 1 ? errors.join("; ") : lastError);
   }
 
   private fail(started: number, tried: string[], error: string): AgentRunResult {
