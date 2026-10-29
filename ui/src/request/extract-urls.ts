@@ -3,7 +3,7 @@
 // Only endings that are rarely ordinary words: "page.it" or "e.g.us" are not addresses.
 const TLDS = 'com|org|net|io|co|app|dev|shop|store|ai|uk|ca|au|biz|info|de|fr|nl|jp|ru|br|se';
 // An address with http(s)://, or one that starts with www., or a bare name ending in a common address ending ("example.com/pricing").
-const URL_RE = new RegExp(String.raw`(?:https?:\/\/[^\s<>"'()]+|www\.[^\s<>"'()]+|(?<![@\p{L}\p{N}_.:/-])[\p{L}\p{N}][\p{L}\p{N}-]*(?:\.[\p{L}\p{N}-]+)*\.(?:${TLDS})(?![a-z0-9-]|\.[a-z0-9])(?::\d{1,5})?(?:\/[^\s<>"'()]*)?)`, 'giu');
+const URL_RE = new RegExp(String.raw`(?:https?:\/\/[^\s<>"'()\u2018\u2019\u201C\u201D]+|www\.[^\s<>"'()\u2018\u2019\u201C\u201D]+|(?<![@\p{L}\p{N}_.:/-])[\p{L}\p{N}][\p{L}\p{N}-]*(?:\.[\p{L}\p{N}-]+)*\.(?:${TLDS})(?![a-z0-9-]|\.[a-z0-9])(?::\d{1,5})?(?:[\/?#][^\s<>"'()\u2018\u2019\u201C\u201D]*)?)`, 'giu');
 
 /** Takes off the comma, full stop or bracket that ends a sentence, not the address. */
 const trimEnd = (u: string) => u.replace(/[.,;:!?)\]}]+$/g, '');
@@ -22,7 +22,7 @@ function openablePublicHost(u: URL): boolean {
 export function pageKey(url: string): string {
   try {
     const u = new URL(/^https?:\/\//i.test(url.trim()) ? url.trim() : `https://${url.trim()}`);
-    return `${u.hostname.replace(/^www\./, '')}${u.port ? `:${u.port}` : ''}${u.pathname}${u.search}`.replace(/\/+$/, ''); // café.com and xn--caf-dma.com are one page; the host is not case sensitive (the URL parser lowercases it), the path and query are
+    return `${u.hostname.replace(/^www\./, '')}${u.port ? `:${u.port}` : ''}${u.pathname.replace(/\/+$/, '')}${u.search}`; // café.com and xn--caf-dma.com are one page; the host is not case sensitive (the URL parser lowercases it), the path and query are
   } catch {
     // fall through to the plain form
   }
@@ -86,3 +86,18 @@ export function addMentionedPages(
   }
   return { pageUrls: urls, savedHtml: html, added };
 }
+
+/** "examplesite.com/pricing" becomes "https://examplesite.com/pricing". Anything that already has a scheme, and anything that is not a name with a dot, is left as typed. */
+export function withHttps(typed: string): string {
+  const v = typed.trim();
+  if (v === '' || /^[a-z][a-z0-9+.-]*:\/\//i.test(v)) return v; // empty, or it already says how to open it (https://, http://, ...)
+  const noSlashes = v.replace(/^\/\//, '');
+  // A closing bracket from pasted text is not part of the address, unless the address has its own opening one (a wiki path such as Foo_(bar)).
+  const bare = noSlashes.replace(noSlashes.includes('(') ? /[.,;:!?]+$/ : /[.,;:!?)\]}]+$/, ''); // a closing full stop or bracket from pasted text is not part of the address
+  const host = bare.split(/[:/?#]/)[0] ?? '';
+  const ending = host.split('.').pop() ?? '';
+  if (!/^[\p{L}\p{N}][\p{L}\p{N}-]*(\.[\p{L}\p{N}-]+)+([:/?#]|$)/u.test(bare)) return v;
+  if (!/^\p{L}[\p{L}-]{1,23}$/u.test(ending) || FILE_ENDINGS.has(ending.toLowerCase())) return v; // "3.14", "127.0.0.1" and "index.html" are not websites
+  return `https://${bare}`;
+}
+const FILE_ENDINGS = new Set(['html', 'htm', 'php', 'js', 'css', 'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'json', 'xml', 'asp', 'aspx', 'md', 'csv', 'zip', 'py', 'ts', 'tsx', 'jsx', 'docx', 'xlsx', 'pptx', 'webp', 'mp4', 'mp3', 'sh', 'rb', 'go', 'java', 'rs', 'yml', 'yaml', 'log']);

@@ -124,7 +124,8 @@ test("the sign-in page says Sign in, has a pencil, a Connected badge, and a hidd
   assert.match(html, /Connected/);
   assert.match(html, /Works always<\/li>\s*<li>[\s\S]*Sets up in 2 seconds<\/li>\s*<li>[\s\S]*Secured<\/li>/);
   assert.ok(!/Expires in|Local token/.test(html));
-  assert.match(html, /hm-local-auth__save"[^>]*hidden/);
+  assert.match(html, /hm-local-auth__actions" data-field hidden/);
+  assert.match(html, /data-cancel/);
 });
 
 test("saving a new website and email signs the token in for them", async () => {

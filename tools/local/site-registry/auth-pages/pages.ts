@@ -94,7 +94,10 @@ export function signInLinkPage(siteId: string, goUrl: string, email = "", saved 
         </div>
       </div>
       <span class="hm-local-auth__connected" data-view>${ICON_CHECK} Connected</span>
-      <button type="submit" class="hm-local-auth__save" data-field hidden>${ICON_CHECK} Save</button>
+      <span class="hm-local-auth__actions" data-field hidden>
+        <button type="submit" class="hm-local-auth__save">${ICON_CHECK} Save</button>
+        <button type="button" class="hm-local-auth__cancel" data-cancel>Cancel</button>
+      </span>
     </div>
     <p class="hm-local-auth__saved" role="status" data-note${saved ? "" : " hidden"}>${saved ? "Saved. Your new sign-in link is ready." : ""}</p>
   </form>
@@ -112,10 +115,24 @@ export function signInLinkPage(siteId: string, goUrl: string, email = "", saved 
         fields.forEach(function (e) { e.hidden = !editing; });
       }
       function say(text, bad) { note.textContent = text; note.hidden = !text; note.style.color = bad ? "#b3261e" : ""; }
+      var original = { website: form.querySelector("input[name=website]").value, email: form.querySelector("input[name=email]").value };
+      form.querySelector("[data-cancel]").addEventListener("click", function () { cancel(); });
+      var busy = false;
+      function cancel() {
+        if (busy) return; // a save is on its way: let it finish
+        form.querySelector("input[name=website]").value = original.website;
+        form.querySelector("input[name=email]").value = original.email;
+        say("");
+        show(false);
+        edit.focus();
+      }
+      form.addEventListener("keydown", function (ev) { if (ev.key === "Escape" && form.getAttribute("data-editing") === "true") { ev.preventDefault(); cancel(); } });
       edit.addEventListener("click", function () { say(""); show(true); form.querySelector("input[name=website]").focus(); });
       // Saving stays on this page: it sends the form in the background and shows the new values.
       form.addEventListener("submit", function (ev) {
         ev.preventDefault();
+        if (busy) return; // one save at a time
+        busy = true;
         say("");
         fetch("/signin/save", { method: "POST", headers: { accept: "application/json" }, body: new URLSearchParams(new FormData(form)) })
           .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
@@ -129,10 +146,13 @@ export function signInLinkPage(siteId: string, goUrl: string, email = "", saved 
             go.setAttribute("href", res.d.goUrl);
             document.querySelector("[data-go-text]").textContent = res.d.goUrl;
             history.replaceState(null, "", "/signin?site=" + encodeURIComponent(res.d.siteId));
+            original = { website: res.d.label, email: res.d.email };
             show(false);
+            edit.focus();
             say("Saved. Your new sign-in link is ready.");
           })
-          .catch(function () { say("Could not save. Please try again.", true); });
+          .catch(function () { say("Could not save. Please try again.", true); })
+          .then(function () { busy = false; });
       });
     })();
   </script>

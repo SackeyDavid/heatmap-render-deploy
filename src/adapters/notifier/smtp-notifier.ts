@@ -65,7 +65,19 @@ export class SmtpNotifier implements Notifier {
 
   /** The message with CRLF line ends. Header values cannot carry line breaks (no header injection); the body is base64 so any text and any leading dot is safe. */
   private render(m: Email): string {
-    const header = (v: string) => (/^[\x20-\x7e]*$/.test(v) ? v.replace(/[\r\n]+/g, " ") : `=?UTF-8?B?${Buffer.from(v.replace(/[\r\n]+/g, " "), "utf8").toString("base64")}?=`);
+    const header = (v: string) => {
+      const one = v.replace(/[\r\n]+/g, " ");
+      if (/^[\x20-\x7e]*$/.test(one)) return one;
+      // Encoded words may be at most 75 characters long (RFC 2047), so a long subject is cut into several, each on its own folded line.
+      const chunks: string[] = [];
+      let cur = "";
+      for (const ch of one) {
+        if (Buffer.byteLength(cur + ch, "utf8") > 36) (chunks.push(cur), (cur = ""));
+        cur += ch;
+      }
+      if (cur) chunks.push(cur);
+      return chunks.map((c) => `=?UTF-8?B?${Buffer.from(c, "utf8").toString("base64")}?=`).join("\r\n ");
+    };
     const b64 = (t: string) => Buffer.from(t.replace(/\r?\n/g, "\r\n"), "utf8").toString("base64").replace(/.{1,76}/g, "$&\r\n").trimEnd();
     const head = [
       `From: ${this.cfg.from}`,

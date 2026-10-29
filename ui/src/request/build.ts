@@ -1,3 +1,4 @@
+import { withHttps } from './extract-urls';
 import { LIMITS, type CreateRequestBody } from '../api/contract';
 import { fill, screens } from '../copy';
 import { parseModelInterpretation, type ModelInterpretation } from '../model/interpretation';
@@ -89,7 +90,7 @@ export function validate(v: FormValues): FieldError[] {
     errors.push({ fieldId: FIELD_IDS.prompt, label: f.prompt, message: t.promptLong });
   }
 
-  const filled = v.pageUrls.map((u, i) => ({ url: u.trim(), i })).filter((p) => p.url !== '');
+  const filled = v.pageUrls.map((u, i) => ({ url: withHttps(u), i })).filter((p) => p.url !== '');
   if (filled.length === 0) {
     errors.push({ fieldId: FIELD_IDS.page(0), label: f.pageUrls, message: t.pageMissing });
   }
@@ -163,7 +164,7 @@ export function validate(v: FormValues): FieldError[] {
  * `interpretation` is the extension point for the future helper (see model/provider.ts); omitted when absent.
  */
 export function buildRequestBody(v: FormValues, interpretation?: ModelInterpretation | null): CreateRequestBody {
-  const pages = v.pageUrls.map((u, i) => ({ url: u.trim(), html: v.savedHtml[i] ?? '' })).filter((p) => p.url !== '');
+  const pages = v.pageUrls.map((u, i) => ({ url: withHttps(u), html: v.savedHtml[i] ?? '' })).filter((p) => p.url !== '');
   const body: CreateRequestBody = {
     operation: v.operation,
     prompt: v.prompt.trim(),

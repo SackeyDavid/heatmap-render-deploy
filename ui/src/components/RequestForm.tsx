@@ -5,7 +5,7 @@ import { readSessionClaims } from '../session/claims';
 import { AlertIcon, MaterialSymbol, MinusIcon } from '../icons';
 import type { ModelProvider } from '../model/provider';
 import { OPERATION_GENERIC, OPERATION_KLAVIYO, PARTNER_OPTIONS } from '../partners/catalog';
-import { addMentionedPages, extractPageUrls } from '../request/extract-urls';
+import { addMentionedPages, extractPageUrls, withHttps } from '../request/extract-urls';
 import { FIELD_IDS, validate, type FieldError, type FormValues } from '../request/build';
 import { MerchantHelper, type HelperUiState } from './MerchantHelper';
 import { modelCopy } from '../copy/model';
@@ -227,6 +227,7 @@ export function RequestForm({ values, onChange, onSubmit, provider, helperNotice
                   placeholder={f.pageHint}
                   value={url}
                   onChange={(e) => setPage(i, e.target.value)}
+                  onBlur={(e) => setPage(i, withHttps(e.target.value))}
                   aria-invalid={errFor(FIELD_IDS.page(i)) ? true : undefined}
                   aria-describedby={describedBy(FIELD_IDS.page(i), `page-hint-${i}`)}
                 />

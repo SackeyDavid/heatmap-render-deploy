@@ -13,6 +13,7 @@ import { defaultOperationFromEnv } from './partners/catalog';
 import { buildRequestBodyForSubmit, emptyValues, type FormValues } from './request/build';
 import { adapterName } from './request/adapter-name';
 import { readSessionClaims } from './session/claims';
+import { withHttps } from './request/extract-urls';
 import { clearToken, getToken, hasUsableToken } from './session/token';
 import { HeatmapBrand } from './components/HeatmapBrand';
 import { MaterialSymbol } from './icons';
@@ -203,7 +204,7 @@ export function App(props: AppProps) {
     const cached = provider.isCached ? await provider.isCached() : caps.cached;
     if (!cached && !opts.allowDownload) return 'download-needed';
     setView({ name: 'working', slow: false, retrying: false, queued: true, readingWords: true, ...(cached ? {} : { backupFraction: 0 }) });
-    const pageUrls = values.pageUrls.map((u) => u.trim()).filter(Boolean);
+    const pageUrls = values.pageUrls.map(withHttps).filter(Boolean);
     interpretAbortRef.current = new AbortController();
     let reading = null;
     try {
@@ -264,7 +265,7 @@ export function App(props: AppProps) {
 
     let helperInterpretation = null;
     if (useHelper) {
-      const pageUrls = values.pageUrls.map((u) => u.trim()).filter(Boolean);
+      const pageUrls = values.pageUrls.map(withHttps).filter(Boolean);
       interpretAbortRef.current = new AbortController();
       try {
         helperInterpretation = await runMerchantInterpret(
