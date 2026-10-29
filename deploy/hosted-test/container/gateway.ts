@@ -45,7 +45,8 @@ const childEnv: Record<string, string> = {
   HOME: process.env.HOME ?? "/root",
   NODE_ENV: "production",
   HEATMAP_MODE: "local",
-  HEATMAP_MANIFEST: process.env.HEATMAP_MANIFEST || "manifests/http-local-openrouter.yaml",
+  // With bucket settings present the files must go to the bucket, so a service created by hand without HEATMAP_MANIFEST still stores them there (not on its own disk).
+  HEATMAP_MANIFEST: process.env.HEATMAP_MANIFEST || (process.env.AWS_S3_BUCKET ? "manifests/http-render.yaml" : "manifests/http-local-openrouter.yaml"),
   HEATMAP_TOKEN_SECRET: TOKEN_SECRET,
   HEATMAP_DATA_DIR: DATA_DIR,
   HEATMAP_HTTP_PORT: String(API_PORT),
