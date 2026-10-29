@@ -17,6 +17,8 @@ export interface OpenRouterOptions {
   fetch?: Fetch;
   /** Waits between attempts on the same model (ms); tests set it to 0. */
   retryDelayMs?: number;
+  /** Longest one request may take (ms) before the next model gets its turn; a hung free model must not use the whole run. Default 40000. */
+  attemptTimeoutMs?: number;
   endpoint?: string;
 }
 
@@ -65,6 +67,8 @@ export function controlsBlock(controlsJson: string | undefined): string {
 class Transient extends Error {}
 /** Trying again, on this model or any other, cannot help (bad or unauthorised key). */
 class Fatal extends Error {}
+/** One request took longer than its share: the same model is unlikely to answer faster, so move on to the next model. */
+class Slow extends Error {}
 
 /**
  * AgentRunner that reads a request through OpenRouter's chat API and writes interpretation.json (the same file the Claude agent writes).
@@ -104,6 +108,7 @@ export class OpenRouterAgent implements AgentRunner {
           lastError = e instanceof Error ? e.message : "request failed";
           errors.push(lastError);
           if (e instanceof Fatal) return this.fail(started, tried, lastError); // a bad key is bad for every model
+          if (e instanceof Slow) break; // too slow: the next model, not another long wait on this one
           if (!(e instanceof Transient)) break; // this model refuses the request: try the next one
           const wait = Math.min(this.opts.retryDelayMs ?? 1500, Math.max(0, deadline - Date.now()));
           if (attempt === 0 && wait > 0) await new Promise((r) => setTimeout(r, wait));
@@ -119,7 +124,8 @@ export class OpenRouterAgent implements AgentRunner {
 
   private async ask(model: string, prompt: string, msLeft: number): Promise<string> {
     const ctl = new AbortController();
-    const timer = setTimeout(() => ctl.abort(), Math.max(1000, msLeft));
+    const cap = this.opts.attemptTimeoutMs ?? 40_000;
+    const timer = setTimeout(() => ctl.abort(), Math.max(1000, Math.min(msLeft, cap)));
     try {
       const res = await this.fetchFn(this.opts.endpoint ?? ENDPOINT, {
         method: "POST",
@@ -140,6 +146,7 @@ export class OpenRouterAgent implements AgentRunner {
       if (!json) throw new Transient(`OpenRouter ${model} did not answer with JSON`);
       return json;
     } catch (e) {
+      if (ctl.signal.aborted) throw new Slow(`OpenRouter ${model} did not answer in time`);
       if (e instanceof Error && (e instanceof Transient || e instanceof Fatal || e.message.startsWith("OpenRouter "))) throw e;
       throw new Transient(`OpenRouter ${model} could not be reached`);
     } finally {
