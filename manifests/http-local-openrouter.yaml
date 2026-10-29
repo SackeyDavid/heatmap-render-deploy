@@ -10,7 +10,8 @@ agents:
   openrouter:
     adapter: OpenRouterAgent
     model: nvidia/nemotron-3.5-super-vl:free
-    fallbackModels: [xingchen-agi/xing4.0-29b-a4b:free, google/gemma-4-31b-it:free], maxTokens: 2500
+    fallbackModels: [xingchen-agi/xing4.0-29b-a4b:free, google/gemma-4-31b-it:free]
+    maxTokens: 2500
   builder: { adapter: klaviyo.rule-table-builder }   # renders the approved interpretation; no model
 
 bindings:

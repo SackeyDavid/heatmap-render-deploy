@@ -12,7 +12,21 @@ export function evidenceInRequest(evidence: string, request: string): boolean {
   const e = withoutQuotes(evidence).toLowerCase();
   const r = withoutQuotes(request).toLowerCase();
   if (!e || e.length > 160) return false;
-  return r.includes(e);
+  return r.includes(e) || wordsInOrder(e, r);
+}
+
+/**
+ * A list wish ("clicks on Search and Free Session") makes the model quote each item with the shared words ("clicks on Free Session").
+ * That is still the merchant's own words, in the merchant's order, with some left out. Two words or more, so one stray word never counts.
+ */
+function wordsInOrder(evidence: string, request: string): boolean {
+  const tokens = (t: string) => t.split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+  const wanted = tokens(evidence);
+  if (wanted.length < 2) return false;
+  const have = tokens(request);
+  let at = 0;
+  for (const word of have) if (word === wanted[at] && ++at === wanted.length) return true;
+  return false;
 }
 
 const GENERIC_NOUNS = new Set([
