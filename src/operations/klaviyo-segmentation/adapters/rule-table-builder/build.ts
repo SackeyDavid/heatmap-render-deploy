@@ -46,8 +46,9 @@ export function choiceQuestion(c: Pick<Choice, "kind" | "name" | "options">): st
  */
 const CODE_WORDS = /\b(?:javascript|script|alert|eval|onerror|fetch|http|https|www|klaviyo|learnq|document|window)\b/;
 function missingNames(missing: string[]): string {
-  const plain = missing.filter((u) => /^[a-z0-9]+(?: [a-z0-9]+){0,3}$/.test(u) && u.length <= 40 && !CODE_WORDS.test(u));
-  return listLabels(plain.map((u) => u.replace(/\b[a-z]/g, (m) => m.toUpperCase())), 3, 40);
+  // Up to eight plain words, so "learn more under 15 minutes to fit" (a card button) is named too, not hidden.
+  const plain = missing.filter((u) => /^[a-z0-9]+(?: [a-z0-9]+){0,7}$/.test(u) && u.length <= 60 && !CODE_WORDS.test(u));
+  return listLabels(plain.map((u) => u.replace(/\b[a-z]/g, (m) => m.toUpperCase())), 3, 60);
 }
 
 /** The first thing that stops a build, as the full internal reason (`error`) and the merchant-facing question; undefined when the plan can be built. */
