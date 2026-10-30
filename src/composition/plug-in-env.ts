@@ -14,7 +14,7 @@ export const PLUG_IN_MATRIX: PlugInMatrixRow[] = [
   {
     env: "HEATMAP_MANIFEST (agents: block)",
     adapter: "FakeAgent | ClaudeCodeRunner | OpenRouterAgent | DisabledAgent",
-    requiredWhen: "ClaudeCodeRunner needs Claude CLI on PATH + account credit: manifests/http-local-claude.yaml. OpenRouterAgent needs OPENROUTER_API_KEY (free models by default): manifests/http-local-openrouter.yaml",
+    requiredWhen: "ClaudeCodeRunner needs Claude CLI on PATH + account credit: manifests/http-local-claude.yaml. OpenRouterAgent needs OPENROUTER_API_KEY (free models by default); GROQ_API_KEY is optional and, when set, Groq reads first: manifests/http-local-openrouter.yaml",
     verifyCommand: "npm run local:stack:claude (see docs/status/STREAM-REAL-AGENT.md)",
   },
   {

@@ -13,6 +13,10 @@
 agents:
   openrouter:
     adapter: OpenRouterAgent
+    # Groq is tried first when GROQ_API_KEY is set (its own free allowance, fast); without the key this line is skipped and OpenRouter reads as before.
+    providerModels:
+      - { model: qwen/qwen3.8-27b, endpoint: "https://api.groq.com/openai/v1/chat/completions", keyEnv: GROQ_API_KEY, label: Groq }
+      - { model: openai/gpt-oss-120b, endpoint: "https://api.groq.com/openai/v1/chat/completions", keyEnv: GROQ_API_KEY, label: Groq }
     model: nvidia/nemotron-3.5-super-vl:free
     fallbackModels: [xingchen-agi/xing4.0-29b-a4b:free, google/gemma-4-31b-it:free]
     maxTokens: 2500

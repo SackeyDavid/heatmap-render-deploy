@@ -5,8 +5,21 @@ import type { AgentRunner, AgentRunResult, AgentTask } from "../../../ports/inde
 /** The part of `fetch` this adapter uses; injectable so tests never touch the network. */
 export type Fetch = (url: string, init: { method: string; headers: Record<string, string>; body: string; signal?: AbortSignal }) => Promise<{ ok: boolean; status: number; json(): Promise<unknown> }>;
 
+/** One model on a provider other than OpenRouter that speaks the same chat format (Groq, Gemini's compatible address, ...). Tried before the OpenRouter models. */
+export interface ProviderModel {
+  model: string;
+  /** Full chat-completions address, https only. */
+  endpoint: string;
+  /** This provider's own key; it is only ever sent to `endpoint`. */
+  apiKey: string;
+  /** Name used in plain error messages, e.g. "Groq". */
+  label: string;
+}
+
 export interface OpenRouterOptions {
   apiKey: string;
+  /** Tried first, in order, each with its own address and key. A provider whose key is refused (401) is skipped for the rest of the run. */
+  providerModels?: ProviderModel[];
   /** Tried first. */
   model: string;
   /** Tried in order when `model` keeps failing (rate limit, server error, empty or unusable answer). */
@@ -76,12 +89,16 @@ class Slow extends Error {}
  * this object and in the Authorization header of one request; it is never put in a transcript, an error or a log line.
  */
 export class OpenRouterAgent implements AgentRunner {
-  private readonly models: string[];
+  private readonly attempts: ProviderModel[];
   private readonly fetchFn: Fetch;
 
   constructor(private readonly opts: OpenRouterOptions) {
-    this.models = [opts.model, ...(opts.fallbackModels ?? [])];
-    const paid = this.models.filter((m) => !m.endsWith(":free"));
+    const openRouterModels = [opts.model, ...(opts.fallbackModels ?? [])];
+    this.attempts = [
+      ...(opts.providerModels ?? []),
+      ...openRouterModels.map((model) => ({ model, endpoint: opts.endpoint ?? ENDPOINT, apiKey: opts.apiKey, label: "OpenRouter" })),
+    ];
+    const paid = openRouterModels.filter((m) => !m.endsWith(":free"));
     if (paid.length > 0 && opts.allowPaid !== true) throw new Error(`OpenRouterAgent: ${paid.join(", ")} is not a free model (free ids end in ":free")`);
     this.fetchFn = opts.fetch ?? ((url, init) => fetch(url, init) as ReturnType<Fetch>);
   }
@@ -96,18 +113,24 @@ export class OpenRouterAgent implements AgentRunner {
     let lastError = "no model answered";
     const errors: string[] = []; // every failed attempt, so one log line shows why each model gave up
 
-    for (const model of this.models) {
+    const refusedKeys = new Set<string>(); // a key one provider refused (401): its other models would be refused too
+    for (const target of this.attempts) {
+      const model = target.model;
       for (let attempt = 0; attempt < 2; attempt++) {
+        if (refusedKeys.has(target.apiKey)) break;
         if (Date.now() >= deadline) return this.fail(started, tried, `timed out after ${task.limits.timeoutMs}ms`);
         tried.push(`${model}#${attempt + 1}`);
         try {
-          const json = await this.ask(model, prompt, deadline - Date.now());
+          const json = await this.ask(target, prompt, deadline - Date.now());
           await writeFile(join(task.outputDir, "interpretation.json"), json, "utf8");
           return { ok: true, exitStatus: 0, filesProduced: ["interpretation.json"], transcript: `read by ${model} (attempts: ${tried.join(", ")})`, durationMs: Date.now() - started };
         } catch (e) {
           lastError = e instanceof Error ? e.message : "request failed";
           errors.push(lastError);
-          if (e instanceof Fatal) return this.fail(started, tried, lastError); // a bad key is bad for every model
+          if (e instanceof Fatal) { // a bad key is bad for every model of that provider; another provider's key may still work
+            refusedKeys.add(target.apiKey);
+            break;
+          }
           if (e instanceof Slow) break; // too slow: the next model, not another long wait on this one
           if (!(e instanceof Transient)) break; // this model refuses the request: try the next one
           const wait = Math.min(this.opts.retryDelayMs ?? 1500, Math.max(0, deadline - Date.now()));
@@ -122,33 +145,34 @@ export class OpenRouterAgent implements AgentRunner {
     return { ok: false, exitStatus: 1, filesProduced: [], transcript: `attempts: ${tried.join(", ")}`, durationMs: Date.now() - started, error };
   }
 
-  private async ask(model: string, prompt: string, msLeft: number): Promise<string> {
+  private async ask(target: ProviderModel, prompt: string, msLeft: number): Promise<string> {
+    const { model, label } = target;
     const ctl = new AbortController();
     const cap = this.opts.attemptTimeoutMs ?? 60_000;
     const timer = setTimeout(() => ctl.abort(), Math.max(1000, Math.min(msLeft, cap)));
     try {
-      const res = await this.fetchFn(this.opts.endpoint ?? ENDPOINT, {
+      const res = await this.fetchFn(target.endpoint, {
         method: "POST",
-        headers: { Authorization: `Bearer ${this.opts.apiKey}`, "Content-Type": "application/json", "X-Title": "heatmap-interpreter" },
+        headers: { Authorization: `Bearer ${target.apiKey}`, "Content-Type": "application/json", "X-Title": "heatmap-interpreter" },
         body: JSON.stringify({ model, temperature: 0, max_tokens: this.opts.maxTokens ?? 900, messages: [{ role: "system", content: SYSTEM }, { role: "user", content: prompt }] }),
         signal: ctl.signal,
       });
       const body = (await res.json().catch(() => ({}))) as { choices?: { message?: { content?: string } }[]; error?: { message?: string } };
       if (!res.ok) {
-        const msg = `OpenRouter ${model} returned ${res.status}`;
+        const msg = `${label} ${model} returned ${res.status}`;
         if (res.status === 429 || res.status >= 500) throw new Transient(msg);
         if (res.status === 401) throw new Fatal(msg); // only 401 means the key itself is bad; 402/403 can be one model or provider, so the next model still gets its turn
         throw new Error(msg);
       }
       const text = body.choices?.[0]?.message?.content;
-      if (!text || !text.trim()) throw new Transient(`OpenRouter ${model} sent an empty answer`);
+      if (!text || !text.trim()) throw new Transient(`${label} ${model} sent an empty answer`);
       const json = jsonObjectFrom(text);
-      if (!json) throw new Transient(`OpenRouter ${model} did not answer with JSON`);
+      if (!json) throw new Transient(`${label} ${model} did not answer with JSON`);
       return json;
     } catch (e) {
-      if (ctl.signal.aborted) throw new Slow(`OpenRouter ${model} did not answer in time`);
-      if (e instanceof Error && (e instanceof Transient || e instanceof Fatal || e.message.startsWith("OpenRouter "))) throw e;
-      throw new Transient(`OpenRouter ${model} could not be reached`);
+      if (ctl.signal.aborted) throw new Slow(`${label} ${model} did not answer in time`);
+      if (e instanceof Error && (e instanceof Transient || e instanceof Fatal || e.message.startsWith(`${label} `))) throw e;
+      throw new Transient(`${label} ${model} could not be reached`);
     } finally {
       clearTimeout(timer);
     }

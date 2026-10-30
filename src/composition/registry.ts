@@ -5,7 +5,7 @@ import { requestPagesDir } from "../domain/request-id.ts";
 import { ConfigError } from "../domain/errors.ts";
 import { ClaudeCodeAgent } from "../adapters/agents/claude-code/claude-code-agent.ts";
 import { DisabledAgent } from "../adapters/agents/disabled/disabled-agent.ts";
-import { OpenRouterAgent } from "../adapters/agents/openrouter/openrouter-agent.ts";
+import { OpenRouterAgent, type ProviderModel } from "../adapters/agents/openrouter/openrouter-agent.ts";
 import { FakeAgent } from "../adapters/agents/fake/fake-agent.ts";
 import { FixtureContextPackSource } from "../adapters/context-pack/fixture-context-pack.ts";
 import { FixturePageInspector } from "../adapters/inspector/fixture-inspector.ts";
@@ -57,6 +57,28 @@ const folderSetting = (where: string, e: Env, value: unknown): string => {
   return path;
 };
 /** Optional size limits for saved pages, declared in the manifest; each must be a positive whole number. */
+/**
+ * The `providerModels` list of an OpenRouterAgent entry: models on providers that speak the same chat format (Groq, ...).
+ * Each names its own key variable (`keyEnv`). A provider whose key is not set is left out, so a manifest can name Groq
+ * before the key exists on a server and the app still reads through OpenRouter.
+ */
+const providerModelsFrom = (where: string, value: unknown, vars: Record<string, string | undefined>): ProviderModel[] => {
+  if (value === undefined) return [];
+  if (!Array.isArray(value)) throw new ConfigError([`${where}.providerModels: must be a list`]);
+  const out: ProviderModel[] = [];
+  for (const [i, raw] of value.entries()) {
+    const at = `${where}.providerModels[${i}]`;
+    const m = (raw ?? {}) as Record<string, unknown>;
+    if (typeof m.model !== "string" || m.model === "") throw new ConfigError([`${at}.model: must be a model id (a string)`]);
+    if (typeof m.endpoint !== "string" || !/^https:\/\/[^\s]+$/.test(m.endpoint)) throw new ConfigError([`${at}.endpoint: must be a full https address`]);
+    if (typeof m.keyEnv !== "string" || !/^[A-Z][A-Z0-9_]*$/.test(m.keyEnv)) throw new ConfigError([`${at}.keyEnv: must be the name of an environment variable, e.g. GROQ_API_KEY`]);
+    if (m.label !== undefined && (typeof m.label !== "string" || !/^[A-Za-z][A-Za-z0-9 ._-]{0,29}$/.test(m.label))) throw new ConfigError([`${at}.label: must be a short plain name`]);
+    const apiKey = vars[m.keyEnv]?.trim();
+    if (apiKey) out.push({ model: m.model, endpoint: m.endpoint, apiKey, label: (m.label as string | undefined) ?? m.keyEnv });
+  }
+  return out;
+};
+
 const inspectorLimits = (c: Record<string, unknown>): { maxHtmlBytes?: number; maxControls?: number } => {
   const out: { maxHtmlBytes?: number; maxControls?: number } = {};
   for (const key of ["maxHtmlBytes", "maxControls"] as const) {
@@ -112,7 +134,7 @@ export const registry = {
         maxBudgetUsd: c.maxBudgetUsd as number | undefined,
       });
     }) as Factory<AgentRunner>,
-    /** Reads a request through OpenRouter (free models only unless the manifest says allowPaid). The key comes from OPENROUTER_API_KEY, never from the manifest. */
+    /** Reads a request through OpenRouter (free models only unless the manifest says allowPaid). The key comes from OPENROUTER_API_KEY, never from the manifest. `providerModels` (Groq and similar) are tried first, each with the key named in its `keyEnv`. */
     OpenRouterAgent: ((env, c) => {
       const where = "agents: OpenRouterAgent";
       const key = (env.vars ?? process.env).OPENROUTER_API_KEY?.trim();
@@ -126,7 +148,9 @@ export const registry = {
       const models = [c.model, ...((c.fallbackModels as string[] | undefined) ?? [])];
       const paid = models.filter((m) => !m.endsWith(":free"));
       if (paid.length > 0 && c.allowPaid !== true) throw new ConfigError([`${where}: ${paid.join(", ")} is not a free model (free ids end in ":free"). Use a free model, or set allowPaid: true to accept the cost`]);
-      return new OpenRouterAgent({ apiKey: key, model: c.model, fallbackModels: c.fallbackModels as string[] | undefined, maxTokens: c.maxTokens as number | undefined, allowPaid: c.allowPaid === true });
+      const vars = env.vars ?? process.env;
+      const providerModels = providerModelsFrom(where, c.providerModels, vars);
+      return new OpenRouterAgent({ apiKey: key, model: c.model, fallbackModels: c.fallbackModels as string[] | undefined, providerModels, maxTokens: c.maxTokens as number | undefined, allowPaid: c.allowPaid === true });
     }) as Factory<AgentRunner>,
     /** Declares "no agent here": the manifest binds it where a real agent could otherwise run. */
     DisabledAgent: (() => new DisabledAgent()) as Factory<AgentRunner>,
@@ -164,7 +188,7 @@ export const registry = {
 export const AGENT_CONFIG_KEYS: Record<keyof typeof registry.agents, readonly string[]> = {
   FakeAgent: ["outputsFrom", "outputsWhen"],
   ClaudeCodeRunner: ["binary", "allowedTools", "maxBudgetUsd"],
-  OpenRouterAgent: ["model", "fallbackModels", "maxTokens", "allowPaid"],
+  OpenRouterAgent: ["model", "fallbackModels", "providerModels", "maxTokens", "allowPaid"],
   DisabledAgent: [],
 };
 

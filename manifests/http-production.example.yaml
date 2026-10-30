@@ -1,5 +1,9 @@
 # Example production manifest (not loaded by default). Copy or set HEATMAP_MANIFEST to this path after plug-ins are configured.
 # See docs/KENN-PLUG-IN-SETUP.md and env.example.
+#
+# ACTIVE DEFAULT for server-side reading (Oct 2026): OpenRouter via manifests/http-render.yaml (hosted) or
+# http-local-openrouter.yaml (local) — not this file's Claude interpreter. Use this example for S3/SMTP/gateway wiring;
+# keep OpenRouter on the confirm step until Kenn enables Claude credit, then swap interpreter to claude-code as below.
 
 # Production runs with HEATMAP_MODE=production, which refuses local-only adapters at startup (FakeAgent, console and
 # in-memory notifier/job store, the fixture inspector, fake verifiers). A real agent must generate, so this example
