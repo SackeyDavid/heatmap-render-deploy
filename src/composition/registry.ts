@@ -75,6 +75,7 @@ const providerModelsFrom = (where: string, value: unknown, vars: Record<string, 
     if (m.label !== undefined && (typeof m.label !== "string" || !/^[A-Za-z][A-Za-z0-9 ._-]{0,29}$/.test(m.label))) throw new ConfigError([`${at}.label: must be a short plain name`]);
     const apiKey = vars[m.keyEnv]?.trim();
     if (apiKey) out.push({ model: m.model, endpoint: m.endpoint, apiKey, label: (m.label as string | undefined) ?? m.keyEnv });
+    else console.warn(`${at}: ${m.keyEnv} is not set, so ${m.model} is skipped`);
   }
   return out;
 };

@@ -39,7 +39,7 @@ const SITES: Site[] = (JSON.parse(readFileSync(join(HERE, "sites.json"), "utf8")
 mkdirSync(DATA_DIR, { recursive: true });
 copyFileSync(join(HERE, "sites.json"), join(DATA_DIR, "sites.json"));
 
-/** The only settings the stack receives. The OpenRouter key is passed through by name; nothing else from this process's environment is. */
+/** The only settings the stack receives. The OpenRouter and Groq keys are passed through by name; nothing else from this process's environment is. */
 const childEnv: Record<string, string> = {
   PATH: process.env.PATH ?? "",
   HOME: process.env.HOME ?? "/root",
@@ -60,6 +60,8 @@ const childEnv: Record<string, string> = {
   HEATMAP_MAX_OPEN_JOBS: process.env.HEATMAP_MAX_OPEN_JOBS || "5",
 };
 if (process.env.OPENROUTER_API_KEY) childEnv.OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+// Groq reads first when its key is set (manifests/http-render.yaml, providerModels). Without it the app reads through OpenRouter alone.
+if (process.env.GROQ_API_KEY) childEnv.GROQ_API_KEY = process.env.GROQ_API_KEY;
 // Hosted setups that keep the tracking files in a bucket (manifests/http-render.yaml) also pass the bucket settings, by name, when they are set.
 for (const name of ["AWS_REGION", "AWS_S3_BUCKET", "AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY", "AWS_S3_ENDPOINT", "AWS_S3_PUBLIC_BASE_URL"]) {
   const value = process.env[name];

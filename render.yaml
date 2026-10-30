@@ -17,6 +17,8 @@ services:
         generateValue: true
       - key: OPENROUTER_API_KEY
         sync: false
+      - key: GROQ_API_KEY
+        sync: false
       - key: AWS_REGION
         sync: false
       - key: AWS_S3_BUCKET
