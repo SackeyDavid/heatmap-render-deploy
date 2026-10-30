@@ -8,7 +8,7 @@ Kinds: click (a button or link), scroll_depth (how far down the page), faq_open 
 
 Rules:
 - "evidence" must be copied exactly from the request.
-- click: "target" is the button or link exactly as the owner NAMED it, without the words "button" or "link". Add "heading" only when the owner said it sits under a heading ("Learn More under Fitness for Everyone"). Add "field":true only when the owner named a text box.
+- click: "target" is the button or link exactly as the owner NAMED it, without the words "button" or "link". Add "heading" only when the owner said it sits under a heading ("Learn More under Fitness for Everyone") AND the page controls list that button with the same text as (under "..."). A menu, bar or section name ("in the About menu", "in the main navigation") is not a heading: leave "heading" out. Add "field":true only when the owner named a text box.
 - scroll_depth: any way of saying a visitor gets part-way or all the way down the page counts (scrolls, reaches, gets to, goes down, makes it to). "depthPercent" is the number the owner meant (halfway 50, a quarter 25, three quarters 75, the end, bottom or whole page 100). Give an unusual number as it is.
 - click also covers taps, presses, selects and opens of a named button or link. Phrases like "log it each time", "count" or "notify me" only describe the reporting, not the action.
 - Use only the owner's own words for names. Never invent selectors, URLs, code or event names.
