@@ -25,6 +25,8 @@ export const DEFAULT_MAX_HTML_BYTES = MAX_SAVED_PAGE_BYTES;
  */
 /** The saved copy is over the size limit (a typed error, so callers never have to read message text). */
 export class SavedPageTooLarge extends Error {}
+/** There is no saved copy of the address (a typed error, so a live-fetch wrapper can tell this apart from every other failure). */
+export class NoSavedCopy extends Error {}
 
 export class SavedHtmlInspector implements PageInspector {
   private readonly maxBytes: number;
@@ -48,7 +50,7 @@ export class SavedHtmlInspector implements PageInspector {
     if (fileName.includes("/") || fileName.includes("\\") || fileName.startsWith(".")) {
       throw new Error(`"${shown}" is not a web address we can read.`);
     }
-    const missing = () => new Error(`We have no saved copy of ${shown} (expected a saved page named ${fileName}).`);
+    const missing = () => new NoSavedCopy(`We have no saved copy of ${shown} (expected a saved page named ${fileName}).`);
     const roots = [this.opts.root, ...(this.opts.fallbackRoots ?? [])];
     let file: string | undefined;
     let size = 0;

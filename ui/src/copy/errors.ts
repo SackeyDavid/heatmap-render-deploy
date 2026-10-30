@@ -243,10 +243,13 @@ export function plainTag(tag: string): string {
   return words || tag;
 }
 
-/** A test tag as the merchant sees it: the plain label, and the exact name to search for (never altered). */
+/** The label of a test tag: a name that is already spaced words keeps its own capitals ("EMS", "to Fit"); a code-style name (add_to_cart) becomes capitalised words. */
+const tagLabel = (name: string): string => (/\s/.test(name) ? name : plainTag(name).replace(/\b[a-z]/g, (c) => c.toUpperCase()));
+
+/** A test tag as the merchant sees it: the label, and the exact name to search for (never altered). */
 export function tagParts(tag: string): { label: string; exact: string; suffix?: string } {
   // A tag the build adds in brackets at the end ("(adapter)") is shown as written, not turned into a plain label.
   const m = /^(.*?) \(([a-z0-9][a-z0-9-]*)\)$/.exec(tag);
-  if (m) return { label: plainTag(m[1]!), exact: tag, suffix: `(${m[2]})` };
-  return { label: plainTag(tag), exact: tag };
+  if (m) return { label: tagLabel(m[1]!), exact: tag, suffix: `(${m[2]})` };
+  return { label: tagLabel(tag), exact: tag };
 }

@@ -25,7 +25,7 @@ agents:
 bindings:
   remoteStorage: s3
   workspace: local-fs
-  pageInspector: { adapter: saved-html, fallbackRoots: [fixtures/pages] }   # saved pages of this request, then the repo's sample pages (local only)
+  pageInspector: { adapter: saved-html, liveFetch: true }   # the request's own saved pages first; otherwise the real page is read from the web (https only, public addresses only)
   contextPack: fixture
   jobStore: file
   notifier: console

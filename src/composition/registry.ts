@@ -5,6 +5,7 @@ import { requestPagesDir } from "../domain/request-id.ts";
 import { ConfigError } from "../domain/errors.ts";
 import { ClaudeCodeAgent } from "../adapters/agents/claude-code/claude-code-agent.ts";
 import { DisabledAgent } from "../adapters/agents/disabled/disabled-agent.ts";
+import { LiveFetchInspector } from "../adapters/inspector/live-fetch/live-fetch-inspector.ts";
 import { OpenRouterAgent, type ProviderModel } from "../adapters/agents/openrouter/openrouter-agent.ts";
 import { FakeAgent } from "../adapters/agents/fake/fake-agent.ts";
 import { FixtureContextPackSource } from "../adapters/context-pack/fixture-context-pack.ts";
@@ -78,6 +79,13 @@ const providerModelsFrom = (where: string, value: unknown, vars: Record<string, 
     else console.warn(`${at}: ${m.keyEnv} is not set, so ${m.model} is skipped`);
   }
   return out;
+};
+
+/** `liveFetch: true` on a saved-html binding: when the request has no saved copy of an address, the real page is read from the web (https only, public addresses only). */
+const withLiveFetch = (c: Record<string, unknown>, inner: PageInspector): PageInspector => {
+  if (c.liveFetch === undefined || c.liveFetch === false) return inner;
+  if (c.liveFetch !== true) throw new ConfigError(["bindings.pageInspector.liveFetch: must be true or false"]);
+  return new LiveFetchInspector({ inner, ...inspectorLimits(c) });
 };
 
 const inspectorLimits = (c: Record<string, unknown>): { maxHtmlBytes?: number; maxControls?: number } => {
@@ -166,9 +174,9 @@ export const registry = {
   pageInspector: {
     fixture: localOnly<PageInspector>((e) => new FixturePageInspector(join(e.rootDir, "fixtures", "pages"))),
     "saved-html": requestScoped<PageInspector>(
-      (e, c) => new SavedHtmlInspector({ root: c.root !== undefined ? folderSetting("bindings.pageInspector.root", e, c.root) : join(e.dataDir, "pages"), fallbackRoots: fallbackRoots(e, c), ...inspectorLimits(c) }),
+      (e, c) => withLiveFetch(c, new SavedHtmlInspector({ root: c.root !== undefined ? folderSetting("bindings.pageInspector.root", e, c.root) : join(e.dataDir, "pages"), fallbackRoots: fallbackRoots(e, c), ...inspectorLimits(c) })),
       // One folder of saved pages per request, so a request can only ever read the pages it uploaded (plus declared fallbacks).
-      (e, c, requestId) => new SavedHtmlInspector({ root: requestPagesDir(e.dataDir, requestId), fallbackRoots: fallbackRoots(e, c), ...inspectorLimits(c) }),
+      (e, c, requestId) => withLiveFetch(c, new SavedHtmlInspector({ root: requestPagesDir(e.dataDir, requestId), fallbackRoots: fallbackRoots(e, c), ...inspectorLimits(c) })),
     ),
   },
   contextPack: {
@@ -195,7 +203,7 @@ export const AGENT_CONFIG_KEYS: Record<keyof typeof registry.agents, readonly st
 
 /** Settings each binding adapter reads when the manifest writes the binding as `{ adapter, ...settings }`. Anything else is a startup error. */
 export const BINDING_CONFIG_KEYS: Partial<Record<keyof typeof registry, Record<string, readonly string[]>>> = {
-  pageInspector: { "saved-html": ["root", "fallbackRoots", "maxHtmlBytes", "maxControls"] },
+  pageInspector: { "saved-html": ["root", "fallbackRoots", "maxHtmlBytes", "maxControls", "liveFetch"] },
 };
 
 /** Step kinds and their config schemas are declared once, in step-schemas.ts. */
